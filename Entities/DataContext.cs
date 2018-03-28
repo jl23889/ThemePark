@@ -42,14 +42,6 @@ namespace ThemePark.Entities
         // Unable to generate entity type for table 'THEMEPARK.TicketRideEnters'. Please see the warning messages.
         // Unable to generate entity type for table 'THEMEPARK.TransactionHotelRoomPurchases'. Please see the warning messages.
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"server=cosc3380.database.windows.net;user=azureuser;password=cosc3380!;database=pro");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

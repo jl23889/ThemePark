@@ -43,6 +43,10 @@ namespace ThemePark.Entities
         // Unable to generate entity type for table 'THEMEPARK.TransactionHotelRoomPurchases'. Please see the warning messages.
 
 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>(entity =>

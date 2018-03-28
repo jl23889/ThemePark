@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ThemePark.Entities
 {
-    public partial class proContext : DbContext
+    public partial class DataContext : DbContext
     {
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerTransaction> CustomerTransaction { get; set; }

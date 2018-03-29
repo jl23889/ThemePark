@@ -33,12 +33,12 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={ '/fetchdata/ridestatus' } activeClassName='active'>
+                            <NavLink to={ '/ridestatus' } activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> LookupRideStatus
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={ '/fetchdata/ridetype' } activeClassName='active'>
+                            <NavLink to={ '/ridetype' } activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> LookupRideType
                             </NavLink>
                         </li>

@@ -10,6 +10,6 @@ import Counter from './components/Counter';
 export const routes = <Layout>
     <Route exact path='/' component={ Home } />
     <Route path='/counter' component={ Counter } />
-    <Route path='/fetchdata/ridestatus' component={ RideStatus } />
-    <Route path='/fetchdata/ridetype' component={ RideType } />
+    <Route path='/ridestatus' component={ RideStatus } />
+    <Route path='/ridetype' component={ RideType } />
 </Layout>;

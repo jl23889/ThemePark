@@ -1,4 +1,6 @@
 import './css/site.css';
+import 'react-table/react-table.css';
+
 import 'bootstrap';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';

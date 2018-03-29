@@ -7,7 +7,6 @@ import * as RideStatusState from '../store/RideStatus'
 import * as RideTypeState from '../store/RideType'
 
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
 
 // At runtime, Redux will merge together...
 type DataProps =

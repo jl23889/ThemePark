@@ -6,6 +6,9 @@ import { ApplicationState }  from '../store';
 import * as RideStatusState from '../store/RideStatus'
 import * as RideTypeState from '../store/RideType'
 
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+
 // At runtime, Redux will merge together...
 type DataProps =
     RideStatusState.RideStatusState        // ... state we've requested from the Redux store
@@ -25,28 +28,27 @@ class FetchData extends React.Component<DataProps, {}> {
 
     public render() {
         return <div>
-            <h1>RIDE STATUS TABLE</h1>
+            <h1>Ride Status Table</h1>
             { this.renderRideStatusTable() }
         </div>
     }
 
     private renderRideStatusTable() {
-        return <table className='table'>
-            <thead>
-                <tr>
-                    <th>RideStatusId</th>
-                    <th>RideStatus</th>
-                </tr>
-            </thead>
-            <tbody>
-            {this.props.rideStatusList.map(ridestatus =>
-                <tr key={ ridestatus.rideStatusId }>
-                    <td>{ ridestatus.rideStatusId }</td>
-                    <td>{ ridestatus.rideStatus }</td>
-                </tr>
-            )}
-            </tbody>
-        </table>;
+        return <div>
+            <ReactTable 
+                data={this.props.rideStatusList}
+                columns={[
+                    {
+                        Header: "RideStatusId",
+                        accessor: "rideStatusId"
+                    },
+                    {
+                        Header: "RideStatus",
+                        accessor: "rideStatus"
+                    }
+                ]}
+            />
+        </div>;
     }
 }
 

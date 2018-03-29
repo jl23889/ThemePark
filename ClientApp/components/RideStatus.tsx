@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 //import * as WeatherForecastsState from '../store/WeatherForecasts';
 import * as RideStatusState from '../store/RideStatus'
+import * as RideTypeState from '../store/RideType'
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -14,23 +15,15 @@ type DataProps =
 class FetchData extends React.Component<DataProps, {}> {
     componentWillMount() {
         // This method runs when the component is first added to the page
-        let entity = this.props.match.params.entity;
-        if (entity='ridestatus') {
-            this.props.requestRideStatusList();
-        } 
+        this.props.requestRideStatusList();
     }
 
     componentWillReceiveProps(nextProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
-        let entity = this.props.match.params.entity;
-        if (entity='ridestatus') {
-            this.props.requestRideStatusList();
-        }
+        this.props.requestRideStatusList();
     }
 
     public render() {
-        let entity = this.props.match.params.entity;
-
         return <div>
             <h1>RIDE STATUS TABLE</h1>
             { this.renderRideStatusTable() }
@@ -42,7 +35,7 @@ class FetchData extends React.Component<DataProps, {}> {
             <thead>
                 <tr>
                     <th>RideStatusId</th>
-                    <th>RideStatus (C)</th>
+                    <th>RideStatus</th>
                 </tr>
             </thead>
             <tbody>

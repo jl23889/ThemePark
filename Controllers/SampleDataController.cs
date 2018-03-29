@@ -41,6 +41,12 @@ namespace ThemePark.Controllers
             return _context.LookUpRideStatus.ToList();
         }
 
+        [HttpGet("[action]")]
+        public IEnumerable<LookUpRideType> LookUpRideType()
+        {
+            return _context.LookUpRideType.ToList();
+        }
+
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }

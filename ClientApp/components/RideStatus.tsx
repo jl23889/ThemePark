@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 //import * as WeatherForecastsState from '../store/WeatherForecasts';
 import * as RideStatusState from '../store/RideStatus'
-import * as RideTypeState from '../store/RideType'
 
 import ReactTable from 'react-table';
 
@@ -14,7 +13,7 @@ type DataProps =
     & typeof RideStatusState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ entity: string }>; // ... plus incoming routing parameters
 
-class FetchData extends React.Component<DataProps, {}> {
+class RideStatus extends React.Component<DataProps, {}> {
     componentWillMount() {
         // This method runs when the component is first added to the page
         this.props.requestRideStatusList();
@@ -54,4 +53,4 @@ class FetchData extends React.Component<DataProps, {}> {
 export default connect(
     (state: ApplicationState) => state.rideStatus, // Selects which state properties are merged into the component's props
     RideStatusState.actionCreators                 // Selects which action creators are merged into the component's props
-)(FetchData) as typeof FetchData;
+)(RideStatus) as typeof RideStatus;

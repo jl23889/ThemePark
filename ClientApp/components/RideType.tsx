@@ -3,7 +3,6 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 //import * as WeatherForecastsState from '../store/WeatherForecasts';
-import * as RideStatusState from '../store/RideStatus'
 import * as RideTypeState from '../store/RideType'
 
 // At runtime, Redux will merge together...
@@ -12,7 +11,7 @@ type DataProps =
     & typeof RideTypeState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ entity: string }>; // ... plus incoming routing parameters
 
-class FetchData extends React.Component<DataProps, {}> {
+class RideType extends React.Component<DataProps, {}> {
     componentWillMount() {
         // This method runs when the component is first added to the page
         this.props.requestRideTypeList();
@@ -53,4 +52,4 @@ class FetchData extends React.Component<DataProps, {}> {
 export default connect(
     (state: ApplicationState) => state.rideType, // Selects which state properties are merged into the component's props
     RideTypeState.actionCreators                 // Selects which action creators are merged into the component's props
-)(FetchData) as typeof FetchData;
+)(RideType) as typeof RideType;

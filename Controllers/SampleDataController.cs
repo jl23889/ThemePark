@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ThemePark.Entities;
 
 namespace ThemePark.Controllers
 {
@@ -14,6 +15,14 @@ namespace ThemePark.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        private readonly DataContext _context;
+
+        public SampleDataController(DataContext context)
+        {
+            _context = context;
+        }
+
+
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
         {
@@ -24,6 +33,12 @@ namespace ThemePark.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
+        }
+
+        [HttpGet("[action]")]
+        public IEnumerable<LookUpRideStatus> LookUpRideStatus()
+        {
+            return _context.LookUpRideStatus.ToList();
         }
 
         public class WeatherForecast

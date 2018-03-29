@@ -2,72 +2,62 @@ import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
-import * as WeatherForecastsState from '../store/WeatherForecasts';
+//import * as WeatherForecastsState from '../store/WeatherForecasts';
+import * as RideStatusState from '../store/RideStatus'
 
 // At runtime, Redux will merge together...
-type WeatherForecastProps =
-    WeatherForecastsState.WeatherForecastsState        // ... state we've requested from the Redux store
-    & typeof WeatherForecastsState.actionCreators      // ... plus action creators we've requested
-    & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
+type DataProps =
+    RideStatusState.RideStatusState        // ... state we've requested from the Redux store
+    & typeof RideStatusState.actionCreators      // ... plus action creators we've requested
+    & RouteComponentProps<{ entity: string }>; // ... plus incoming routing parameters
 
-class FetchData extends React.Component<WeatherForecastProps, {}> {
+class FetchData extends React.Component<DataProps, {}> {
     componentWillMount() {
         // This method runs when the component is first added to the page
-        let startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
-        this.props.requestWeatherForecasts(startDateIndex);
+        let entity = this.props.match.params.entity;
+        if (entity='ridestatus') {
+            this.props.requestRideStatusList();
+        } 
     }
 
-    componentWillReceiveProps(nextProps: WeatherForecastProps) {
+    componentWillReceiveProps(nextProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
-        let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
-        this.props.requestWeatherForecasts(startDateIndex);
+        let entity = this.props.match.params.entity;
+        if (entity='ridestatus') {
+            this.props.requestRideStatusList();
+        }
     }
 
     public render() {
+        let entity = this.props.match.params.entity;
+
         return <div>
-            <h1>Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
-            { this.renderForecastsTable() }
-            { this.renderPagination() }
-        </div>;
+            <h1>RIDE STATUS TABLE</h1>
+            { this.renderRideStatusTable() }
+        </div>
     }
 
-    private renderForecastsTable() {
+    private renderRideStatusTable() {
         return <table className='table'>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
+                    <th>RideStatusId</th>
+                    <th>RideStatus (C)</th>
                 </tr>
             </thead>
             <tbody>
-            {this.props.forecasts.map(forecast =>
-                <tr key={ forecast.dateFormatted }>
-                    <td>{ forecast.dateFormatted }</td>
-                    <td>{ forecast.temperatureC }</td>
-                    <td>{ forecast.temperatureF }</td>
-                    <td>{ forecast.summary }</td>
+            {this.props.rideStatusList.map(ridestatus =>
+                <tr key={ ridestatus.rideStatusId }>
+                    <td>{ ridestatus.rideStatusId }</td>
+                    <td>{ ridestatus.rideStatus }</td>
                 </tr>
             )}
             </tbody>
         </table>;
     }
-
-    private renderPagination() {
-        let prevStartDateIndex = (this.props.startDateIndex || 0) - 5;
-        let nextStartDateIndex = (this.props.startDateIndex || 0) + 5;
-
-        return <p className='clearfix text-center'>
-            <Link className='btn btn-default pull-left' to={ `/fetchdata/${ prevStartDateIndex }` }>Previous</Link>
-            <Link className='btn btn-default pull-right' to={ `/fetchdata/${ nextStartDateIndex }` }>Next</Link>
-            { this.props.isLoading ? <span>Loading...</span> : [] }
-        </p>;
-    }
 }
 
 export default connect(
-    (state: ApplicationState) => state.weatherForecasts, // Selects which state properties are merged into the component's props
-    WeatherForecastsState.actionCreators                 // Selects which action creators are merged into the component's props
+    (state: ApplicationState) => state.rideStatus, // Selects which state properties are merged into the component's props
+    RideStatusState.actionCreators                 // Selects which action creators are merged into the component's props
 )(FetchData) as typeof FetchData;

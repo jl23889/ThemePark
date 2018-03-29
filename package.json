@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "react-table": "^6.8.0"
+    "react-table": "^6.8.0",
+    "redux-form": "^7.3.0"
   }
 }

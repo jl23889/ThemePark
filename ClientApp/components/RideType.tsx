@@ -20,8 +20,8 @@ class FetchData extends React.Component<DataProps, {}> {
 
     componentWillReceiveProps(nextProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
-        this.props.requestRideTypeList();
-        }
+        //this.props.requestRideTypeList();
+    }
 
     public render() {
         return <div>

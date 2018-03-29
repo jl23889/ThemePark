@@ -42,6 +42,7 @@
     "webpack-merge": "4.1.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "react-table": "^6.8.0"
   }
 }

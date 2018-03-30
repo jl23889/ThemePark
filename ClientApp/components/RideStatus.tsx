@@ -3,7 +3,8 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 //import * as WeatherForecastsState from '../store/WeatherForecasts';
-import * as RideStatusState from '../store/RideStatus'
+import * as RideStatusState from '../store/RideStatus';
+import RideStatusForm from './RideStatusForm';
 
 import ReactTable from 'react-table';
 
@@ -14,7 +15,7 @@ type DataProps =
     & RouteComponentProps<{ entity: string }>; // ... plus incoming routing parameters
 
 class RideStatus extends React.Component<DataProps, {}> {
-    componentWillMount() {
+    componentDidMount() {
         // This method runs when the component is first added to the page
         this.props.requestRideStatusList();
     }
@@ -27,8 +28,17 @@ class RideStatus extends React.Component<DataProps, {}> {
     public render() {
         return <div>
             <h1>Ride Status Table</h1>
+            { this.renderCreateNewForm() }
             { this.renderRideStatusTable() }
         </div>
+    }
+
+    submit = values => {
+        this.props.createNewRideStatus();
+    }
+
+    private renderCreateNewForm() {        
+        return <RideStatusForm onSubmit={this.submit}/>
     }
 
     private renderRideStatusTable() {

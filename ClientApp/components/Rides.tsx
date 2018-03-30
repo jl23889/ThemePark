@@ -5,7 +5,7 @@ import { ApplicationState }  from '../store';
 import * as RidesState from '../store/Rides';
 
 import ReactTable from 'react-table';
-import { LocalForm, Control } from 'react-redux-form';
+import { Field, reduxForm } from 'redux-form';
 
 // At runtime, Redux will merge together...
 type DataProps =

@@ -3,6 +3,8 @@ import * as Counter from './Counter';
 import * as RideStatus from './RideStatus'
 import * as RideType from './RideType'
 import * as Rides from './Rides'
+import { reducer as formReducer } from 'redux-form'
+import { state as formState } from 'redux-form'
 
 // The top-level state object
 export interface ApplicationState {
@@ -11,6 +13,7 @@ export interface ApplicationState {
     rideStatus: RideStatus.RideStatusState;
     rideType: RideType.RideTypeState;
     rides: Rides.RidesState;
+    form: formState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -22,6 +25,7 @@ export const reducers = {
     rides: Rides.reducer,
     rideStatus: RideStatus.reducer,
     rideType: RideType.reducer,
+    form: formReducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

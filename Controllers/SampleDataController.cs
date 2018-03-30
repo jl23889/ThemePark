@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Http;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using ThemePark.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace ThemePark.Controllers
 {
@@ -16,10 +20,12 @@ namespace ThemePark.Controllers
         };
 
         private readonly DataContext _context;
+        private readonly ILogger _logger;
 
-        public SampleDataController(DataContext context)
+        public SampleDataController(DataContext context, ILogger<SampleDataController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
 
@@ -39,6 +45,30 @@ namespace ThemePark.Controllers
         public IEnumerable<LookUpRideStatus> LookUpRideStatus()
         {
             return _context.LookUpRideStatus.ToList();
+        }
+
+        [HttpGet("[action]")]
+        public IEnumerable<Ride> GetRides()
+        {
+            return _context.Ride.ToList();
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult CreateNewRideStatus([FromBody]LookUpRideStatus newRideStatus)
+        {
+            try {
+                if (ModelState.IsValid && newRideStatus != null) 
+                {  
+                    _context.LookUpRideStatus.Add(newRideStatus);
+                    _context.SaveChanges();
+                    return Ok(); 
+                }
+                return BadRequest();
+            }
+            catch
+            {
+                return BadRequest();
+            }    
         }
 
         [HttpGet("[action]")]

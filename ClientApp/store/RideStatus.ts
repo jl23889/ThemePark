@@ -44,7 +44,6 @@ type KnownAction = RequestRideStatusAction | FetchRideStatusAction | CreateRideS
 
 export const actionCreators = {
     requestRideStatusList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        console.log(getState().form);
         // Only load data if it's something we don't already have (and are not already loading)
         if (!getState().rideStatus.isLoading) {
             axios.get(`api/SampleData/LookUpRideStatus`)

@@ -7,7 +7,7 @@ import axios from 'axios';
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface RideStatusState {
-    isLoading: boolean;
+    reloadData: boolean;
     rideStatusList: RideStatus[];
 }
 
@@ -31,7 +31,6 @@ interface FetchRideStatusAction {
 
 interface CreateRideStatusAction {
     type: 'CREATE_RIDE_STATUS';
-    rideStatus: RideStatus[];
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
@@ -44,8 +43,8 @@ type KnownAction = RequestRideStatusAction | FetchRideStatusAction | CreateRideS
 
 export const actionCreators = {
     requestRideStatusList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // Only load data if it's something we don't already have (and are not already loading)
-        if (!getState().rideStatus.isLoading) {
+        // Only load data if reload flag is true
+        if (getState().rideStatus.reloadData) {
             axios.get(`api/SampleData/LookUpRideStatus`)
             .then(response => {
                 dispatch({ type: 'FETCH_RIDE_STATUS', rideStatusList: response.data });
@@ -54,9 +53,12 @@ export const actionCreators = {
     },
     createNewRideStatus: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         axios.post(`api/SampleData/CreateNewRideStatus`, getState().form.rideStatus.values)
-        .then(response => {
-            console.log(response);  
-        })
+        .then(
+            response => {
+                console.log(response);
+                dispatch({ type: 'CREATE_RIDE_STATUS' });
+            }
+        );
     }
 };
 
@@ -65,7 +67,7 @@ export const actionCreators = {
 
 const unloadedState: RideStatusState = { 
     rideStatusList: [], 
-    isLoading: false 
+    reloadData: true 
 };
 
 export const reducer: Reducer<RideStatusState> = (state: RideStatusState, incomingAction: Action) => {
@@ -74,17 +76,17 @@ export const reducer: Reducer<RideStatusState> = (state: RideStatusState, incomi
         case 'REQUEST_RIDE_STATUS':
             return {
                 rideStatusList: state.rideStatusList,
-                isLoading: true
+                reloadData: false
             }
         case 'FETCH_RIDE_STATUS':
             return {
                 rideStatusList: action.rideStatusList,
-                isLoading: false
+                reloadData: false
             }
         case 'CREATE_RIDE_STATUS':
             return {
-                rideStatusList: action.rideStatus,
-                isLoading: false
+                rideStatusList: state.rideStatusList,
+                reloadData: true
             }
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

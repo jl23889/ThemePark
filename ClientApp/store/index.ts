@@ -2,6 +2,7 @@ import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 import * as RideStatus from './RideStatus'
 import * as RideType from './RideType'
+import * as Rides from './Rides'
 
 // The top-level state object
 export interface ApplicationState {
@@ -9,6 +10,7 @@ export interface ApplicationState {
     weatherForecasts: WeatherForecasts.WeatherForecastsState;
     rideStatus: RideStatus.RideStatusState;
     rideType: RideType.RideTypeState;
+    rides: Rides.RidesState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -17,6 +19,7 @@ export interface ApplicationState {
 export const reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
+    rides: Rides.reducer,
     rideStatus: RideStatus.reducer,
     rideType: RideType.reducer,
 };

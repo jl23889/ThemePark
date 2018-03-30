@@ -46,7 +46,7 @@ type KnownAction = RequestRidesAction | FetchRidesAction;
 export const actionCreators = {
     requestRidesList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
-        if (!getState().rideStatus.isLoading) {
+        if (!getState().rides.isLoading) {
             axios.get(`api/SampleData/GetRides`)
             .then(response => {
                 dispatch({ type: 'FETCH_RIDES', ridesList: response.data });

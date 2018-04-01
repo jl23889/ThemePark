@@ -56,37 +56,55 @@ namespace ThemePark.Controllers
         [HttpPost("[action]")]
         public IActionResult CreateNewRideStatus([FromBody]LookUpRideStatus newRideStatus)
         {
-            try {
-                if (ModelState.IsValid && newRideStatus != null) 
-                {  
+            if (ModelState.IsValid && newRideStatus != null) 
+            {
+                try {
                     _context.LookUpRideStatus.Add(newRideStatus);
                     _context.SaveChanges();
                     return Ok(); 
-                }
-                return BadRequest();
+                }  
+                catch
+                {
+                    return BadRequest();
+                }  
             }
-            catch
-            {
-                return BadRequest();
-            }    
+            return BadRequest();   
         }
 
         [HttpPut("[action]")]
         public IActionResult UpdateRideStatus([FromBody]LookUpRideStatus updateRideStatus)
         {
-            try {
-                if (ModelState.IsValid && updateRideStatus != null) 
-                {  
+            if (ModelState.IsValid && updateRideStatus != null) 
+            {
+                try {
                     _context.LookUpRideStatus.Update(updateRideStatus);
                     _context.SaveChanges();
                     return Ok(); 
-                }
-                return BadRequest();
+                }  
+                catch
+                {
+                    return BadRequest();
+                }  
             }
-            catch
+            return BadRequest();
+        }
+
+        [HttpDelete("[action]")]
+        public IActionResult DeleteRideStatus([FromBody]LookUpRideStatus deleteRideStatus)
+        {
+            if (ModelState.IsValid && deleteRideStatus != null) 
             {
-                return BadRequest();
-            }    
+                try {
+                    _context.LookUpRideStatus.Remove(deleteRideStatus);
+                    _context.SaveChanges();
+                    return Ok(); 
+                }  
+                catch
+                {
+                    return BadRequest();
+                }  
+            }
+            return BadRequest();
         }
 
         [HttpGet("[action]")]

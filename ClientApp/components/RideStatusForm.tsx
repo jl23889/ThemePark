@@ -1,10 +1,5 @@
 import * as React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
-import * as RideStatusState from '../store/RideStatus';
 
-import ReactTable from 'react-table';
 import { Field, reduxForm } from 'redux-form';
 
 let RideStatusForm = props => {
@@ -34,7 +29,6 @@ let RideStatusForm = props => {
 }
 
 RideStatusForm = reduxForm({
-    form: 'rideStatus'
 })(RideStatusForm);
 
 export default RideStatusForm;

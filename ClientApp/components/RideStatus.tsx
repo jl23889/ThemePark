@@ -32,12 +32,20 @@ class RideStatus extends React.Component<DataProps, {}> {
         </div>
     }
 
-    submit = values => {
+    createNewRideStatus = values => {
         this.props.createNewRideStatus();
     }
 
+    updateRideStatus = values => {
+        console.log (values);
+        this.props.updateRideStatus(values);
+    }
+
     private renderCreateNewForm() {        
-        return <RideStatusForm onSubmit={this.submit}/>
+        return <RideStatusForm 
+            onSubmit={this.createNewRideStatus}
+            form="newForm"
+        />
     }
 
     private renderRideStatusTable() {
@@ -51,9 +59,19 @@ class RideStatus extends React.Component<DataProps, {}> {
                     },
                     {
                         Header: "RideStatus",
-                        accessor: "rideStatus"
+                        accessor: "rideStatus",
                     }
                 ]}
+                className="-highlight"
+                filterable
+                SubComponent={row => {
+                    // contains update form
+                    return <RideStatusForm 
+                        onSubmit={this.updateRideStatus}
+                        initialValues={row.original}
+                        form={"form"+row.original.rideStatusId}
+                    />
+                }}
             />
         </div>;
     }

@@ -71,6 +71,24 @@ namespace ThemePark.Controllers
             }    
         }
 
+        [HttpPut("[action]")]
+        public IActionResult UpdateRideStatus([FromBody]LookUpRideStatus updateRideStatus)
+        {
+            try {
+                if (ModelState.IsValid && updateRideStatus != null) 
+                {  
+                    _context.LookUpRideStatus.Update(updateRideStatus);
+                    _context.SaveChanges();
+                    return Ok(); 
+                }
+                return BadRequest();
+            }
+            catch
+            {
+                return BadRequest();
+            }    
+        }
+
         [HttpGet("[action]")]
         public IEnumerable<LookUpRideType> LookUpRideType()
         {

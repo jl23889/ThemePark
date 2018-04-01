@@ -1,4 +1,3 @@
-import { fetch, addTask } from 'domain-task';
 import { Action, Reducer, ActionCreator } from 'redux';
 import { AppThunkAction } from './';
 import axios from 'axios';
@@ -8,7 +7,7 @@ import axios from 'axios';
 
 export interface RideStatusState {
     reloadData: boolean;
-    rideStatusList: RideStatus[];
+    rideStatusList: RideStatus[];  // list that should be rendered in table
 }
 
 export interface RideStatus {
@@ -20,10 +19,6 @@ export interface RideStatus {
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
-interface RequestRideStatusAction {
-    type: 'REQUEST_RIDE_STATUS';
-}
-
 interface FetchRideStatusAction {
     type: 'FETCH_RIDE_STATUS';
     rideStatusList: RideStatus[];
@@ -33,9 +28,14 @@ interface CreateRideStatusAction {
     type: 'CREATE_RIDE_STATUS';
 }
 
+interface UpdateRideStatusAction {
+    type: 'UPDATE_RIDE_STATUS';
+}
+
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestRideStatusAction | FetchRideStatusAction | CreateRideStatusAction;
+type KnownAction =  FetchRideStatusAction | CreateRideStatusAction
+    | UpdateRideStatusAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -59,6 +59,17 @@ export const actionCreators = {
                 dispatch({ type: 'CREATE_RIDE_STATUS' });
             }
         );
+    },
+    updateRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        console.log(getState());
+        console.log(values);
+        axios.put(`api/SampleData/UpdateRideStatus`, values)
+        .then(
+            response => {
+                console.log(response);
+                dispatch({ type: 'UPDATE_RIDE_STATUS' });
+            }
+        );
     }
 };
 
@@ -73,17 +84,17 @@ const unloadedState: RideStatusState = {
 export const reducer: Reducer<RideStatusState> = (state: RideStatusState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'REQUEST_RIDE_STATUS':
-            return {
-                rideStatusList: state.rideStatusList,
-                reloadData: false
-            }
         case 'FETCH_RIDE_STATUS':
             return {
                 rideStatusList: action.rideStatusList,
                 reloadData: false
             }
         case 'CREATE_RIDE_STATUS':
+            return {
+                rideStatusList: state.rideStatusList,
+                reloadData: true
+            }
+        case 'UPDATE_RIDE_STATUS':
             return {
                 rideStatusList: state.rideStatusList,
                 reloadData: true

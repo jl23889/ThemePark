@@ -6,6 +6,7 @@ import * as RideStatusState from '../store/RideStatus';
 import RideStatusForm from './RideStatusForm';
 
 import ReactTable from 'react-table';
+import { DropdownButton, MenuItem } from 'react-bootstrap'
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -27,6 +28,8 @@ class RideStatus extends React.Component<DataProps, {}> {
     render() {
         return <div>
             <h1>Ride Status Table</h1>
+            { this.renderDropdown() }
+            <h3>Create New</h3>
             { this.renderCreateNewForm() }
             { this.renderRideStatusTable() }
         </div>
@@ -42,6 +45,17 @@ class RideStatus extends React.Component<DataProps, {}> {
 
     deleteRideStatus(id) {
         this.props.deleteRideStatus(id);
+    }
+
+    private renderDropdown() {        
+        return <DropdownButton
+            bsStyle={'primary'}
+            title={'Select Table'}
+            id={`dropdown-basic`}
+        >
+            <MenuItem eventKey="1" active >RideStatus</MenuItem>
+            <MenuItem eventKey="2" href="lookup/ridetype">RideType</MenuItem>
+        </DropdownButton>
     }
 
     private renderCreateNewForm() {        

@@ -12,6 +12,6 @@ export const routes = <Layout>
     <Route exact path='/' component={ Home } />
     <Route path='/counter' component={ Counter } />
     <Route path='/rides' component={ Rides } />
-    <Route path='/ridestatus' component={ RideStatus } />
-    <Route path='/ridetype' component={ RideType } />
+    <Route path='/lookup/ridestatus' component={ RideStatus } />
+    <Route path='/lookup/ridetype' component={ RideType } />
 </Layout>;

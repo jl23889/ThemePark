@@ -6,12 +6,6 @@ let RideStatusForm = props => {
     const { handleSubmit, pristine, reset, submitting } = props;
     return <div>
     	<form onSubmit={handleSubmit}>
-    		<label>RideStatusId</label>
-    		<Field 
-    			name="rideStatusId" 
-    			component="input" 
-    			type="text" 
-    		/>
     		<label>RideStatus</label>
     		<Field 
     			name="rideStatus" 

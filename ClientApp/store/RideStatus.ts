@@ -55,11 +55,10 @@ export const actionCreators = {
             })
         }
     },
-    createNewRideStatus: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.post(`api/SampleData/CreateNewRideStatus`, getState().form.rideStatus.values)
+    createNewRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        axios.post(`api/SampleData/CreateNewRideStatus`, values)
         .then(
             response => {
-                console.log(response);
                 dispatch({ type: 'CREATE_RIDE_STATUS' });
             }
         );
@@ -68,7 +67,6 @@ export const actionCreators = {
         axios.put(`api/SampleData/UpdateRideStatus`, values)
         .then(
             response => {
-                console.log(response);
                 dispatch({ type: 'UPDATE_RIDE_STATUS' });
             }
         );

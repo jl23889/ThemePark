@@ -32,11 +32,11 @@ class RideStatus extends React.Component<DataProps, {}> {
         </div>
     }
 
-    createNewRideStatus() {
-        this.props.createNewRideStatus();
+    createNewRideStatus = values => {
+        this.props.createNewRideStatus(values);
     }
 
-    updateRideStatus(values) {
+    updateRideStatus = values => {
         this.props.updateRideStatus(values);
     }
 

@@ -54,8 +54,20 @@ namespace ThemePark.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult CreateNewRideStatus([FromBody]LookUpRideStatus rideStatus)
+        public IActionResult CreateNewRideStatus([FromBody][Bind("RideStatus")]LookUpRideStatus rideStatus)
         {
+            // sequentially generate id
+            // somewhat of a hack but should work for now
+            short id = 0;
+            bool found = false;
+            while (!found) {
+                id++;
+                if (_context.LookUpRideStatus.Find(id) == null) {
+                    found = true;
+                }
+            }
+            rideStatus.RideStatusId=id;
+                
             if (ModelState.IsValid && rideStatus != null) 
             {
                 try {

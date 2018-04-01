@@ -24,7 +24,7 @@ class RideStatus extends React.Component<DataProps, {}> {
         this.props.requestRideStatusList();
     }
 
-    public render() {
+    render() {
         return <div>
             <h1>Ride Status Table</h1>
             { this.renderCreateNewForm() }
@@ -32,13 +32,16 @@ class RideStatus extends React.Component<DataProps, {}> {
         </div>
     }
 
-    createNewRideStatus = values => {
+    createNewRideStatus() {
         this.props.createNewRideStatus();
     }
 
-    updateRideStatus = values => {
-        console.log (values);
+    updateRideStatus(values) {
         this.props.updateRideStatus(values);
+    }
+
+    deleteRideStatus(id) {
+        this.props.deleteRideStatus(id);
     }
 
     private renderCreateNewForm() {        
@@ -65,12 +68,20 @@ class RideStatus extends React.Component<DataProps, {}> {
                 className="-highlight"
                 filterable
                 SubComponent={row => {
+                    const { original } = row;
                     // contains update form
-                    return <RideStatusForm 
-                        onSubmit={this.updateRideStatus}
-                        initialValues={row.original}
-                        form={"form"+row.original.rideStatusId}
-                    />
+                    return (
+                    <div className="container">
+                        <RideStatusForm 
+                            onSubmit={this.updateRideStatus}
+                            initialValues={original}
+                            form={"form"+original.rideStatusId}
+                        />
+                        <button onClick={this.deleteRideStatus.bind(this, original) } >
+                            Delete
+                        </button>
+                    </div>
+                    );
                 }}
             />
         </div>;

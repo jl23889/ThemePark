@@ -32,10 +32,14 @@ interface UpdateRideStatusAction {
     type: 'UPDATE_RIDE_STATUS';
 }
 
+interface DeleteRideStatusAction {
+    type: 'DELETE_RIDE_STATUS';
+}
+
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 type KnownAction =  FetchRideStatusAction | CreateRideStatusAction
-    | UpdateRideStatusAction;
+    | UpdateRideStatusAction | DeleteRideStatusAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -61,13 +65,20 @@ export const actionCreators = {
         );
     },
     updateRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        console.log(getState());
-        console.log(values);
         axios.put(`api/SampleData/UpdateRideStatus`, values)
         .then(
             response => {
                 console.log(response);
                 dispatch({ type: 'UPDATE_RIDE_STATUS' });
+            }
+        );
+    },
+    deleteRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        // id is the rideStatusId
+        axios.post(`api/SampleData/DeleteRideStatus`, values)
+        .then(
+            response => {
+                dispatch({ type: 'DELETE_RIDE_STATUS' });
             }
         );
     }
@@ -95,6 +106,11 @@ export const reducer: Reducer<RideStatusState> = (state: RideStatusState, incomi
                 reloadData: true
             }
         case 'UPDATE_RIDE_STATUS':
+            return {
+                rideStatusList: state.rideStatusList,
+                reloadData: true
+            }
+        case 'DELETE_RIDE_STATUS':
             return {
                 rideStatusList: state.rideStatusList,
                 reloadData: true

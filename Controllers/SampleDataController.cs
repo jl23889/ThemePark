@@ -54,12 +54,12 @@ namespace ThemePark.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult CreateNewRideStatus([FromBody]LookUpRideStatus newRideStatus)
+        public IActionResult CreateNewRideStatus([FromBody]LookUpRideStatus rideStatus)
         {
-            if (ModelState.IsValid && newRideStatus != null) 
+            if (ModelState.IsValid && rideStatus != null) 
             {
                 try {
-                    _context.LookUpRideStatus.Add(newRideStatus);
+                    _context.LookUpRideStatus.Add(rideStatus);
                     _context.SaveChanges();
                     return Ok(); 
                 }  
@@ -72,12 +72,12 @@ namespace ThemePark.Controllers
         }
 
         [HttpPut("[action]")]
-        public IActionResult UpdateRideStatus([FromBody]LookUpRideStatus updateRideStatus)
+        public IActionResult UpdateRideStatus([FromBody]LookUpRideStatus rideStatus)
         {
-            if (ModelState.IsValid && updateRideStatus != null) 
+            if (ModelState.IsValid && rideStatus != null) 
             {
                 try {
-                    _context.LookUpRideStatus.Update(updateRideStatus);
+                    _context.LookUpRideStatus.Update(rideStatus);
                     _context.SaveChanges();
                     return Ok(); 
                 }  
@@ -89,13 +89,14 @@ namespace ThemePark.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("[action]")]
-        public IActionResult DeleteRideStatus([FromBody]LookUpRideStatus deleteRideStatus)
+        [HttpPost("[action]")]
+        public IActionResult DeleteRideStatus([FromBody]LookUpRideStatus rs)
         {
-            if (ModelState.IsValid && deleteRideStatus != null) 
+            var rideStatus = _context.LookUpRideStatus.Find(rs.RideStatusId);
+            if (rideStatus != null) 
             {
                 try {
-                    _context.LookUpRideStatus.Remove(deleteRideStatus);
+                    _context.LookUpRideStatus.Remove(rideStatus);
                     _context.SaveChanges();
                     return Ok(); 
                 }  

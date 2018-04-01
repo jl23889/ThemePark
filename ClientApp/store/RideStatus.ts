@@ -49,14 +49,14 @@ export const actionCreators = {
     requestRideStatusList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if reload flag is true
         if (getState().rideStatus.reloadData) {
-            axios.get(`api/SampleData/LookUpRideStatus`)
+            axios.get(`api/RideStatus/LookUpRideStatus`)
             .then(response => {
                 dispatch({ type: 'FETCH_RIDE_STATUS', rideStatusList: response.data });
             })
         }
     },
     createNewRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.post(`api/SampleData/CreateNewRideStatus`, values)
+        axios.post(`api/RideStatus/CreateNewRideStatus`, values)
         .then(
             response => {
                 dispatch({ type: 'CREATE_RIDE_STATUS' });
@@ -64,7 +64,7 @@ export const actionCreators = {
         );
     },
     updateRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.put(`api/SampleData/UpdateRideStatus`, values)
+        axios.put(`api/RideStatus/UpdateRideStatus`, values)
         .then(
             response => {
                 dispatch({ type: 'UPDATE_RIDE_STATUS' });
@@ -73,7 +73,7 @@ export const actionCreators = {
     },
     deleteRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // id is the rideStatusId
-        axios.post(`api/SampleData/DeleteRideStatus`, values)
+        axios.post(`api/RideStatus/DeleteRideStatus`, values)
         .then(
             response => {
                 dispatch({ type: 'DELETE_RIDE_STATUS' });

@@ -146,7 +146,11 @@ class Rides extends React.Component<DataProps, {}> {
                     {
                         Header: "Installation Date",
                         accessor: "installationDate",
-                        filterable: false
+                        filterable: false,
+                        Cell: row => (
+                            // convert dateString to Date object and convert it back to string
+                            new Date(row.value).toLocaleDateString()
+                        )
                     },
                     {
                         Header: "Ride Status",

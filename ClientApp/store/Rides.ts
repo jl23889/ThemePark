@@ -18,11 +18,11 @@ export interface Ride {
     rideId: string;
     rideName: string;
     totalCapcity: number;
-    installationDate: string;
+    installationDate(): Date;
     status: number;
     fastPassPossible: boolean;
     rideType: number;
-    lastMaintenanceSince: string;
+    lastMaintenanceSince(): Date;
 }
 
 export interface RideStatus {

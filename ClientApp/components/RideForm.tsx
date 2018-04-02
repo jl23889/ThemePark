@@ -4,7 +4,6 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 
 // generate option element from rideStatus
 function rideStatusOption(rs) {
-    console.log(rs);
     return <option key={rs.rideStatusId} value={rs.rideStatusId}>{rs.rideStatus}</option>
 }
 

@@ -140,11 +140,13 @@ class Rides extends React.Component<DataProps, {}> {
                     },
                     {
                         Header: "Total Capacity",
-                        accessor: "totalCapacity"
+                        accessor: "totalCapacity",
+                        filterable: false
                     },
                     {
                         Header: "Installation Date",
-                        accessor: "installationDate"
+                        accessor: "installationDate",
+                        filterable: false
                     },
                     {
                         Header: "Ride Status",
@@ -169,7 +171,8 @@ class Rides extends React.Component<DataProps, {}> {
                             row.value === false ? 'no'
                             : row.value === true ? 'yes'
                             : 'Unknown'
-                        )
+                        ),
+                        filterable: false
                     },
                     {
                         Header: "Ride Type",
@@ -188,7 +191,8 @@ class Rides extends React.Component<DataProps, {}> {
                     },
                     {
                         Header: "Date of Last Maintenance",
-                        accessor: "lastMaintenanceSince"
+                        accessor: "lastMaintenanceSince",
+                        filterable: false
                     }
                 ]}
                 className="-highlight"

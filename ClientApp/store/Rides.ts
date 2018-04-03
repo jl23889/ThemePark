@@ -9,9 +9,8 @@ export interface RidesState {
     rideList: Ride[];
     rideStatusList: RideStatus[];
     rideTypeList: RideType[];
+    rideSelected: Ride;
     reloadRides: boolean;
-    reloadRideStatuses: boolean;
-    reloadRideTypes: boolean;
 }
 
 export interface Ride {
@@ -53,6 +52,11 @@ interface UpdateRideAction {
     type: 'UPDATE_RIDE';
 }
 
+interface UpdateRideActionFail {
+    type: 'UPDATE_RIDE_FAIL';
+    rideSelected: Ride;
+}
+
 interface DeleteRideAction {
     type: 'DELETE_RIDE';
 }
@@ -63,41 +67,16 @@ interface FetchRideStatusesAction {
     rideStatusList: RideStatus[];
 }
 
-interface CreateRideStatusAction {
-    type: 'CREATE_RIDE_STATUS';
-}
-
-interface UpdateRideStatusAction {
-    type: 'UPDATE_RIDE_STATUS';
-}
-
-interface DeleteRideStatusAction {
-    type: 'DELETE_RIDE_STATUS';
-}
-
 // ride types
 interface FetchRideTypesAction {
     type: 'FETCH_RIDE_TYPES';
     rideTypeList: RideType[];
 }
 
-interface CreateRideTypeAction {
-    type: 'CREATE_RIDE_TYPE';
-}
-
-interface UpdateRideTypeAction {
-    type: 'UPDATE_RIDE_TYPE';
-}
-
-interface DeleteRideTypeAction {
-    type: 'DELETE_RIDE_TYPE';
-}
-
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction =  FetchRidesAction | CreateRideAction | UpdateRideAction | DeleteRideAction |
-    FetchRideStatusesAction | CreateRideStatusAction | UpdateRideStatusAction | DeleteRideStatusAction |
-    FetchRideTypesAction | CreateRideTypeAction | UpdateRideTypeAction | DeleteRideTypeAction;
+type KnownAction =  FetchRidesAction | CreateRideAction | UpdateRideAction 
+    | UpdateRideActionFail | DeleteRideAction | FetchRideStatusesAction | FetchRideTypesAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -113,23 +92,29 @@ export const actionCreators = {
             .then(response => {
                 dispatch({ type: 'FETCH_RIDES', rideList: response.data });
             })
+            .catch(error => {
+                // error dispatch goes here
+            })
         }
     },
     createNewRide: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
         axios.post(`api/Ride/CreateNewRide`, values)
-        .then(
-            response => {
-                dispatch({ type: 'CREATE_RIDE' });
-            }
-        );
+        .then(response => {
+            dispatch({ type: 'CREATE_RIDE' });
+        })
+        .catch(error => {
+            // error dispatch goes here
+        })
     },
     updateRide: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        console.log(values);
         axios.put(`api/Ride/UpdateRide`, values)
-        .then(
-            response => {
-                dispatch({ type: 'UPDATE_RIDE' });
-            }
-        );
+        .then(response => {
+            dispatch({ type: 'UPDATE_RIDE' });
+        })
+        .catch(error => {
+            dispatch({ type: 'UPDATE_RIDE_FAIL', rideSelected: values })
+        })
     },
     deleteRide: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // id is the rideId
@@ -143,75 +128,19 @@ export const actionCreators = {
 
     // ride statuses
     requestRideStatusList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // Only load data if reload flag is true
-        if (getState().rides.reloadRideStatuses) {
-            axios.get(`api/RideStatus/LookUpRideStatus`)
-            .then(response => {
-                dispatch({ type: 'FETCH_RIDE_STATUSES', rideStatusList: response.data });
-            })
-        }
-    },
-    createNewRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.post(`api/RideStatus/CreateNewRideStatus`, values)
-        .then(
-            response => {
-                dispatch({ type: 'CREATE_RIDE_STATUS' });
-            }
-        );
-    },
-    updateRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.put(`api/RideStatus/UpdateRideStatus`, values)
-        .then(
-            response => {
-                dispatch({ type: 'UPDATE_RIDE_STATUS' });
-            }
-        );
-    },
-    deleteRideStatus: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // id is the rideStatusId
-        axios.post(`api/RideStatus/DeleteRideStatus`, values)
-        .then(
-            response => {
-                dispatch({ type: 'DELETE_RIDE_STATUS' });
-            }
-        );
+        axios.get(`api/RideStatus/LookUpRideStatus`)
+        .then(response => {
+            dispatch({ type: 'FETCH_RIDE_STATUSES', rideStatusList: response.data });
+        })
     },
 
     // ride types
     requestRideTypeList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // Only load data if reload flag is true
-        if (getState().rides.reloadRideTypes) {
-            axios.get(`api/RideType/LookUpRideType`)
-            .then(response => {
-                dispatch({ type: 'FETCH_RIDE_TYPES', rideTypeList: response.data });
-            })
-        }
+        axios.get(`api/RideType/LookUpRideType`)
+        .then(response => {
+            dispatch({ type: 'FETCH_RIDE_TYPES', rideTypeList: response.data });
+        })
     },
-    createNewRideType: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.post(`api/RideType/CreateNewRideType`, values)
-        .then(
-            response => {
-                dispatch({ type: 'CREATE_RIDE_TYPE' });
-            }
-        );
-    },
-    updateRideType: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.put(`api/RideType/UpdateRideType`, values)
-        .then(
-            response => {
-                dispatch({ type: 'UPDATE_RIDE_TYPE' });
-            }
-        );
-    },
-    deleteRideType: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // id is the rideTypeId
-        axios.post(`api/RideType/DeleteRideType`, values)
-        .then(
-            response => {
-                dispatch({ type: 'DELETE_RIDE_TYPE' });
-            }
-        );
-    }
 };
 
 // ----------------
@@ -221,9 +150,8 @@ const unloadedState: RidesState = {
     rideList: [], 
     rideStatusList: [],
     rideTypeList: [],
+    rideSelected: null,
     reloadRides: true,
-    reloadRideStatuses: true,
-    reloadRideTypes: true
 };
 
 export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: Action) => {
@@ -235,36 +163,40 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: action.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: false,
-                reloadRideTypes: false
+                rideSelected: state.rideSelected,
+                reloadRides: false
             }
         case 'CREATE_RIDE':
             return {
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
-                reloadRides: true,
-                reloadRideStatuses: false,
-                reloadRideTypes: false
+                rideSelected: state.rideSelected,
+                reloadRides: true
             }
         case 'UPDATE_RIDE':
             return {
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
-                reloadRides: true,
-                reloadRideStatuses: false,
-                reloadRideTypes: false
+                rideSelected: state.rideSelected,
+                reloadRides: true
+            }
+        case 'UPDATE_RIDE_FAIL':
+            return {
+                rideList: state.rideList,
+                rideStatusList: state.rideStatusList,
+                rideTypeList: state.rideTypeList,
+                rideSelected: action.rideSelected,
+                reloadRides: false
             }
         case 'DELETE_RIDE':
             return {
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
-                reloadRides: true,
-                reloadRideStatuses: false,
-                reloadRideTypes: false
+                rideSelected: state.rideSelected,
+                reloadRides: true
             }    
 
         // ride status
@@ -273,37 +205,9 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: action.rideStatusList,
                 rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: false,
-                reloadRideTypes: false
+                rideSelected: state.rideSelected,
+                reloadRides: false
             }
-        case 'CREATE_RIDE_STATUS':
-            return {
-                rideList: state.rideList,
-                rideStatusList: state.rideStatusList,
-                rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: true,
-                reloadRideTypes: false
-            }
-        case 'UPDATE_RIDE_STATUS':
-            return {
-                rideList: state.rideList,
-                rideStatusList: state.rideStatusList,
-                rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: true,
-                reloadRideTypes: false
-            }
-        case 'DELETE_RIDE_STATUS':
-            return {
-                rideList: state.rideList,
-                rideStatusList: state.rideStatusList,
-                rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: true,
-                reloadRideTypes: false
-            }  
 
         // ride type
         case 'FETCH_RIDE_TYPES':
@@ -311,37 +215,9 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: action.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: false,
-                reloadRideTypes: false
+                rideSelected: state.rideSelected,
+                reloadRides: false
             }
-        case 'CREATE_RIDE_TYPE':
-            return {
-                rideList: state.rideList,
-                rideStatusList: state.rideStatusList,
-                rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: false,
-                reloadRideTypes: true
-            }
-        case 'UPDATE_RIDE_TYPE':
-            return {
-                rideList: state.rideList,
-                rideStatusList: state.rideStatusList,
-                rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: false,
-                reloadRideTypes: true
-            }
-        case 'DELETE_RIDE_TYPE':
-            return {
-                rideList: state.rideList,
-                rideStatusList: state.rideStatusList,
-                rideTypeList: state.rideTypeList,
-                reloadRides: false,
-                reloadRideStatuses: false,
-                reloadRideTypes: true
-            }  
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

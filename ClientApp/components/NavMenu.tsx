@@ -33,9 +33,21 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={ '/lookup/ridestatus' } activeClassName='active'>
+                            <NavLink to={ '/lookup' } activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> LookupTables
                             </NavLink>
+                            <ul className='nav navbar-nav'>
+                                <li>
+                                    <NavLink to={ '/lookup/ridestatus' } activeClassName='active'>
+                                        LookupRideStatus
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={ '/lookup/ridetype' } activeClassName='active'>
+                                        LookupRideType
+                                    </NavLink>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

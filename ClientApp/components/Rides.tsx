@@ -199,7 +199,7 @@ class Rides extends React.Component<DataProps, {}> {
                         filterable: false
                     }
                 ]}
-                className="-highlight"
+                className="-striped -highlight"
                 filterable
                 SubComponent={row => {
                     const { original } = row;

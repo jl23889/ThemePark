@@ -3,6 +3,7 @@ import * as Counter from './Counter';
 import * as RideStatus from './RideStatus'
 import * as RideType from './RideType'
 import * as Rides from './Rides'
+import * as EmployeeType from './EmployeeType'
 import { reducer as formReducer } from 'redux-form'
 import { state as formState } from 'redux-form'
 
@@ -13,6 +14,8 @@ export interface ApplicationState {
     rideStatus: RideStatus.RideStatusState;
     rideType: RideType.RideTypeState;
     rides: Rides.RidesState;
+
+    employeeType: EmployeeType.EmployeeTypeState;
     form: formState;
 }
 
@@ -25,6 +28,8 @@ export const reducers = {
     rides: Rides.reducer,
     rideStatus: RideStatus.reducer,
     rideType: RideType.reducer,
+
+    employeeType: EmployeeType.reducer,
     form: formReducer
 };
 

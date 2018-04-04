@@ -33,6 +33,8 @@ export class NavMenu extends React.Component<{}, {}> {
                             </NavLink>
                         </li>
                         <li>
+                            {// TODO: MAKE THIS COLLAPSIBLE OR DROPDOWN
+                            }
                             <NavLink to={ '/lookup' } activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> LookupTables
                             </NavLink>
@@ -45,6 +47,11 @@ export class NavMenu extends React.Component<{}, {}> {
                                 <li>
                                     <NavLink to={ '/lookup/ridetype' } activeClassName='active'>
                                         LookupRideType
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={ '/lookup/employeetype' } activeClassName='active'>
+                                        LookupEmployeeType
                                     </NavLink>
                                 </li>
                             </ul>

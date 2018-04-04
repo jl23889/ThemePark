@@ -64,7 +64,7 @@ namespace ThemePark.Controllers
         [HttpPut("[action]")]
         public IActionResult UpdateCustomer([FromBody]Customer customer)
         {
-            if (ModelState.IsValid && c != null) 
+            if (ModelState.IsValid && customer != null) 
             {
                 try {
                     _context.Customer.Update(customer);

@@ -126,7 +126,7 @@ namespace ThemePark.Entities
                     .IsRequired()
                     .HasColumnName("CustomerPassword")
                     .HasColumnType("binary(64)");
-            }
+            });
 
             modelBuilder.Entity<CustomerTransaction>(entity =>
             {
@@ -227,7 +227,7 @@ namespace ThemePark.Entities
                     .IsRequired()
                     .HasColumnName("EmployeePassword")
                     .HasColumnType("binary(64)");
-            }
+            });
 
             modelBuilder.Entity<Hotel>(entity =>
             {

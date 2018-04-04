@@ -3,6 +3,8 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 import * as RideStatusState from '../store/RideStatus';
+import * as RideStatusActions from '../actions/_RideStatusActions';
+
 import RideStatusForm from './RideStatusForm';
 
 import ReactTable from 'react-table';
@@ -11,7 +13,7 @@ import { DropdownButton, MenuItem } from 'react-bootstrap'
 // At runtime, Redux will merge together...
 type DataProps =
     RideStatusState.RideStatusState        // ... state we've requested from the Redux store
-    & typeof RideStatusState.actionCreators      // ... plus action creators we've requested
+    & typeof RideStatusActions.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ entity: string }>; // ... plus incoming routing parameters
 
 class RideStatus extends React.Component<DataProps, {}> {
@@ -104,5 +106,5 @@ class RideStatus extends React.Component<DataProps, {}> {
 
 export default connect(
     (state: ApplicationState) => state.rideStatus, // Selects which state properties are merged into the component's props
-    RideStatusState.actionCreators                 // Selects which action creators are merged into the component's props
+    RideStatusActions.actionCreators                 // Selects which action creators are merged into the component's props
 )(RideStatus) as typeof RideStatus;

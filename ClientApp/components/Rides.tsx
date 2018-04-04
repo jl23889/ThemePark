@@ -3,15 +3,24 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 import * as RidesState from '../store/Rides';
+import * as RideActions from '../actions/_RideActions';
+import * as RideStatusActions from '../actions/_RideStatusActions';
+import * as RideTypeActions from '../actions/_RideTypeActions';
 
 import RideForm from './RideForm';
 
 import ReactTable from 'react-table';
 
+// combines action creators from ride, ridestatus, and ridetype
+const actionCreators = Object.assign(
+    RideActions.actionCreators, 
+    RideStatusActions.actionCreators, 
+    RideTypeActions.actionCreators);
+
 // At runtime, Redux will merge together...
 type DataProps =
     RidesState.RidesState        // ... state we've requested from the Redux store
-    & typeof RidesState.actionCreators     // ... plus action creators we've requested
+    & typeof actionCreators    // ... plus action creators we've requested
     & RouteComponentProps<{ entity: string }>; // ... plus incoming routing parameters
 
 class Rides extends React.Component<DataProps, {}> {
@@ -228,5 +237,5 @@ class Rides extends React.Component<DataProps, {}> {
 
 export default connect(
     (state: ApplicationState) => state.rides, // Selects which state properties are merged into the component's props
-    RidesState.actionCreators                 // Selects which action creators are merged into the component's props
+    actionCreators                 // Selects which action creators are merged into the component's props
 )(Rides) as typeof Rides;

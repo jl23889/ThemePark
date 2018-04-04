@@ -1,6 +1,9 @@
-import { Action, Reducer, ActionCreator } from 'redux';
-import { AppThunkAction } from './';
-import axios from 'axios';
+import { Action, Reducer } from 'redux';
+import { FetchRideStatusAction } from '../actions/_RideStatusActions'
+import { FetchRideTypeAction } from '../actions/_RideTypeActions'
+import { RideActions } from '../actions/_RideActions'
+
+import { Ride, RideStatus, RideType } from '../models/_DataModels'
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -13,136 +16,6 @@ export interface RidesState {
     reloadRides: boolean;
 }
 
-export interface Ride {
-    rideId: string;
-    rideName: string;
-    totalCapcity: number;
-    installationDate(): Date;
-    status: number;
-    fastPassPossible: boolean;
-    rideType: number;
-    lastMaintenanceSince(): Date;
-}
-
-export interface RideStatus {
-    rideStatusId: number;
-    rideStatus: string;
-}
-
-export interface RideType {
-    rideTypeId: number;
-    rideType: string;
-}
-
-// -----------------
-// ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
-// They do not themselves have any side-effects; they just describe something that is going to happen.
-
-// rides
-interface FetchRidesAction {
-    type: 'FETCH_RIDES';
-    rideList: Ride[];
-}
-
-interface CreateRideAction {
-    type: 'CREATE_RIDE';
-}
-
-interface UpdateRideAction {
-    type: 'UPDATE_RIDE';
-}
-
-interface UpdateRideActionFail {
-    type: 'UPDATE_RIDE_FAIL';
-    rideSelected: Ride;
-}
-
-interface DeleteRideAction {
-    type: 'DELETE_RIDE';
-}
-
-// ride statuses
-interface FetchRideStatusesAction {
-    type: 'FETCH_RIDE_STATUSES';
-    rideStatusList: RideStatus[];
-}
-
-// ride types
-interface FetchRideTypesAction {
-    type: 'FETCH_RIDE_TYPES';
-    rideTypeList: RideType[];
-}
-
-// Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
-// declared type strings (and not any other arbitrary string).
-type KnownAction =  FetchRidesAction | CreateRideAction | UpdateRideAction 
-    | UpdateRideActionFail | DeleteRideAction | FetchRideStatusesAction | FetchRideTypesAction;
-
-// ----------------
-// ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
-// They don't directly mutate state, but they can have external side-effects (such as loading data).
-
-export const actionCreators = {
-
-    // rides 
-    requestRidesList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // Only load data if it's something we don't already have (and are not already loading)
-        if (getState().rides.reloadRides) {
-            axios.get(`api/Ride/GetRides`)
-            .then(response => {
-                dispatch({ type: 'FETCH_RIDES', rideList: response.data });
-            })
-            .catch(error => {
-                // error dispatch goes here
-            })
-        }
-    },
-    createNewRide: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.post(`api/Ride/CreateNewRide`, values)
-        .then(response => {
-            dispatch({ type: 'CREATE_RIDE' });
-        })
-        .catch(error => {
-            // error dispatch goes here
-        })
-    },
-    updateRide: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        console.log(values);
-        axios.put(`api/Ride/UpdateRide`, values)
-        .then(response => {
-            dispatch({ type: 'UPDATE_RIDE' });
-        })
-        .catch(error => {
-            dispatch({ type: 'UPDATE_RIDE_FAIL', rideSelected: values })
-        })
-    },
-    deleteRide: (values): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        // id is the rideId
-        axios.post(`api/Ride/DeleteRide`, values)
-        .then(
-            response => {
-                dispatch({ type: 'DELETE_RIDE' });
-            }
-        );
-    },
-
-    // ride statuses
-    requestRideStatusList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.get(`api/RideStatus/LookUpRideStatus`)
-        .then(response => {
-            dispatch({ type: 'FETCH_RIDE_STATUSES', rideStatusList: response.data });
-        })
-    },
-
-    // ride types
-    requestRideTypeList: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        axios.get(`api/RideType/LookUpRideType`)
-        .then(response => {
-            dispatch({ type: 'FETCH_RIDE_TYPES', rideTypeList: response.data });
-        })
-    },
-};
-
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
@@ -153,6 +26,8 @@ const unloadedState: RidesState = {
     rideSelected: null,
     reloadRides: true,
 };
+
+type KnownAction = RideActions | FetchRideStatusAction | FetchRideTypeAction;
 
 export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
@@ -200,7 +75,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
             }    
 
         // ride status
-        case 'FETCH_RIDE_STATUSES':
+        case 'FETCH_RIDE_STATUS':
             return {
                 rideList: state.rideList,
                 rideStatusList: action.rideStatusList,
@@ -210,7 +85,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
             }
 
         // ride type
-        case 'FETCH_RIDE_TYPES':
+        case 'FETCH_RIDE_TYPE':
             return {
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,

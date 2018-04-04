@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
-import * as EmployeeTypeState from '../store/EmployeeType';
-import * as EmployeeTypeActions from '../actions/_EmployeeTypeActions';
+import { ApplicationState }  from '../../store';
+import * as EmployeeTypeState from '../../store/EmployeeType';
+import * as EmployeeTypeActions from '../../actions/_EmployeeTypeActions';
 
-import EmployeeTypeForm from './EmployeeTypeForm';
+import EmployeeTypeForm from '../EmployeeTypeForm';
 
 import ReactTable from 'react-table';
-import { DropdownButton, MenuItem } from 'react-bootstrap'
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -29,8 +28,7 @@ class EmployeeType extends React.Component<DataProps, {}> {
 
     render() {
         return <div>
-            <h1>Ride Status Table</h1>
-            { this.renderDropdown() }
+            <h1>Employee Type Table</h1>
             <h3>Create New</h3>
             { this.renderCreateNewForm() }
             { this.renderEmployeeTypeTable() }
@@ -47,17 +45,6 @@ class EmployeeType extends React.Component<DataProps, {}> {
 
     deleteEmployeeType(id) {
         this.props.deleteEmployeeType(id);
-    }
-
-    private renderDropdown() {        
-        return <DropdownButton
-            bsStyle={'primary'}
-            title={'Select Table'}
-            id={`dropdown-basic`}
-        >
-            <MenuItem eventKey="1" active >EmployeeType</MenuItem>
-            <MenuItem eventKey="2" href="lookup/ridetype">RideType</MenuItem>
-        </DropdownButton>
     }
 
     private renderCreateNewForm() {        
@@ -107,4 +94,4 @@ class EmployeeType extends React.Component<DataProps, {}> {
 export default connect(
     (state: ApplicationState) => state.employeeType, // Selects which state properties are merged into the component's props
     EmployeeTypeActions.actionCreators                 // Selects which action creators are merged into the component's props
-)(EmployeeType) as typeof EmployeeType;
+)(EmployeeType);

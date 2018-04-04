@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
-import * as RideStatusState from '../store/RideStatus';
-import * as RideStatusActions from '../actions/_RideStatusActions';
+import { ApplicationState }  from '../../store';
+import * as RideStatusState from '../../store/RideStatus';
+import * as RideStatusActions from '../../actions/_RideStatusActions';
 
-import RideStatusForm from './RideStatusForm';
+import RideStatusForm from '../RideStatusForm';
 
 import ReactTable from 'react-table';
-import { DropdownButton, MenuItem } from 'react-bootstrap'
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -30,7 +29,6 @@ class RideStatus extends React.Component<DataProps, {}> {
     render() {
         return <div>
             <h1>Ride Status Table</h1>
-            { this.renderDropdown() }
             <h3>Create New</h3>
             { this.renderCreateNewForm() }
             { this.renderRideStatusTable() }
@@ -47,17 +45,6 @@ class RideStatus extends React.Component<DataProps, {}> {
 
     deleteRideStatus(id) {
         this.props.deleteRideStatus(id);
-    }
-
-    private renderDropdown() {        
-        return <DropdownButton
-            bsStyle={'primary'}
-            title={'Select Table'}
-            id={`dropdown-basic`}
-        >
-            <MenuItem eventKey="1" active >RideStatus</MenuItem>
-            <MenuItem eventKey="2" href="lookup/ridetype">RideType</MenuItem>
-        </DropdownButton>
     }
 
     private renderCreateNewForm() {        
@@ -107,4 +94,4 @@ class RideStatus extends React.Component<DataProps, {}> {
 export default connect(
     (state: ApplicationState) => state.rideStatus, // Selects which state properties are merged into the component's props
     RideStatusActions.actionCreators                 // Selects which action creators are merged into the component's props
-)(RideStatus) as typeof RideStatus;
+)(RideStatus);

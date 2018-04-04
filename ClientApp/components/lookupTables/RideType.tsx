@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
-import * as RideTypeState from '../store/RideType';
-import * as RideTypeActions from '../actions/_RideTypeActions'
+import { ApplicationState }  from '../../store';
+import * as RideTypeState from '../../store/RideType';
+import * as RideTypeActions from '../../actions/_RideTypeActions'
 
-import RideTypeForm from './RideTypeForm';
+import RideTypeForm from '../RideTypeForm';
 
 import ReactTable from 'react-table';
-import { DropdownButton, MenuItem } from 'react-bootstrap'
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -30,7 +29,6 @@ class RideType extends React.Component<DataProps, {}> {
     render() {
         return <div>
             <h1>Ride Type Table</h1>
-            { this.renderDropdown() }
             <h3>Create New</h3>
             { this.renderCreateNewForm() }
             { this.renderRideTypeTable() }
@@ -47,17 +45,6 @@ class RideType extends React.Component<DataProps, {}> {
 
     deleteRideType(id) {
         this.props.deleteRideType(id);
-    }
-
-    private renderDropdown() {        
-        return <DropdownButton
-            bsStyle={'primary'}
-            title={'Select Table'}
-            id={`dropdown-basic`}
-        >
-            <MenuItem eventKey="1" active >RideType</MenuItem>
-            <MenuItem eventKey="2" href="lookup/ridestatus">RideStatus</MenuItem>
-        </DropdownButton>
     }
 
     private renderCreateNewForm() {        
@@ -107,4 +94,4 @@ class RideType extends React.Component<DataProps, {}> {
 export default connect(
     (state: ApplicationState) => state.rideType, // Selects which state properties are merged into the component's props
     RideTypeActions.actionCreators                 // Selects which action creators are merged into the component's props
-)(RideType) as typeof RideType;
+)(RideType);

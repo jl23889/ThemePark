@@ -47,8 +47,9 @@ class Lookup extends React.Component<DataProps, {}> {
 				return <RideType/>    		
     		case 'employeetype':
     			return <EmployeeType/>
+    		default:
+    			return <h1>LOADING...</h1>
     	}
-		
     }
 
     private renderDropdown() {        
@@ -57,14 +58,14 @@ class Lookup extends React.Component<DataProps, {}> {
             title={'Select Table'}
             id={`dropdown-basic`}
         >
-            <MenuItem eventKey="1">
-            	<Link to={ '/lookup/ridestatus' }>Ride Status</Link>
+            <MenuItem eventKey="1" href='/lookup/ridestatus'>
+            	Ride Status
             </MenuItem>
-            <MenuItem eventKey="2">
-            	<Link to={ '/lookup/ridetype' }>Ride Type</Link>
+            <MenuItem eventKey="2" href='/lookup/ridetype'>
+            	Ride Type
         	</MenuItem>
-            <MenuItem eventKey="3">
-            	<Link to={ '/lookup/employeetype' }>Employee Type</Link>
+            <MenuItem eventKey="3" href='/lookup/employeetype'>
+            	Employee Type
         	</MenuItem>
 
         </DropdownButton>

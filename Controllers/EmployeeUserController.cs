@@ -71,7 +71,7 @@ namespace ThemePark.Controllers
 
 			return Ok(new {
 				EmployeeId = user.EmployeeId,
-				EmployeeUserName = user.EmployeeUserName,
+				username = user.EmployeeUserName,
 				// DO NOT RETURN A PASSWORD HERE
 				Token = tokenString
 			});

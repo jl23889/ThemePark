@@ -7,7 +7,7 @@ import * as RideActions from '../actions/_RideActions';
 import * as RideStatusActions from '../actions/_RideStatusActions';
 import * as RideTypeActions from '../actions/_RideTypeActions';
 
-import RideForm from './RideForm';
+import RideForm from './forms/RideForm';
 
 import ReactTable from 'react-table';
 

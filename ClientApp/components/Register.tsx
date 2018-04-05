@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 import * as RegisterState from '../store/Register';
 import * as RegisterActions from '../actions/_RegisterActions'
-import RegisterCustomerForm from './RegisterCustomerForm';
-import RegisterEmployeeForm from './RegisterEmployeeForm';
+import RegisterCustomerForm from './forms/RegisterCustomerForm';
+import RegisterEmployeeForm from './forms/RegisterEmployeeForm';
 
 import { Button } from 'react-bootstrap'
 

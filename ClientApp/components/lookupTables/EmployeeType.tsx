@@ -5,7 +5,7 @@ import { ApplicationState }  from '../../store';
 import * as EmployeeTypeState from '../../store/EmployeeType';
 import * as EmployeeTypeActions from '../../actions/_EmployeeTypeActions';
 
-import EmployeeTypeForm from '../EmployeeTypeForm';
+import EmployeeTypeForm from '../forms/EmployeeTypeForm';
 
 import ReactTable from 'react-table';
 

@@ -5,7 +5,7 @@ import { ApplicationState }  from '../../store';
 import * as RideStatusState from '../../store/RideStatus';
 import * as RideStatusActions from '../../actions/_RideStatusActions';
 
-import RideStatusForm from '../RideStatusForm';
+import RideStatusForm from '../forms/RideStatusForm';
 
 import ReactTable from 'react-table';
 

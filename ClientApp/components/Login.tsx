@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 import * as LoginState from '../store/Login';
 import * as LoginActions from '../actions/_LoginActions'
-import LoginCustomerForm from './LoginCustomerForm';
-import LoginEmployeeForm from './LoginEmployeeForm';
+import LoginCustomerForm from './forms/LoginCustomerForm';
+import LoginEmployeeForm from './forms/LoginEmployeeForm';
 
 import { Button } from 'react-bootstrap'
 

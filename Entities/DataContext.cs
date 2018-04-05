@@ -122,10 +122,15 @@ namespace ThemePark.Entities
                     .HasMaxLength(30)
                     .HasColumnType("varchar(30)");
 
-                entity.Property(e => e.CustomerPassword)
+                entity.Property(e => e.CustomerPasswordHash)
                     .IsRequired()
-                    .HasColumnName("CustomerPassword")
+                    .HasColumnName("CustomerPasswordHash")
                     .HasColumnType("binary(64)");
+
+                entity.Property(e => e.CustomerPasswordSalt)
+                    .IsRequired()
+                    .HasColumnName("CustomerPasswordSalt")
+                    .HasColumnType("binary(128)");
             });
 
             modelBuilder.Entity<CustomerTransaction>(entity =>
@@ -223,10 +228,15 @@ namespace ThemePark.Entities
                     .HasMaxLength(30)
                     .HasColumnType("varchar(30)");
 
-                entity.Property(e => e.EmployeePassword)
+                entity.Property(e => e.EmployeePasswordHash)
                     .IsRequired()
-                    .HasColumnName("EmployeePassword")
+                    .HasColumnName("EmployeePasswordHash")
                     .HasColumnType("binary(64)");
+
+                entity.Property(e => e.EmployeePasswordSalt)
+                    .IsRequired()
+                    .HasColumnName("EmployeePasswordSalt")
+                    .HasColumnType("binary(128)");
             });
 
             modelBuilder.Entity<Hotel>(entity =>

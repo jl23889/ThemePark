@@ -7,6 +7,7 @@ namespace ThemePark.Entities
     {
         public string CustomerId { get; set; }
         public string CustomerUserName { get; set; }
-        public string CustomerPassword { get; set; }
+        public byte[] CustomerPasswordHash { get; set; }
+        public byte[] CustomerPasswordSalt { get; set; }
     }
 }

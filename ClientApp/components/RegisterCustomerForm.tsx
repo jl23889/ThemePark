@@ -2,22 +2,28 @@ import * as React from 'react';
 
 import { Field, reduxForm } from 'redux-form';
 
-let RegisterForm = props => {
+let RegisterCustomerForm = props => {
     const { handleSubmit, reset, submitting } = props;
     return <div>
     	<form onSubmit={handleSubmit}>
     		<label>Username</label>
     		<Field 
-    			name="username" 
+    			name="customerUserName" 
     			component="input" 
     			type="text" 
     		/>
     		<label>Password</label>
     		<Field 
-    			name="password" 
+    			name="customerPassword" 
     			component="input" 
     			type="text" 
     		/>
+            <label>CustomerID</label>
+            <Field 
+                name="customerId" 
+                component="input" 
+                type="text" 
+            />
     		<button type="submit" disabled={submitting}>
     			Submit
     		</button>
@@ -28,7 +34,7 @@ let RegisterForm = props => {
     </div>;
 }
 
-RegisterForm = reduxForm({
-})(RegisterForm);
+RegisterCustomerForm = reduxForm({
+})(RegisterCustomerForm);
 
-export default RegisterForm;
+export default RegisterCustomerForm;

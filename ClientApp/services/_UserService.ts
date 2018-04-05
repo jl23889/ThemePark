@@ -38,22 +38,6 @@ export const userService = {
             localStorage.removeItem('user');
         }
     },
-
-    register: (user, registerType) => {
-        var url = 'api/CustomerUser/Register'      
-        if (registerType = 'employee') {
-            url='api/EmployeeUser/Register'
-        }
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-        };
-
-        return fetch(url, requestOptions)
-            .then(handleResponse, handleError);
-    }
 }
 
 function handleResponse(response) {

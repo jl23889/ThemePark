@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 import * as RegisterState from '../store/Register';
 import * as RegisterActions from '../actions/_RegisterActions'
-import RegisterForm from './RegisterForm';
+import RegisterCustomerForm from './RegisterCustomerForm';
+import RegisterEmployeeForm from './RegisterEmployeeForm';
+
+import { Button } from 'react-bootstrap'
+
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -24,17 +28,38 @@ class Register extends React.Component<DataProps, {}> {
     render() {
         return <div>
         	<h1>Registration Form</h1>
-            { this.renderRegisterForm() }
+            <Button bsStyle="primary" 
+                disabled={!this.props.disableCustomerForm} 
+                onClick={this.props.showCustomerForm}>Customer</Button>
+            <Button bsStyle="warning"
+                disabled={!this.props.disableEmployeeForm} 
+                onClick={this.props.showEmployeeForm}>Employee</Button>
+
+            { !this.props.disableCustomerForm ? this.renderRegisterCustomerForm() : ''}
+            { !this.props.disableEmployeeForm ? this.renderRegisterEmployeeForm() : ''}
         </div>
     }
 
-    register = values => {
-    	console.log (values);
-        // this.props.register(values);
+    registerCustomer = values => {
+        this.props.registerCustomer(values);
     }
 
-    private renderRegisterForm() {
-    	return <RegisterForm onSubmit={this.register} form="registerForm"/>
+    registerEmployee = values => {
+        this.props.registerEmployee(values);
+    }
+
+    private renderRegisterCustomerForm() {
+    	return <div>
+            <h1>CUSTOMER REGISTRATION FORM</h1>
+            <RegisterCustomerForm onSubmit={this.registerCustomer} form="registerCustomerForm"/>
+        </div>
+    }
+
+    private renderRegisterEmployeeForm() {
+        return <div>
+            <h1>EMPLOYEE REGISTRATION FORM</h1>
+            <RegisterEmployeeForm onSubmit={this.registerEmployee} form="registerEmployeeForm"/>
+        </div>
     }
 }
 

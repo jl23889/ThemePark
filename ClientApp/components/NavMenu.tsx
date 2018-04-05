@@ -53,9 +53,9 @@ class NavMenu extends React.Component<DataProps, {}> {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
                 <li>
-                    <NavLink exact to={ '/login' } activeClassName='active'>
+                    <Link to={ '/login' }>
                         <span className='glyphicon glyphicon-home'></span> Login
-                    </NavLink>
+                    </Link>
                 </li>
             </ul>
         </div>
@@ -65,41 +65,41 @@ class NavMenu extends React.Component<DataProps, {}> {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
                 <li>
-                    <NavLink exact to={ '/' } activeClassName='active'>
+                    <Link to={ '/' }>
                         <span className='glyphicon glyphicon-home'></span> Home
-                    </NavLink>
+                    </Link>
                 </li>
                 <li>
-                    <NavLink to={ '/counter' } activeClassName='active'>
+                    <Link to={ '/counter' }>
                         <span className='glyphicon glyphicon-education'></span> Counter
-                    </NavLink>
+                    </Link>
                 </li>
                 <li>
-                    <NavLink to={ '/rides' } activeClassName='active'>
+                    <Link to={ '/rides' }>
                         <span className='glyphicon glyphicon-th-list'></span> Ride Table
-                    </NavLink>
+                    </Link>
                 </li>
                 <li>
                     {// TODO: MAKE THIS COLLAPSIBLE OR DROPDOWN
                     }
-                    <NavLink to={ '/lookup' } activeClassName='active'>
+                    <Link to={ '/lookup' }>
                         <span className='glyphicon glyphicon-th-list'></span> LookupTables
-                    </NavLink>
+                    </Link>
                     <ul className='nav navbar-nav'>
                         <li>
-                            <NavLink to={ '/lookup/ridestatus' } activeClassName='active'>
+                            <Link to={ '/lookup/ridestatus' }>
                                 LookupRideStatus
-                            </NavLink>
+                            </Link>
                         </li>
                         <li>
-                            <NavLink to={ '/lookup/ridetype' } activeClassName='active'>
+                            <Link to={ '/lookup/ridetype' }>
                                 LookupRideType
-                            </NavLink>
+                            </Link>
                         </li>
                         <li>
-                            <NavLink to={ '/lookup/employeetype' } activeClassName='active'>
+                            <Link to={ '/lookup/employeetype' }>
                                 LookupEmployeeType
-                            </NavLink>
+                            </Link>
                         </li>
                     </ul>
                 </li>

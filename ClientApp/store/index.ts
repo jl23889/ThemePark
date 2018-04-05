@@ -5,7 +5,6 @@ import * as RideType from './RideType'
 import * as Rides from './Rides'
 import * as Login from './Login'
 import * as Register from './Register'
-import * as NavMenu from './NavMenu'
 
 import * as EmployeeType from './EmployeeType'
 import * as Lookup from './Lookup'
@@ -24,7 +23,6 @@ export interface ApplicationState {
 
     login: Login.LoginState;
     register: Register.RegisterState;
-    //navMenu: NavMenu.NavMenuState;
 
     employeeType: EmployeeType.EmployeeTypeState;
 
@@ -45,7 +43,6 @@ export const reducers = {
 
     login: Login.reducer,
     register: Register.reducer,
-    //navMenu: NavMenu.reducer,
 
     employeeType: EmployeeType.reducer,
 

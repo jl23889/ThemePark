@@ -21,6 +21,29 @@ export interface RideType {
     rideType: string;
 }
 
+// Customers 
+//////////////
+export interface Customer {
+    customerId: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    dateOfBirth(): Date;
+    gender: number;
+    emergencyContactNumber: string;
+    totalSpending: number;
+    addressStreet: string;
+    addressCity: string;
+    addressState: string;
+    addressZipCode: string;
+    totalVisit: number;
+}
+
+export interface Gender {
+    genderId: number;
+    genderType: string;
+}
+
 // EMPLOYEES 
 //////////////
 export interface Employee {

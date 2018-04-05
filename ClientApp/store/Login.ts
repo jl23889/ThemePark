@@ -7,7 +7,7 @@ import { LoginActions, LoginFormActions } from '../actions/_LoginActions'
 export interface LoginState {
     loggingIn: boolean;
     loggedIn: boolean;
-    loginType: string;
+    accessLevel: number;
     disableCustomerForm: boolean;
     disableEmployeeForm: boolean;
 }
@@ -18,7 +18,7 @@ export interface LoginState {
 const unloadedState: LoginState = { 
     loggedIn: false, // returns true if user object exists in localstorage
     loggingIn: false,
-    loginType: '',
+    accessLevel: 0,
     disableCustomerForm: true,
     disableEmployeeForm: true
 };
@@ -32,7 +32,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: action.userExists,
                 loggingIn: state.loggingIn,
-                loginType: action.userType,
+                accessLevel: action.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
             }
@@ -40,7 +40,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: state.loggedIn,
                 loggingIn: state.loggingIn,
-                loginType: state.loginType,
+                accessLevel: state.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
             }
@@ -48,7 +48,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: state.loggedIn,
                 loggingIn: state.loggingIn,
-                loginType: state.loginType,
+                accessLevel: state.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
             }
@@ -56,7 +56,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: true,
                 loggingIn: false,
-                loginType: state.loginType,
+                accessLevel: state.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
             }
@@ -64,7 +64,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: false,
                 loggingIn: false,
-                loginType: state.loginType,
+                accessLevel: state.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
             }
@@ -72,7 +72,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: false,
                 loggingIn: false,
-                loginType: '',
+                accessLevel: 0,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
             }
@@ -80,7 +80,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: state.loggedIn,
                 loggingIn: state.loggingIn,
-                loginType: state.loginType,
+                accessLevel: state.accessLevel,
                 disableCustomerForm: false,
                 disableEmployeeForm: true,
             }
@@ -88,7 +88,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: state.loggedIn,
                 loggingIn: state.loggingIn,
-                loginType: state.loginType,
+                accessLevel: state.accessLevel,
                 disableCustomerForm: true,
                 disableEmployeeForm: false,
             }

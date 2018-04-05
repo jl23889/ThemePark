@@ -6,6 +6,24 @@ let RegisterCustomerForm = props => {
     const { handleSubmit, reset, submitting } = props;
     return <div>
     	<form onSubmit={handleSubmit}>
+            <label>First Name</label>
+            <Field 
+                name="firstName" 
+                component="input" 
+                type="text" 
+            />
+            <label>Last Name</label>
+            <Field 
+                name="lastName" 
+                component="input" 
+                type="text" 
+            />
+            <label>Email</label>
+            <Field 
+                name="lastName" 
+                component="input" 
+                type="text" 
+            />
     		<label>Username</label>
     		<Field 
     			name="customerUserName" 
@@ -18,12 +36,6 @@ let RegisterCustomerForm = props => {
     			component="input" 
     			type="text" 
     		/>
-            <label>CustomerID</label>
-            <Field 
-                name="customerId" 
-                component="input" 
-                type="text" 
-            />
     		<button type="submit" disabled={submitting}>
     			Submit
     		</button>

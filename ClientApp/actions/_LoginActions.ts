@@ -9,7 +9,11 @@ import axios from 'axios';
 export interface UserLoggedInCheckAction {
     type: 'USER_LOGIN_CHECK';
     userExists : boolean;
-    userType: string;
+    accessLevel: number; //this is the employeeType as a number
+    // this determines employee's level of access to certain functions
+    // 0 is customers
+    // 1 is admin level
+    // 2+ is all other employees
 }
 
 export interface UserLoginRequestAction {
@@ -116,19 +120,22 @@ export const actionCreators = {
         let storedUser = null;
 
         if (typeof window !== 'undefined') {
-            storedUser = localStorage.getItem('user');
+            storedUser = JSON.parse(localStorage.getItem('user'));
         }
         var userExists = false;
-        var userType = '';
-        if (storedUser != null && storedUser.employeeId !== 'undefined'){
+        var accessLevel = 0;
+        if (storedUser != null && storedUser.employeeType !== 'undefined' ){
             userExists = true;
-            userType = 'employee';
+            accessLevel = storedUser.employeeType;
+
         } else if (storedUser != null && storedUser.customerId !== 'undefined') {
             userExists = true;
-            userType = 'customer'; 
         }
 
-        dispatch({ type: 'USER_LOGIN_CHECK', userExists: userExists, userType: userType });
+        console.log(accessLevel);
+        dispatch({ type: 'USER_LOGIN_CHECK', 
+            userExists: userExists, 
+            accessLevel: accessLevel});
     },
     showCustomerForm: (user): AppThunkAction<LoginFormActions> => (dispatch, getState) => {
         dispatch({ type: 'SHOW_CUSTOMER_FORM' }); 

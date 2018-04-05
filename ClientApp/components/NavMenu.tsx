@@ -38,7 +38,8 @@ class NavMenu extends React.Component<DataProps, {}> {
                 </div>
                 <div className='clearfix'></div>
                 { !this.props.loggedIn ? this.renderLogin() : '' }
-                { this.props.loginType == 'employee' ? this.renderEmployeeMenu() : '' }
+                { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeMenu() : '' }
+                { this.props.loggedIn && this.props.accessLevel == 1 ? this.renderAdminMenu() : '' }
             </div>
         </div>;
     }
@@ -61,24 +62,9 @@ class NavMenu extends React.Component<DataProps, {}> {
         </div>
     }
 
-    private renderEmployeeMenu() {
+    private renderAdminMenu() {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
-                <li>
-                    <Link to={ '/' }>
-                        <span className='glyphicon glyphicon-home'></span> Home
-                    </Link>
-                </li>
-                <li>
-                    <Link to={ '/counter' }>
-                        <span className='glyphicon glyphicon-education'></span> Counter
-                    </Link>
-                </li>
-                <li>
-                    <Link to={ '/rides' }>
-                        <span className='glyphicon glyphicon-th-list'></span> Ride Table
-                    </Link>
-                </li>
                 <li>
                     {// TODO: MAKE THIS COLLAPSIBLE OR DROPDOWN
                     }
@@ -102,6 +88,18 @@ class NavMenu extends React.Component<DataProps, {}> {
                             </Link>
                         </li>
                     </ul>
+                </li>
+            </ul>
+        </div>
+    }
+
+    private renderEmployeeMenu() {
+        return <div className='navbar-collapse collapse'>
+            <ul className='nav navbar-nav'>
+                <li>
+                    <Link to={ '/rides' }>
+                        <span className='glyphicon glyphicon-th-list'></span> Ride Table
+                    </Link>
                 </li>
             </ul>
         </div>

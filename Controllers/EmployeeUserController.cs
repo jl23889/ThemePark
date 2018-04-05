@@ -69,8 +69,12 @@ namespace ThemePark.Controllers
 			var token = tokenHandler.CreateToken(tokenDescriptor);
 			var tokenString = tokenHandler.WriteToken(token);
 
+            // find employee (we need this to return employee type)
+            var employee = _context.Employee.Find(user.EmployeeId);
+
 			return Ok(new {
 				EmployeeId = user.EmployeeId,
+                EmployeeType = employee.EmpType,
 				username = user.EmployeeUserName,
 				// DO NOT RETURN A PASSWORD HERE
 				Token = tokenString

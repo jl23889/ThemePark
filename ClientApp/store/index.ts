@@ -24,7 +24,7 @@ export interface ApplicationState {
 
     login: Login.LoginState;
     register: Register.RegisterState;
-    navMenu: NavMenu.NavMenuState;
+    //navMenu: NavMenu.NavMenuState;
 
     employeeType: EmployeeType.EmployeeTypeState;
 
@@ -45,7 +45,7 @@ export const reducers = {
 
     login: Login.reducer,
     register: Register.reducer,
-    navMenu: NavMenu.reducer,
+    //navMenu: NavMenu.reducer,
 
     employeeType: EmployeeType.reducer,
 

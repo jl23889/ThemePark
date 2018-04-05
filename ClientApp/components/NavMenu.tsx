@@ -2,12 +2,12 @@ import * as React from 'react';
 import { NavLink, Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
-import * as NavMenuState from '../store/NavMenu';
+import * as LoginState from '../store/Login';
 import * as LoginActions from '../actions/_LoginActions'
 
 // At runtime, Redux will merge together...
 type DataProps =
-    NavMenuState.NavMenuState        // ... state we've requested from the Redux store
+    LoginState.LoginState        // ... state we've requested from the Redux store
     & typeof LoginActions.actionCreators       // ... plus action creators we've requested
     & RouteComponentProps<{}>; // ... plus incoming routing parameters
 
@@ -109,6 +109,6 @@ class NavMenu extends React.Component<DataProps, {}> {
 }
 
 export default connect(
-    (state: ApplicationState) => state.navMenu, // Selects which state properties are merged into the component's props
+    (state: ApplicationState) => state.login, // Selects which state properties are merged into the component's props
     LoginActions.actionCreators                 // Selects which action creators are merged into the component's props
 )(NavMenu);

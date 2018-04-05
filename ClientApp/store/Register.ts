@@ -6,8 +6,8 @@ import { RegisterActions, RegisterFormActions } from '../actions/_RegisterAction
 
 export interface RegisterState {
     registering: boolean;
-    disableCustomerForm: boolean,
-    disableEmployeeForm: boolean,
+    disableCustomerForm: boolean;
+    disableEmployeeForm: boolean;
 }
 
 // ----------------

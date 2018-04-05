@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 import * as LoginState from '../store/Login';
 import * as LoginActions from '../actions/_LoginActions'
-import LoginForm from './LoginForm';
+import LoginCustomerForm from './LoginCustomerForm';
+import LoginEmployeeForm from './LoginEmployeeForm';
 
+import { Button } from 'react-bootstrap'
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -24,17 +26,42 @@ class Login extends React.Component<DataProps, {}> {
 
     render() {
         return <div>
-        	<h1>Login Form</h1>
-            { this.renderLoginForm() }
+            <h1>Login Form</h1>
+            <Button bsStyle="primary" 
+                disabled={!this.props.disableCustomerForm} 
+                onClick={this.props.showCustomerForm}>Customer</Button>
+            <Button bsStyle="warning"
+                disabled={!this.props.disableEmployeeForm} 
+                onClick={this.props.showEmployeeForm}>Employee</Button>
+
+            <Button bsStyle="warning"
+                onClick={this.props.logout}>Logout</Button>
+
+            { !this.props.disableCustomerForm ? this.renderLoginCustomerForm() : ''}
+            { !this.props.disableEmployeeForm ? this.renderLoginEmployeeForm() : ''}
         </div>
     }
 
-    login = values => {
-        this.props.login(values.username, values.password, 'customer');
+    loginCustomer = values => {
+        this.props.loginCustomer(values.username, values.password);
     }
 
-    private renderLoginForm() {
-    	return <LoginForm onSubmit={this.login} form="loginForm"/>
+    loginEmployee = values => {
+        this.props.loginEmployee(values.username, values.password);
+    }
+
+    private renderLoginCustomerForm() {
+    	return <div>
+            <h1> CUSTOMER LOGIN FORM </h1>
+            <LoginCustomerForm onSubmit={this.loginCustomer} form="loginCustomerForm"/>
+        </div>
+    }
+
+    private renderLoginEmployeeForm() {
+        return <div>
+            <h1> EMPLOYEE LOGIN FORM </h1>
+            <LoginEmployeeForm onSubmit={this.loginEmployee} form="loginEmployeeForm"/>
+        </div>
     }
 }
 

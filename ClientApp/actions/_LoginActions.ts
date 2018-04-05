@@ -1,8 +1,5 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
-import { userService } from '../services/_userService';
-import { User } from '../models/_DataModels'
-
 import axios from 'axios';
 
 // -----------------
@@ -11,23 +8,26 @@ import axios from 'axios';
 
 export interface UserLoginRequestAction {
     type: 'USER_LOGIN_REQUEST';
-    loggingIn: true;
 }
 
 export interface UserLoginSuccessAction {
     type: 'USER_LOGIN_SUCCESS';
-    loggedIn: true;
-    user: User
 }
 
 export interface UserLoginFailAction {
     type: 'USER_LOGIN_FAIL';
-    loggedIn: false;
 }
 
 export interface UserLogoutAction {
     type: 'USER_LOGOUT';
-    loggedIn: false;
+}
+
+export interface EnableCustomerFormAction {
+    type: 'SHOW_CUSTOMER_FORM';
+}
+
+export interface EnableEmployeeFormAction {
+    type: 'SHOW_EMPLOYEE_FORM';
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
@@ -35,32 +35,82 @@ export interface UserLogoutAction {
 export type LoginActions =  UserLoginRequestAction | UserLoginSuccessAction 
     | UserLoginFailAction | UserLogoutAction;
 
+export type LoginFormActions = EnableCustomerFormAction | EnableEmployeeFormAction;
+
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    login: (username, password, loginType): AppThunkAction<LoginActions> => (dispatch, getState) => {
-        return dispatch => {
-            dispatch(request({username}));
+    loginCustomer: (username, password): AppThunkAction<LoginActions> => (dispatch, getState) => {
+        dispatch({ type: 'USER_LOGIN_REQUEST' }); 
 
-            userService.login(username, password, loginType) 
-                .then(
-                    user => {
-                        dispatch(success(user));
-                    },
-                    error => {
-                        dispatch(fail(error));
-                    }
-                );
-        };
+        // create an object before passing to api
+        let user = {
+            CustomerUserName: username,
+            CustomerPassword: password
+        }
 
-        function request(username) { return { type: 'USER_LOGIN_REQUEST', username }}
-        function success(user) { return { type: 'USER_LOGIN_SUCCESS', user }}
-        function fail(error) { return { type: 'USER_LOGIN_FAIL', error }}
+        axios.post(`api/CustomerUser/Authenticate`, user)
+        .then(response => {
+            console.log(response);
+            dispatch({ type: 'USER_LOGIN_SUCCESS' });
+
+            // login successful if theres a jwt token in response
+            if (response && response.data && response.data.token) {
+                // ensure actions are done client side (prevent prerendering)
+                if (typeof window !== 'undefined') {
+
+                    // store user details and jwt token in local storage to keep user loggedin
+                    localStorage.setItem('user', JSON.stringify(response.data));
+                }
+            }
+        })
+        .catch(error => {
+            dispatch({ type: 'USER_LOGIN_FAIL' });
+        })
+    },
+    loginEmployee: (username, password): AppThunkAction<LoginActions> => (dispatch, getState) => {
+        dispatch({ type: 'USER_LOGIN_REQUEST' }); 
+
+        // create an object before passing to api
+        let user = {
+            EmployeeUserName: username,
+            EmployeePassword: password
+        }
+
+        axios.post(`api/EmployeeUser/Authenticate`, user)
+        .then(response => {
+            console.log(response);
+            dispatch({ type: 'USER_LOGIN_SUCCESS'});
+
+            // login successful if theres a jwt token in response
+            if (response) {
+                // ensure actions are done client side (prevent prerendering)
+                if (typeof window !== 'undefined') {
+
+                    // store user details and jwt token in local storage to keep user loggedin
+                    localStorage.setItem('user', JSON.stringify(response.data));
+                }
+            }
+        })
+        .catch(error => {
+            dispatch({ type: 'USER_LOGIN_FAIL' });
+        })
     },
     logout: (): AppThunkAction<LoginActions> => (dispatch, getState) => {
-        userService.logout();
-        return { type: 'USER_LOGOUT'}
+        // ensure actions are done client side (prevent prerendering)
+        if (typeof window !== 'undefined') {
+
+            localStorage.removeItem('user');
+        }
+        dispatch({ type: 'USER_LOGOUT'});
+    },
+    showCustomerForm: (user): AppThunkAction<LoginFormActions> => (dispatch, getState) => {
+        dispatch({ type: 'SHOW_CUSTOMER_FORM' }); 
+    },
+
+    showEmployeeForm: (user): AppThunkAction<LoginFormActions> => (dispatch, getState) => {
+        dispatch({ type: 'SHOW_EMPLOYEE_FORM' }); 
     },
 };

@@ -63,11 +63,4 @@ export interface EmployeeType {
     employeeType: string;
 }
 
-// USER
-//////////////
-export interface User {
-    username: string;
-    password: string;
-    type: string;
-}
 

@@ -37,8 +37,9 @@ class Login extends React.Component<DataProps, {}> {
             <Button bsStyle="warning"
                 onClick={this.props.logout}>Logout</Button>
 
-            { !this.props.disableCustomerForm ? this.renderLoginCustomerForm() : ''}
-            { !this.props.disableEmployeeForm ? this.renderLoginEmployeeForm() : ''}
+            { !this.props.loggedIn && !this.props.disableCustomerForm ? this.renderLoginCustomerForm() : ''}
+            { !this.props.loggedIn && !this.props.disableEmployeeForm ? this.renderLoginEmployeeForm() : ''}
+            { this.props.loggedIn ? this.renderWelcome() : ''}
         </div>
     }
 
@@ -61,6 +62,12 @@ class Login extends React.Component<DataProps, {}> {
         return <div>
             <h1> EMPLOYEE LOGIN FORM </h1>
             <LoginEmployeeForm onSubmit={this.loginEmployee} form="loginEmployeeForm"/>
+        </div>
+    }
+
+    private renderWelcome() {
+        return <div>
+            <h1> YOU ARE NOW LOGGED IN</h1>
         </div>
     }
 }

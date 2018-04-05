@@ -6,6 +6,12 @@ import axios from 'axios';
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
+export interface UserLoggedInCheckAction {
+    type: 'USER_LOGIN_CHECK';
+    userExists : boolean;
+    userType: string;
+}
+
 export interface UserLoginRequestAction {
     type: 'USER_LOGIN_REQUEST';
 }
@@ -32,10 +38,12 @@ export interface EnableEmployeeFormAction {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type LoginActions =  UserLoginRequestAction | UserLoginSuccessAction 
+export type LoginActions =  UserLoggedInCheckAction | UserLoginRequestAction | UserLoginSuccessAction 
     | UserLoginFailAction | UserLogoutAction;
 
 export type LoginFormActions = EnableCustomerFormAction | EnableEmployeeFormAction;
+
+export type LoginNavMenuActions = UserLoggedInCheckAction | UserLogoutAction; // used in navbar
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -53,9 +61,6 @@ export const actionCreators = {
 
         axios.post(`api/CustomerUser/Authenticate`, user)
         .then(response => {
-            console.log(response);
-            dispatch({ type: 'USER_LOGIN_SUCCESS' });
-
             // login successful if theres a jwt token in response
             if (response && response.data && response.data.token) {
                 // ensure actions are done client side (prevent prerendering)
@@ -65,6 +70,7 @@ export const actionCreators = {
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
             }
+            dispatch({ type: 'USER_LOGIN_SUCCESS' });
         })
         .catch(error => {
             dispatch({ type: 'USER_LOGIN_FAIL' });
@@ -81,9 +87,6 @@ export const actionCreators = {
 
         axios.post(`api/EmployeeUser/Authenticate`, user)
         .then(response => {
-            console.log(response);
-            dispatch({ type: 'USER_LOGIN_SUCCESS'});
-
             // login successful if theres a jwt token in response
             if (response) {
                 // ensure actions are done client side (prevent prerendering)
@@ -93,6 +96,8 @@ export const actionCreators = {
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
             }
+            dispatch({ type: 'USER_LOGIN_SUCCESS'});
+
         })
         .catch(error => {
             dispatch({ type: 'USER_LOGIN_FAIL' });
@@ -105,6 +110,25 @@ export const actionCreators = {
             localStorage.removeItem('user');
         }
         dispatch({ type: 'USER_LOGOUT'});
+    },
+    checkLoggedIn: (): AppThunkAction<LoginActions> => (dispatch, getState) => {
+        // ensure actions are done client side (prevent prerendering)
+        let storedUser = null;
+
+        if (typeof window !== 'undefined') {
+            storedUser = localStorage.getItem('user');
+        }
+        var userExists = false;
+        var userType = '';
+        if (storedUser != null && storedUser.employeeId !== 'undefined'){
+            userExists = true;
+            userType = 'employee';
+        } else if (storedUser != null && storedUser.customerId !== 'undefined') {
+            userExists = true;
+            userType = 'customer'; 
+        }
+
+        dispatch({ type: 'USER_LOGIN_CHECK', userExists: userExists, userType: userType });
     },
     showCustomerForm: (user): AppThunkAction<LoginFormActions> => (dispatch, getState) => {
         dispatch({ type: 'SHOW_CUSTOMER_FORM' }); 

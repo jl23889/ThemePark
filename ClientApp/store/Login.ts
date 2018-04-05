@@ -14,14 +14,8 @@ export interface LoginState {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-let storedUser = null
-// ensure actions are done client side (prevent prerendering)
-if (typeof window !== 'undefined') {
-    storedUser = JSON.parse(localStorage.getItem('user'));
-}
-
 const unloadedState: LoginState = { 
-    loggedIn: storedUser ? true : false, // returns true if user object exists in localstorage
+    loggedIn: false, // returns true if user object exists in localstorage
     loggingIn: false,
     disableCustomerForm: true,
     disableEmployeeForm: true
@@ -32,6 +26,20 @@ type KnownAction = LoginActions | LoginFormActions // list of known actions
 export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
+        case 'USER_LOGIN_CHECK':
+            return {
+                loggedIn: action.userExists,
+                loggingIn: state.loggingIn,
+                disableCustomerForm: state.disableCustomerForm,
+                disableEmployeeForm: state.disableEmployeeForm,
+            }
+        case 'USER_LOGIN_REQUEST':
+            return {
+                loggedIn: state.loggedIn,
+                loggingIn: state.loggingIn,
+                disableCustomerForm: state.disableCustomerForm,
+                disableEmployeeForm: state.disableEmployeeForm,
+            }
         case 'USER_LOGIN_REQUEST':
             return {
                 loggedIn: state.loggedIn,
@@ -57,6 +65,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
             return {
                 loggedIn: false,
                 loggingIn: false,
+                loginType: '',
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
             }

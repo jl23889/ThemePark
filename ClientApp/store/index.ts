@@ -3,6 +3,9 @@ import * as Counter from './Counter';
 import * as RideStatus from './RideStatus'
 import * as RideType from './RideType'
 import * as Rides from './Rides'
+import * as Login from './Login'
+import * as Register from './Register'
+
 import * as EmployeeType from './EmployeeType'
 import * as Lookup from './Lookup'
 
@@ -17,6 +20,9 @@ export interface ApplicationState {
     rideStatus: RideStatus.RideStatusState;
     rideType: RideType.RideTypeState;
     rides: Rides.RidesState;
+
+    login: Login.LoginState;
+    register: Register.RegisterState;
 
     employeeType: EmployeeType.EmployeeTypeState;
 
@@ -34,6 +40,9 @@ export const reducers = {
     rides: Rides.reducer,
     rideStatus: RideStatus.reducer,
     rideType: RideType.reducer,
+
+    login: Login.reducer,
+    register: Register.reducer,
 
     employeeType: EmployeeType.reducer,
 

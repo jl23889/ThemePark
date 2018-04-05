@@ -11,6 +11,7 @@ import { createBrowserHistory } from 'history';
 import configureStore from './configureStore';
 import { ApplicationState }  from './store';
 import * as RoutesModule from './routes';
+
 let routes = RoutesModule.routes;
 
 // Create browser history to use in the Redux store

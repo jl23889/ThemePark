@@ -62,3 +62,12 @@ export interface EmployeeType {
     employeeTypeId: number;
     employeeType: string;
 }
+
+// USER
+//////////////
+export interface User {
+    username: string;
+    password: string;
+    type: string;
+}
+

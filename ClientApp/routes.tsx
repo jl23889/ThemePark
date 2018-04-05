@@ -4,13 +4,20 @@ import { Layout } from './components/Layout';
 import Home from './components/Home';
 import Rides from './components/Rides';
 import Lookup from './components/Lookup';
+import Login from './components/Login';
+import Register from './components/Register';
+
 
 import Counter from './components/Counter';
 
 
-export const routes = <Layout>
+export const routes =
+<Layout>
     <Route exact path='/' component={ Home } />
     <Route path='/counter' component={ Counter } />
     <Route path='/rides' component={ Rides } />
+    <Route path='/login' component={ Login } />
+    <Route path='/register' component={ Register } />
+
     <Route path='/lookup/:tableToLoad?' component={ Lookup } />
 </Layout>;

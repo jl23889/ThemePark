@@ -1,31 +1,77 @@
+import { authHeader } from '../helpers/_authHeader';
+
 import axios from 'axios';
 
-export const userService {
-	login,
-	logout,
-	register,
-	getAll,
-	getById,
-	update,
-	delete: _delete
-}
+export const userService = {
+    login: (username, password, loginType) => {
+        var url = 'api/CustomerUser/Authenticate'      
+        if (loginType = 'employee') {
+            url='api/EmployeeUser/Authenticate'
+        }
 
-function empLogin(username, password) {
-	const requestOptions = {
-		method: 'POST',
-		headers: { 'Content-Type' : 'application/json' },
-		body: JSON.stringify({username, password})
-	}
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type' : 'application/json' },
+            body: JSON.stringify({username, password})
+        }
 
-    axios({
-    	method: 'post',
-    	url: 'api/EmployeeUser/authenticate',
-    	data: requestOptions    
-    })
-    .get(`api/EmployeeType/LookUpEmployeeType`)
-            .then(response => {
-                dispatch({ type: 'FETCH_EMPLOYEE_TYPE', employeeTypeList: response.data });
-            })
+        return fetch(url, requestOptions)
+            .then(handleResponse, handleError)
+            .then(user => {
+                // login successful if theres a jwt token in response
+                if (user) {
+                    // ensure actions are done client side (prevent prerendering)
+                    if (typeof window !== 'undefined') {
+
+                        // store user details and jwt token in local storage to keep user loggedin
+                        localStorage.setItem('user', JSON.stringify(user));
+                    }
+                }
+                return user; 
+            });
+    },
+
+    logout: () => {
+        // ensure actions are done client side (prevent prerendering)
+        if (typeof window !== 'undefined') {
+
+            localStorage.removeItem('user');
         }
     },
+
+    register: (user, registerType) => {
+        var url = 'api/CustomerUser/Register'      
+        if (registerType = 'employee') {
+            url='api/EmployeeUser/Register'
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        };
+
+        return fetch(url, requestOptions)
+            .then(handleResponse, handleError);
+    }
+}
+
+function handleResponse(response) {
+    return new Promise((resolve, reject) => {
+        if (response.ok) {
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                response.json().then(json => resolve(json));
+            } else {
+                resolve();
+            }
+        } else {
+            // return error message from response body
+            response.text().then(text => reject(text));
+        }
+    });
+}
+
+function handleError(error) {
+    return Promise.reject(error && error.message);
 }

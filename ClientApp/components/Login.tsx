@@ -27,15 +27,19 @@ class Login extends React.Component<DataProps, {}> {
     render() {
         return <div>
             <h1>Login Form</h1>
-            <Button bsStyle="primary" 
-                disabled={!this.props.disableCustomerForm} 
-                onClick={this.props.showCustomerForm}>Customer</Button>
-            <Button bsStyle="warning"
-                disabled={!this.props.disableEmployeeForm} 
-                onClick={this.props.showEmployeeForm}>Employee</Button>
+            { !this.props.loggedIn ? <div>
+                <Button bsStyle="primary" 
+                    disabled={!this.props.disableCustomerForm} 
+                    onClick={this.props.showCustomerForm}>Customer</Button>
+                <Button bsStyle="warning"
+                    disabled={!this.props.disableEmployeeForm} 
+                    onClick={this.props.showEmployeeForm}>Employee</Button>
+                </div>
+            : ''}
 
-            <Button bsStyle="warning"
-                onClick={this.props.logout}>Logout</Button>
+            { this.props.loggedIn ?
+                <Button bsStyle="warning"
+                onClick={this.props.logout}>Logout</Button> : '' }
 
             { !this.props.loggedIn && !this.props.disableCustomerForm ? this.renderLoginCustomerForm() : ''}
             { !this.props.loggedIn && !this.props.disableEmployeeForm ? this.renderLoginEmployeeForm() : ''}
@@ -55,6 +59,8 @@ class Login extends React.Component<DataProps, {}> {
     	return <div>
             <h1> CUSTOMER LOGIN FORM </h1>
             <LoginCustomerForm onSubmit={this.loginCustomer} form="loginCustomerForm"/>
+            <h1> NO ACCOUNT? REGISTER HERE: </h1>
+            <Link to="/register">Register</Link>
         </div>
     }
 
@@ -62,6 +68,8 @@ class Login extends React.Component<DataProps, {}> {
         return <div>
             <h1> EMPLOYEE LOGIN FORM </h1>
             <LoginEmployeeForm onSubmit={this.loginEmployee} form="loginEmployeeForm"/>
+            <h1> NO ACCOUNT? REGISTER HERE: </h1>
+            <Link to="/register">Register</Link>
         </div>
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ThemePark.Entities
 {
-    public partial class CustomerUser
+    public partial class CustomerLogin
     {
         public string CustomerId { get; set; }
         public string CustomerUserName { get; set; }

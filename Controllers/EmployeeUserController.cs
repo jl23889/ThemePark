@@ -81,7 +81,7 @@ namespace ThemePark.Controllers
         public IActionResult Register([FromBody]EmployeeUserDataModel userModel)
         {
         	// map employeeuserdatamodel to employeeuser entity
-            var user = _mapper.Map<EmployeeUser>(userModel);
+            var user = _mapper.Map<EmployeeLogin>(userModel);
 
             try 
             {

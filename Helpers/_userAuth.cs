@@ -17,12 +17,12 @@ namespace ThemePark.Helpers
 	public interface IUserAuthService
 	{
 		// TODO: write update user methods
-		CustomerUser AuthenticateCustomerUser(string username, string password);
-		CustomerUser CreateCustomerUser(CustomerUser user, string password);
+		CustomerLogin AuthenticateCustomerUser(string username, string password);
+		CustomerLogin CreateCustomerUser(CustomerLogin user, string password);
 		// void UpdateCustomerUser(CustomerUser user, string password = null); 
 
-		EmployeeUser AuthenticateEmployeeUser(string username, string password);
-		EmployeeUser CreateEmployeeUser(EmployeeUser user, string password);
+		EmployeeLogin AuthenticateEmployeeUser(string username, string password);
+		EmployeeLogin CreateEmployeeUser(EmployeeLogin user, string password);
 		// void UpdateEmployeeUser(EmployeeUser user, string password = null); 
 	}
 
@@ -37,13 +37,13 @@ namespace ThemePark.Helpers
             _logger = logger;
         }
 
-        // returns a customerUser given a username and password
-        public CustomerUser AuthenticateCustomerUser(string username, string password)
+        // returns a customerLogin given a username and password
+        public CustomerLogin AuthenticateCustomerUser(string username, string password)
         {
         	if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         		return null;
 
-        	var user = _context.CustomerUser.SingleOrDefault(x => x.CustomerUserName == username);
+        	var user = _context.CustomerLogin.SingleOrDefault(x => x.CustomerUserName == username);
 
         	// check if username exists
         	if (user == null)
@@ -57,13 +57,13 @@ namespace ThemePark.Helpers
         	return user;
         }
 
-         // returns a employeeUser given a username and password
-        public EmployeeUser AuthenticateEmployeeUser(string username, string password)
+         // returns a employeeLogin given a username and password
+        public EmployeeLogin AuthenticateEmployeeUser(string username, string password)
         {
         	if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         		return null;
 
-        	var user = _context.EmployeeUser.SingleOrDefault(x => x.EmployeeUserName == username);
+        	var user = _context.EmployeeLogin.SingleOrDefault(x => x.EmployeeUserName == username);
 
         	// check if username exists
         	if (user == null)
@@ -78,12 +78,12 @@ namespace ThemePark.Helpers
         }
 
         // returns a customerUser after creating customer
-        public CustomerUser CreateCustomerUser(CustomerUser user, string password)
+        public CustomerLogin CreateCustomerUser(CustomerLogin user, string password)
         {
         	if (string.IsNullOrWhiteSpace(password))
         		throw new AppException("Password is required");
 
-        	if (_context.CustomerUser.Any(x => x.CustomerUserName == user.CustomerUserName))
+        	if (_context.CustomerLogin.Any(x => x.CustomerUserName == user.CustomerUserName))
         		throw new AppException("Username " + user.CustomerUserName + " is already taken");
 
         	byte[] passwordHash, passwordSalt;
@@ -93,19 +93,19 @@ namespace ThemePark.Helpers
         	user.CustomerPasswordHash = passwordHash;
         	user.CustomerPasswordSalt = passwordSalt;
 
-        	_context.CustomerUser.Add(user);
+        	_context.CustomerLogin.Add(user);
         	_context.SaveChanges();
 
         	return user;
         }
 
         // returns a employeeUser after creating employee
-        public EmployeeUser CreateEmployeeUser(EmployeeUser user, string password)
+        public EmployeeLogin CreateEmployeeUser(EmployeeLogin user, string password)
         {
         	if (string.IsNullOrWhiteSpace(password))
         		throw new AppException("Password is required");
 
-        	if (_context.EmployeeUser.Any(x => x.EmployeeUserName == user.EmployeeUserName))
+        	if (_context.EmployeeLogin.Any(x => x.EmployeeUserName == user.EmployeeUserName))
         		throw new AppException("Username " + user.EmployeeUserName + " is already taken");
 
         	byte[] passwordHash, passwordSalt;
@@ -115,7 +115,7 @@ namespace ThemePark.Helpers
         	user.EmployeePasswordHash = passwordHash;
         	user.EmployeePasswordSalt = passwordSalt;
 
-        	_context.EmployeeUser.Add(user);
+        	_context.EmployeeLogin.Add(user);
         	_context.SaveChanges();
 
         	return user;

@@ -10,8 +10,8 @@ namespace ThemePark.Helpers
 	{
 		public CustomerAutoMapperProfile()
 		{
-			CreateMap<CustomerUser, CustomerUserDataModel>();
-			CreateMap<CustomerUserDataModel, CustomerUser>();
+			CreateMap<CustomerLogin, CustomerUserDataModel>();
+			CreateMap<CustomerUserDataModel, CustomerLogin>();
 		}
 	}
 
@@ -19,8 +19,8 @@ namespace ThemePark.Helpers
 	{
 		public EmployeeAutoMapperProfile()
 		{
-			CreateMap<EmployeeUser, EmployeeUserDataModel>();
-			CreateMap<EmployeeUserDataModel, EmployeeUser>();
+			CreateMap<EmployeeLogin, EmployeeUserDataModel>();
+			CreateMap<EmployeeUserDataModel, EmployeeLogin>();
 		}
 	}
 }

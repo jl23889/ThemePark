@@ -8,9 +8,9 @@ namespace ThemePark.Entities
     {
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerTransaction> CustomerTransaction { get; set; }
-        public virtual DbSet<CustomerUser> CustomerUser { get; set; }
+        public virtual DbSet<CustomerLogin> CustomerLogin { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<EmployeeUser> EmployeeUser { get; set; }
+        public virtual DbSet<EmployeeLogin> EmployeeLogin { get; set; }
         public virtual DbSet<Hotel> Hotel { get; set; }
         public virtual DbSet<HotelRoom> HotelRoom { get; set; }
         public virtual DbSet<LookUpEmployeeType> LookUpEmployeeType { get; set; }
@@ -106,8 +106,10 @@ namespace ThemePark.Entities
                     .HasConstraintName("FK__Customer__Gender__05D8E0BE");
             });
 
-            modelBuilder.Entity<CustomerUser>(entity => 
+            modelBuilder.Entity<CustomerLogin>(entity => 
             {
+                entity.HasKey(e => e.CustomerUserName);
+
                 entity.ToTable("CustomerLogin", "THEMEPARK");
 
                 entity.Property(e => e.CustomerId)
@@ -212,9 +214,11 @@ namespace ThemePark.Entities
                     .HasConstraintName("FK__Employee__EmpTyp__0B91BA14");
             });
 
-            modelBuilder.Entity<EmployeeUser>(entity => 
+            modelBuilder.Entity<EmployeeLogin>(entity => 
             {
                 entity.ToTable("EmployeeLogin", "THEMEPARK");
+
+                entity.HasKey(e => e.EmployeeUserName);
 
                 entity.Property(e => e.EmployeeId)
                     .IsRequired()

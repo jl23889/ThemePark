@@ -48,7 +48,7 @@ class Lookup extends React.Component<DataProps, {}> {
     		case 'employeetype':
     			return <EmployeeType/>
     		default:
-    			return <h1>LOADING...</h1>
+    			return
     	}
     }
 

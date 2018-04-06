@@ -38,9 +38,9 @@ class Rides extends React.Component<DataProps, {}> {
 
     render() {
         return <div>
-            <h1>Ride Table</h1>
-            <h3>Create New</h3>
+            <h3>Add Ride</h3>
             { this.renderCreateNewForm() }
+            <h1>Ride Table</h1>
             { this.renderRidesTable() }
         </div>
     }

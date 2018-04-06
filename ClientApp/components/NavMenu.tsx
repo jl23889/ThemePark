@@ -66,28 +66,9 @@ class NavMenu extends React.Component<DataProps, {}> {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
                 <li>
-                    {// TODO: MAKE THIS COLLAPSIBLE OR DROPDOWN
-                    }
                     <Link to={ '/lookup' }>
                         <span className='glyphicon glyphicon-th-list'></span> LookupTables
                     </Link>
-                    <ul className='nav navbar-nav'>
-                        <li>
-                            <Link to={ '/lookup/ridestatus' }>
-                                LookupRideStatus
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={ '/lookup/ridetype' }>
-                                LookupRideType
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={ '/lookup/employeetype' }>
-                                LookupEmployeeType
-                            </Link>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         </div>

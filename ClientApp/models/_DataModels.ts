@@ -1,3 +1,11 @@
+// ALERT
+//////////////
+export interface Alert {
+    toastId: number;
+    alertType: string;
+    alertMessage: string;
+}
+
 // RIDES 
 //////////////
 export interface Ride {

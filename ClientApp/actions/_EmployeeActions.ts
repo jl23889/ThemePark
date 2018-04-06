@@ -25,13 +25,14 @@ export interface CreateEmployeeAction {
     type: 'CREATE_EMPLOYEE';
 }
 
-export interface UpdateEmployeeAction {
-    type: 'UPDATE_EMPLOYEE';
+export interface UpdateEmployeeActionSuccess {
+    type: 'UPDATE_EMPLOYEE_SUCCESS';
+    toastId: number;
 }
 
 export interface UpdateEmployeeActionFail {
     type: 'UPDATE_EMPLOYEE_FAIL';
-    employeeSelected: Employee;
+    toastId: number;
 }
 
 export interface DeleteEmployeeAction {
@@ -42,11 +43,11 @@ export interface DeleteEmployeeAction {
 // declared type strings (and not any other arbitrary string).
 
 export type EmployeeActions =  FetchEmployeesActionInProgress | FetchEmployeesActionSuccess | 
-    FetchEmployeeAction | CreateEmployeeAction | UpdateEmployeeAction | 
+    FetchEmployeeAction | CreateEmployeeAction | UpdateEmployeeActionSuccess | 
     UpdateEmployeeActionFail | DeleteEmployeeAction;
 
 export type EmployeeProfileActions = FetchEmployeeAction |
-    UpdateEmployeeAction | UpdateEmployeeActionFail;
+    UpdateEmployeeActionSuccess | UpdateEmployeeActionFail;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -61,7 +62,7 @@ export const actionCreators = {
             dispatch({ type: 'FETCH_EMPLOYEES_SUCCESS', employeeList: response.data });
         })
         .catch(error => {
-            // error dispatch goes here
+            //
         })
     }, 
     // get a single employee by id
@@ -108,14 +109,14 @@ export const actionCreators = {
             // error dispatch goes here
         })
     },
-    updateEmployee: (values): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
+    updateEmployee: (values, toastId): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
         console.log(values);
         axios.put(`api/Employee/UpdateEmployee`, values)
         .then(response => {
-            dispatch({ type: 'UPDATE_EMPLOYEE' });
+            dispatch({ type: 'UPDATE_EMPLOYEE_SUCCESS', toastId: toastId });
         })
         .catch(error => {
-            dispatch({ type: 'UPDATE_EMPLOYEE_FAIL', employeeSelected: values })
+            dispatch({ type: 'UPDATE_EMPLOYEE_FAIL', toastId: toastId })
         })
     },
     deleteEmployee: (values): AppThunkAction<EmployeeActions> => (dispatch, getState) => {

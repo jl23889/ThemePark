@@ -2,7 +2,7 @@ import { Action, Reducer } from 'redux';
 import { FetchEmployeeTypeAction } from '../actions/_EmployeeTypeActions'
 import { EmployeeActions } from '../actions/_EmployeeActions'
 
-import { Employee, EmployeeType } from '../models/_DataModels'
+import { Alert, Employee, EmployeeType } from '../models/_DataModels'
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -13,6 +13,7 @@ export interface EmployeesState {
     employeeTypeList: EmployeeType[];
     employeeSelected: Employee;
     reloadEmployees: boolean;
+    employeeAlert: Alert;
 }
 
 // ----------------
@@ -24,6 +25,8 @@ const unloadedState: EmployeesState = {
     employeeTypeList: [],
     employeeSelected: null,
     reloadEmployees: true,
+    employeeAlert: null,
+
 };
 
 type KnownAction = EmployeeActions | FetchEmployeeTypeAction;
@@ -38,7 +41,8 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
-                reloadEmployees: false
+                reloadEmployees: false,
+                employeeAlert: state.employeeAlert,
             }
         case 'FETCH_EMPLOYEES_SUCCESS':
             return {
@@ -46,7 +50,8 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeList: action.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
-                reloadEmployees: false
+                reloadEmployees: false,
+                employeeAlert: state.employeeAlert,
             }
         case 'FETCH_EMPLOYEE':
             return {
@@ -55,6 +60,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: action.employee,
                 reloadEmployees: state.reloadEmployees,
+                employeeAlert: state.employeeAlert,
             }
         case 'CREATE_EMPLOYEE':
             return {
@@ -62,23 +68,34 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
-                reloadEmployees: true
+                reloadEmployees: true,
+                employeeAlert: state.employeeAlert,
             }
-        case 'UPDATE_EMPLOYEE':
+        case 'UPDATE_EMPLOYEE_SUCCESS':
             return {
                 loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
-                reloadEmployees: true
+                reloadEmployees: true,
+                employeeAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Update Successful'
+                },
             }
         case 'UPDATE_EMPLOYEE_FAIL':
             return {
                 loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
-                employeeSelected: action.employeeSelected,
-                reloadEmployees: false
+                employeeSelected: state.employeeSelected,
+                reloadEmployees: false,
+                employeeAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'Update Failed! Please try again'
+                },
             }
         case 'DELETE_EMPLOYEE':
             return {
@@ -86,7 +103,8 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
-                reloadEmployees: true
+                reloadEmployees: true,
+                employeeAlert: state.employeeAlert,
             }
 
         // employee type
@@ -96,7 +114,8 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeList: state.employeeList,
                 employeeTypeList: action.employeeTypeList,
                 employeeSelected: state.employeeSelected,
-                reloadEmployees: false
+                reloadEmployees: false,
+                employeeAlert: state.employeeAlert,
             }
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

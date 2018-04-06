@@ -11,12 +11,12 @@ import Register from './components/Register';
 
 import EmployeeProfile from './components/EmployeeProfile';
 
-
 import Counter from './components/Counter';
-
+import { ToastContainer } from 'react-toastify';
 
 export const routes =
 <Layout>
+	<ToastContainer/>
     <Route exact path='/' component={ Home } />
     <Route path='/counter' component={ Counter } />
     <Route path='/rides' component={ Rides } />

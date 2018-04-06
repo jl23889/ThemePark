@@ -9,6 +9,8 @@ import * as Login from '../actions/_LoginActions';
 
 import EmployeeForm from './forms/EmployeeForm';
 import { Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { displayToast } from '../helpers/_displayToast'
 
 // combines action creators from employee and employeetype
 const actionCreators = Object.assign(
@@ -34,6 +36,9 @@ class EmployeeProfile extends React.Component<DataProps, {}> {
         // This method runs when incoming props (e.g., route params) change
         if (this.props.reloadEmployee) 
             this.props.requestLoggedInEmployee();
+
+        // update unique toast 
+        displayToast(this.props.employeeAlert );
     }
 
     render() {
@@ -44,7 +49,13 @@ class EmployeeProfile extends React.Component<DataProps, {}> {
     }
 
     updateEmployee = values => {
-        this.props.updateEmployee(values);
+        // generate unique toast
+        const toastId = 
+            toast('Updating...', {
+                type: 'info'
+            });
+
+        this.props.updateEmployee(values, toastId);
     }
 
     logoutUser = () => {

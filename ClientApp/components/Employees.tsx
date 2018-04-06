@@ -9,6 +9,8 @@ import * as EmployeeTypeActions from '../actions/_EmployeeTypeActions';
 import EmployeeForm from './forms/EmployeeForm';
 
 import ReactTable from 'react-table';
+import { toast } from 'react-toastify';
+import { displayToast } from '../helpers/_displayToast'
 
 // combines action creators from employee and employeetype
 const actionCreators = Object.assign(
@@ -30,12 +32,17 @@ class Employees extends React.Component<DataProps, {}> {
 
     componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
-        if (!this.props.loadingEmployeeList && this.props.reloadEmployees) 
+        if (!this.props.loadingEmployeeList && this.props.reloadEmployees) {
             this.props.requestEmployeesList();
+        }
+
+        // update unique toast 
+        displayToast(this.props.employeeAlert );
     }
 
     render() {
         return <div>
+            { this.props.updateEmployee }
             <h3>Add Employee</h3>
             { this.renderCreateNewForm() }
 
@@ -50,7 +57,13 @@ class Employees extends React.Component<DataProps, {}> {
     }
 
     updateEmployee = values => {
-        this.props.updateEmployee(values);
+        // generate unique toast
+        const toastId = 
+            toast('Updating Employee...', {
+                type: 'info'
+            });
+
+        this.props.updateEmployee(values, toastId);
     }
 
     deleteEmployee(id) {

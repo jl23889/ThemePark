@@ -75,7 +75,9 @@ class Login extends React.Component<DataProps, {}> {
 
     private renderWelcome() {
         return <div>
-            <h1> YOU ARE NOW LOGGED IN</h1>
+            <h3> Welcome! You can go to your profile here: 
+                <Link to="/profile">My Profile</Link>
+            </h3>
         </div>
     }
 }

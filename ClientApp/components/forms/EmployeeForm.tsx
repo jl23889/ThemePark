@@ -10,7 +10,7 @@ function employeeTypeOption(et) {
 
 // generate option element from usaStatesList
 function usaStatesOption(st) {
-    return <option key={st} value={st}>{st}</option>
+    return <option key={st.shortName} value={st.shortName}>{st.name}</option>
 }
 
 // format dateString so it shows as initial value 
@@ -44,13 +44,13 @@ let EmployeeForm = props => {
         <form onSubmit={handleSubmit}>
         <label>First Name</label>
         <Field 
-            name="firstName" 
+            name="empFirstName" 
             component="input" 
             type="text" 
         />
         <label>Last Name</label>
         <Field 
-            name="lastName" 
+            name="empLastName" 
             component="input" 
             type="text" 
         />

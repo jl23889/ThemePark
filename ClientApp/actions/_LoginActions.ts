@@ -1,6 +1,10 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
+
 import axios from 'axios';
+
+// we import the top level history object so we can redirect using actions
+import { history } from '../boot-client';
 
 // -----------------
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
@@ -113,7 +117,8 @@ export const actionCreators = {
 
             localStorage.removeItem('user');
         }
-        dispatch({ type: 'USER_LOGOUT'});
+        dispatch({ type: 'USER_LOGOUT'})
+        // history.push('/');
     },
     checkLoggedIn: (): AppThunkAction<LoginActions> => (dispatch, getState) => {
         // ensure actions are done client side (prevent prerendering)

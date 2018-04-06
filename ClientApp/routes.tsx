@@ -9,6 +9,8 @@ import Lookup from './components/Lookup';
 import Login from './components/Login';
 import Register from './components/Register';
 
+import EmployeeProfile from './components/EmployeeProfile';
+
 
 import Counter from './components/Counter';
 
@@ -21,6 +23,7 @@ export const routes =
     <Route path='/employees' component={ Employees } />    
     <Route path='/login' component={ Login } />
     <Route path='/register' component={ Register } />
+    <Route path='/profile' component={ EmployeeProfile } />
 
     <Route path='/lookup/:tableToLoad?' component={ Lookup } />
 </Layout>;

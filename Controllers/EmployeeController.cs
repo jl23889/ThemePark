@@ -31,6 +31,14 @@ namespace ThemePark.Controllers
             return _context.Employee.ToList();
         }
 
+        // return a single employee by employeeId passed in as param
+        [HttpGet("[action]")]
+        public Employee GetEmployee(string id)
+        {
+            return _context.Employee.Find(id);
+        }
+
+
         [HttpPost("[action]")]
         public IActionResult CreateNewEmployee([FromBody] Employee employee)
         {

@@ -7,8 +7,12 @@ import axios from 'axios';
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
-export interface FetchRidesAction {
-    type: 'FETCH_RIDES';
+export interface FetchRidesActionInProgress {
+    type: 'FETCH_RIDES_IN_PROGRESS';
+}
+
+export interface FetchRidesActionSuccess {
+    type: 'FETCH_RIDES_SUCCESS';
     rideList: Ride[];
 }
 
@@ -32,8 +36,8 @@ export interface DeleteRideAction {
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 
-export type RideActions =  FetchRidesAction | CreateRideAction | UpdateRideAction 
-    | UpdateRideActionFail | DeleteRideAction;
+export type RideActions = FetchRidesActionInProgress | FetchRidesActionSuccess |
+    CreateRideAction | UpdateRideAction | UpdateRideActionFail | DeleteRideAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -45,9 +49,10 @@ export const actionCreators = {
     requestRidesList: (): AppThunkAction<RideActions> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         if (getState().rides.reloadRides) {
+            dispatch({ type: 'FETCH_RIDES_IN_PROGRESS' });
             axios.get(`api/Ride/GetRides`)
             .then(response => {
-                dispatch({ type: 'FETCH_RIDES', rideList: response.data });
+                dispatch({ type: 'FETCH_RIDES_SUCCESS', rideList: response.data });
             })
             .catch(error => {
                 // error dispatch goes here

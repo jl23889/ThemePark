@@ -9,6 +9,7 @@ import { Ride, RideStatus, RideType } from '../models/_DataModels'
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface RidesState {
+    loadingRideList: boolean;
     rideList: Ride[];
     rideStatusList: RideStatus[];
     rideTypeList: RideType[];
@@ -20,6 +21,7 @@ export interface RidesState {
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
 const unloadedState: RidesState = { 
+    loadingRideList: false,
     rideList: [], 
     rideStatusList: [],
     rideTypeList: [],
@@ -33,8 +35,18 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
     const action = incomingAction as KnownAction;
     switch (action.type) {
         // rides
-        case 'FETCH_RIDES':
+        case 'FETCH_RIDES_IN_PROGRESS':
             return {
+                loadingRideList: true,
+                rideList: [],
+                rideStatusList: state.rideStatusList,
+                rideTypeList: state.rideTypeList,
+                rideSelected: state.rideSelected,
+                reloadRides: false
+            }
+        case 'FETCH_RIDES_SUCCESS':
+            return {
+                loadingRideList: false,
                 rideList: action.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
@@ -43,6 +55,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
             }
         case 'CREATE_RIDE':
             return {
+                loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
@@ -51,6 +64,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
             }
         case 'UPDATE_RIDE':
             return {
+                loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
@@ -59,6 +73,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
             }
         case 'UPDATE_RIDE_FAIL':
             return {
+                loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
@@ -67,6 +82,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
             }
         case 'DELETE_RIDE':
             return {
+                loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
@@ -77,6 +93,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
         // ride status
         case 'FETCH_RIDE_STATUS':
             return {
+                loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: action.rideStatusList,
                 rideTypeList: state.rideTypeList,
@@ -87,6 +104,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
         // ride type
         case 'FETCH_RIDE_TYPE':
             return {
+                loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: action.rideTypeList,

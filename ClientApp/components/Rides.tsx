@@ -33,7 +33,8 @@ class Rides extends React.Component<DataProps, {}> {
 
     componentWillReceiveProps(nextProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
-        this.props.requestRidesList();
+        if (!this.props.loadingRideList && this.props.reloadRides) 
+            this.props.requestRidesList();
     }
 
     render() {
@@ -41,7 +42,8 @@ class Rides extends React.Component<DataProps, {}> {
             <h3>Add Ride</h3>
             { this.renderCreateNewForm() }
             <h1>Ride Table</h1>
-            { this.renderRidesTable() }
+            { (!this.props.loadingRideList) ? this.renderRidesTable() : 
+                <h3>LOADING TABLE...</h3>}
         </div>
     }
 

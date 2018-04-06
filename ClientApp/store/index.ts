@@ -7,6 +7,7 @@ import * as Login from './Login'
 import * as Register from './Register'
 import * as TicketType from './TicketType'
 
+import * as Employees from './Employees'
 import * as EmployeeType from './EmployeeType'
 import * as Lookup from './Lookup'
 
@@ -27,6 +28,7 @@ export interface ApplicationState {
     login: Login.LoginState;
     register: Register.RegisterState;
 
+    employees: Employees.EmployeesState;
     employeeType: EmployeeType.EmployeeTypeState;
 
     lookup: Lookup.LookupState;
@@ -49,6 +51,7 @@ export const reducers = {
     login: Login.reducer,
     register: Register.reducer,
 
+    employees: Employees.reducer,
     employeeType: EmployeeType.reducer,
 
     lookup: Lookup.reducer,

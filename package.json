@@ -46,6 +46,7 @@
     "axios": "^0.18.0",
     "react-bootstrap": "^0.32.1",
     "react-table": "^6.8.0",
+    "react-toastify": "^3.4.3",
     "redux-form": "https://registry.npmjs.org/redux-form/-/redux-form-7.3.0.tgz"
   }
 }

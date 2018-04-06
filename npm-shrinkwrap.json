@@ -493,6 +493,11 @@
       "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz",
       "dev": true
     },
+    "bowser": {
+      "version": "1.9.3",
+      "from": "bowser@>=1.7.3 <2.0.0",
+      "resolved": "https://registry.npmjs.org/bowser/-/bowser-1.9.3.tgz"
+    },
     "brace-expansion": {
       "version": "1.1.8",
       "from": "brace-expansion@>=1.1.7 <2.0.0",
@@ -857,6 +862,18 @@
       "from": "css-color-names@0.0.4",
       "resolved": "https://registry.npmjs.org/css-color-names/-/css-color-names-0.0.4.tgz",
       "dev": true
+    },
+    "css-in-js-utils": {
+      "version": "2.0.1",
+      "from": "css-in-js-utils@>=2.0.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/css-in-js-utils/-/css-in-js-utils-2.0.1.tgz",
+      "dependencies": {
+        "isobject": {
+          "version": "3.0.1",
+          "from": "isobject@>=3.0.1 <4.0.0",
+          "resolved": "https://registry.npmjs.org/isobject/-/isobject-3.0.1.tgz"
+        }
+      }
     },
     "css-loader": {
       "version": "0.28.4",
@@ -1989,6 +2006,11 @@
       "resolved": "https://registry.npmjs.org/get-value/-/get-value-2.0.6.tgz",
       "dev": true
     },
+    "glamor": {
+      "version": "2.20.40",
+      "from": "glamor@>=2.20.40 <3.0.0",
+      "resolved": "https://registry.npmjs.org/glamor/-/glamor-2.20.40.tgz"
+    },
     "glob-base": {
       "version": "0.3.0",
       "from": "glob-base@>=0.3.0 <0.4.0",
@@ -2103,6 +2125,11 @@
       "resolved": "https://registry.npmjs.org/https-browserify/-/https-browserify-0.0.1.tgz",
       "dev": true
     },
+    "hyphenate-style-name": {
+      "version": "1.0.2",
+      "from": "hyphenate-style-name@>=1.0.2 <2.0.0",
+      "resolved": "https://registry.npmjs.org/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz"
+    },
     "iconv-lite": {
       "version": "0.4.18",
       "from": "iconv-lite@>=0.4.13 <0.5.0",
@@ -2175,6 +2202,11 @@
       "from": "inherits@>=2.0.3 <2.1.0",
       "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz",
       "dev": true
+    },
+    "inline-style-prefixer": {
+      "version": "3.0.8",
+      "from": "inline-style-prefixer@>=3.0.6 <4.0.0",
+      "resolved": "https://registry.npmjs.org/inline-style-prefixer/-/inline-style-prefixer-3.0.8.tgz"
     },
     "interpret": {
       "version": "1.0.3",
@@ -3433,6 +3465,23 @@
       "from": "react-table@latest",
       "resolved": "https://registry.npmjs.org/react-table/-/react-table-6.8.0.tgz"
     },
+    "react-toastify": {
+      "version": "3.4.3",
+      "from": "react-toastify@latest",
+      "resolved": "https://registry.npmjs.org/react-toastify/-/react-toastify-3.4.3.tgz",
+      "dependencies": {
+        "fbjs": {
+          "version": "0.8.16",
+          "from": "fbjs@>=0.8.16 <0.9.0",
+          "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.8.16.tgz"
+        },
+        "prop-types": {
+          "version": "15.6.1",
+          "from": "prop-types@>=15.6.0 <16.0.0",
+          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.6.1.tgz"
+        }
+      }
+    },
     "react-transition-group": {
       "version": "2.3.0",
       "from": "react-transition-group@>=2.0.0 <3.0.0",
@@ -3924,6 +3973,11 @@
       "from": "tapable@>=0.2.5 <0.3.0",
       "resolved": "https://registry.npmjs.org/tapable/-/tapable-0.2.6.tgz",
       "dev": true
+    },
+    "through": {
+      "version": "2.3.8",
+      "from": "through@>=2.3.8 <3.0.0",
+      "resolved": "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
     },
     "timers-browserify": {
       "version": "2.0.2",

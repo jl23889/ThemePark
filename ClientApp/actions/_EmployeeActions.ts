@@ -7,8 +7,12 @@ import axios from 'axios';
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
-export interface FetchEmployeesAction {
-    type: 'FETCH_EMPLOYEES';
+export interface FetchEmployeesActionInProgress {
+    type: 'FETCH_EMPLOYEES_IN_PROGRESS';
+}
+
+export interface FetchEmployeesActionSuccess {
+    type: 'FETCH_EMPLOYEES_SUCCESS';
     employeeList: Employee[];
 }
 
@@ -37,8 +41,8 @@ export interface DeleteEmployeeAction {
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 
-export type EmployeeActions =  FetchEmployeesAction | FetchEmployeeAction |
-    CreateEmployeeAction | UpdateEmployeeAction | 
+export type EmployeeActions =  FetchEmployeesActionInProgress | FetchEmployeesActionSuccess | 
+    FetchEmployeeAction | CreateEmployeeAction | UpdateEmployeeAction | 
     UpdateEmployeeActionFail | DeleteEmployeeAction;
 
 export type EmployeeProfileActions = FetchEmployeeAction |
@@ -51,9 +55,10 @@ export type EmployeeProfileActions = FetchEmployeeAction |
 export const actionCreators = {
 
     requestEmployeesList: (): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
+        dispatch({ type: 'FETCH_EMPLOYEES_IN_PROGRESS' });
         axios.get(`api/Employee/GetEmployees`)
         .then(response => {
-            dispatch({ type: 'FETCH_EMPLOYEES', employeeList: response.data });
+            dispatch({ type: 'FETCH_EMPLOYEES_SUCCESS', employeeList: response.data });
         })
         .catch(error => {
             // error dispatch goes here

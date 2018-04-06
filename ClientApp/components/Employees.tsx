@@ -28,9 +28,10 @@ class Employees extends React.Component<DataProps, {}> {
         this.props.requestEmployeesList();
     }
 
-    componentWillReceiveProps(nextProps: DataProps) {
+    componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
-        if (this.props.reloadEmployees) this.props.requestEmployeesList();
+        if (!this.props.loadingEmployeeList && this.props.reloadEmployees) 
+            this.props.requestEmployeesList();
     }
 
     render() {
@@ -39,7 +40,8 @@ class Employees extends React.Component<DataProps, {}> {
             { this.renderCreateNewForm() }
 
             <h1>Employee Table</h1>
-            { this.renderEmployeesTable() }
+            { (!this.props.loadingEmployeeList) ? this.renderEmployeesTable() :
+                <h3>LOADING TABLE...</h3>}
         </div>
     }
 

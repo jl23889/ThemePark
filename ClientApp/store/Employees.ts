@@ -8,6 +8,7 @@ import { Employee, EmployeeType } from '../models/_DataModels'
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface EmployeesState {
+    loadingEmployeeList: boolean;
     employeeList: Employee[];
     employeeTypeList: EmployeeType[];
     employeeSelected: Employee;
@@ -18,6 +19,7 @@ export interface EmployeesState {
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
 const unloadedState: EmployeesState = { 
+    loadingEmployeeList: false,
     employeeList: [], 
     employeeTypeList: [],
     employeeSelected: null,
@@ -30,8 +32,17 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
     const action = incomingAction as KnownAction;
     switch (action.type) {
         // employees
-        case 'FETCH_EMPLOYEES':
+        case 'FETCH_EMPLOYEES_IN_PROGRESS':
             return {
+                loadingEmployeeList: true,
+                employeeList: state.employeeList,
+                employeeTypeList: state.employeeTypeList,
+                employeeSelected: state.employeeSelected,
+                reloadEmployees: false
+            }
+        case 'FETCH_EMPLOYEES_SUCCESS':
+            return {
+                loadingEmployeeList: false,
                 employeeList: action.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
@@ -39,6 +50,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
             }
         case 'FETCH_EMPLOYEE':
             return {
+                loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: action.employee,
@@ -46,6 +58,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
             }
         case 'CREATE_EMPLOYEE':
             return {
+                loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
@@ -53,6 +66,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
             }
         case 'UPDATE_EMPLOYEE':
             return {
+                loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
@@ -60,6 +74,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
             }
         case 'UPDATE_EMPLOYEE_FAIL':
             return {
+                loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: action.employeeSelected,
@@ -67,6 +82,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
             }
         case 'DELETE_EMPLOYEE':
             return {
+                loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
@@ -76,6 +92,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
         // employee type
         case 'FETCH_EMPLOYEE_TYPE':
             return {
+                loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: action.employeeTypeList,
                 employeeSelected: state.employeeSelected,

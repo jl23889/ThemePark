@@ -46,7 +46,7 @@ class NavMenu extends React.Component<DataProps, {}> {
 
     private renderUsername() {
         return <div className="navbar-brand">
-            <Link to={'/login'}>MyProfile</Link>
+            <Link to={'/profile'}>MyProfile</Link>
         </div>
     }
 

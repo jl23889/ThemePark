@@ -8,6 +8,7 @@ import * as EmployeeTypeActions from '../actions/_EmployeeTypeActions';
 import * as Login from '../actions/_LoginActions';
 
 import EmployeeForm from './forms/EmployeeForm';
+import { Button } from 'react-bootstrap';
 
 // combines action creators from employee and employeetype
 const actionCreators = Object.assign(
@@ -46,15 +47,24 @@ class EmployeeProfile extends React.Component<DataProps, {}> {
         this.props.updateEmployee(values);
     }
 
+    logoutUser = () => {
+        this.props.logout();
+        this.props.history.push('/login'); //redirect to login
+    }
+
     private renderProfileForm() {        
-        return <EmployeeForm 
-            onSubmit={this.updateEmployee}
-            initialValues={this.props.employee}
-            form="employeeProfileForm"
-            props={{
-                employeeTypeList: this.props.employeeTypeList
-            }}
-        />
+        return <div>
+            <EmployeeForm 
+                onSubmit={this.updateEmployee}
+                initialValues={this.props.employee}
+                form="employeeProfileForm"
+                props={{
+                    employeeTypeList: this.props.employeeTypeList
+                }}
+            />
+            <Button bsStyle="warning"
+                onClick={this.logoutUser}>Logout</Button>
+        </div>
     }
 }
 

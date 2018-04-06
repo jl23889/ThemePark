@@ -44,13 +44,13 @@ let EmployeeForm = props => {
         <form onSubmit={handleSubmit}>
         <label>First Name</label>
         <Field 
-            name="firstName" 
+            name="empFirstName" 
             component="input" 
             type="text" 
         />
         <label>Last Name</label>
         <Field 
-            name="lastName" 
+            name="empLastName" 
             component="input" 
             type="text" 
         />

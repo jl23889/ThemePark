@@ -12,6 +12,7 @@ import { DropdownButton, MenuItem } from 'react-bootstrap'
 import EmployeeType from './lookupTables/EmployeeType';
 import RideStatus from './lookupTables/RideStatus';
 import RideType from './lookupTables/RideType';
+import TicketType from './lookupTables/TicketType';
 
 
 // At runtime, Redux will merge together...
@@ -47,6 +48,8 @@ class Lookup extends React.Component<DataProps, {}> {
 				return <RideType/>    		
     		case 'employeetype':
     			return <EmployeeType/>
+            case 'tickettype':
+                return <TicketType/>
     		default:
     			return
     	}
@@ -67,6 +70,9 @@ class Lookup extends React.Component<DataProps, {}> {
             <MenuItem eventKey="3" href='/lookup/employeetype'>
             	Employee Type
         	</MenuItem>
+            <MenuItem eventKey="4" href='/lookup/tickettype'>
+                Ticket Type
+            </MenuItem>
 
         </DropdownButton>
     }

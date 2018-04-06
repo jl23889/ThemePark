@@ -63,4 +63,10 @@ export interface EmployeeType {
     employeeType: string;
 }
 
+// TICKET TYPE 
+//////////////
+export interface TicketType {
+    ticketTypeId: number;
+    ticketType: string;
+}
 

@@ -37,6 +37,13 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeSelected: state.employeeSelected,
                 reloadEmployees: false
             }
+        case 'FETCH_EMPLOYEE':
+            return {
+                employeeList: state.employeeList,
+                employeeTypeList: state.employeeTypeList,
+                employeeSelected: action.employee,
+                reloadEmployees: state.reloadEmployees,
+            }
         case 'CREATE_EMPLOYEE':
             return {
                 employeeList: state.employeeList,

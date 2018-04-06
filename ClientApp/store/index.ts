@@ -9,6 +9,8 @@ import * as TicketType from './TicketType'
 
 import * as Employees from './Employees'
 import * as EmployeeType from './EmployeeType'
+import * as EmployeeProfile from './EmployeeProfile'
+
 import * as Lookup from './Lookup'
 
 import { reducer as formReducer } from 'redux-form'
@@ -30,6 +32,7 @@ export interface ApplicationState {
 
     employees: Employees.EmployeesState;
     employeeType: EmployeeType.EmployeeTypeState;
+    employeeProfile: EmployeeProfile.EmployeeProfileState;
 
     lookup: Lookup.LookupState;
     form: formState;
@@ -53,6 +56,7 @@ export const reducers = {
 
     employees: Employees.reducer,
     employeeType: EmployeeType.reducer,
+    employeeProfile: EmployeeProfile.reducer,
 
     lookup: Lookup.reducer,
     form: formReducer

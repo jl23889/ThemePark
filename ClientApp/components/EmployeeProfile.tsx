@@ -30,7 +30,7 @@ class EmployeeProfile extends React.Component<DataProps, {}> {
         this.props.requestLoggedInEmployee();
     }
 
-    componentWillReceiveProps(nextProps: DataProps) {
+    componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
         if (this.props.reloadEmployee) 
             this.props.requestLoggedInEmployee();

@@ -31,7 +31,7 @@ class Rides extends React.Component<DataProps, {}> {
         this.props.requestRidesList();
     }
 
-    componentWillReceiveProps(nextProps: DataProps) {
+    componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
         if (!this.props.loadingRideList && this.props.reloadRides) 
             this.props.requestRidesList();

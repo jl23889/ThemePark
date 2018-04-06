@@ -19,7 +19,7 @@ class NavMenu extends React.Component<DataProps, {}> {
         this.props.checkLoggedIn();
     }
 
-    componentDidUpdate(nextProps: DataProps) {
+    componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
         this.props.checkLoggedIn();
     }

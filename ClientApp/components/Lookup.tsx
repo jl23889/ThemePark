@@ -27,7 +27,7 @@ class Lookup extends React.Component<DataProps, {}> {
         this.props.selectLookupTable(this.props.match.params.tableToLoad)
     }
 
-    componentDidUpdate(nextProps: DataProps) {
+    componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
         this.props.selectLookupTable(this.props.match.params.tableToLoad)
     }

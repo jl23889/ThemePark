@@ -20,7 +20,7 @@ class Login extends React.Component<DataProps, {}> {
         // This method runs when the component is first added to the page
     }
 
-    componentDidUpdate(nextProps: DataProps) {
+    componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
     }
 

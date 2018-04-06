@@ -38,7 +38,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
         case 'FETCH_RIDES_IN_PROGRESS':
             return {
                 loadingRideList: true,
-                rideList: [],
+                rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,

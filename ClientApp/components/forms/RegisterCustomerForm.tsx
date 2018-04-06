@@ -20,7 +20,7 @@ let RegisterCustomerForm = props => {
             />
             <label>Email</label>
             <Field 
-                name="lastName" 
+                name="email" 
                 component="input" 
                 type="text" 
             />

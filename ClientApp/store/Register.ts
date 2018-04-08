@@ -7,7 +7,6 @@ import { Alert } from '../models/_DataModels'
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface RegisterState {
-    registering: boolean;
     disableCustomerForm: boolean;
     disableEmployeeForm: boolean;
     registerAlert: Alert;
@@ -17,7 +16,6 @@ export interface RegisterState {
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
 const unloadedState: RegisterState = { 
-    registering: false,
     disableCustomerForm: true,
     disableEmployeeForm: true,
     registerAlert: null,
@@ -30,14 +28,12 @@ export const reducer: Reducer<RegisterState> = (state: RegisterState, incomingAc
     switch (action.type) {
         case 'USER_REGISTER_IN_PROGRESS':
             return {
-                registering: true,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
                 registerAlert: state.registerAlert,
             }
         case 'USER_REGISTER_SUCCESS':
             return {
-                registering: false,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
                 registerAlert: {
@@ -48,7 +44,6 @@ export const reducer: Reducer<RegisterState> = (state: RegisterState, incomingAc
             }
         case 'USER_REGISTER_FAIL':
             return {
-                registering: false,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
                 registerAlert: {
@@ -59,14 +54,12 @@ export const reducer: Reducer<RegisterState> = (state: RegisterState, incomingAc
             }
         case 'SHOW_CUSTOMER_FORM':
             return {
-                registering: state.registering,
                 disableCustomerForm: false,
                 disableEmployeeForm: true,
                 registerAlert: state.registerAlert,
             }
         case 'SHOW_EMPLOYEE_FORM':
             return {
-                registering: state.registering,
                 disableCustomerForm: true,
                 disableEmployeeForm: false,
                 registerAlert: state.registerAlert,

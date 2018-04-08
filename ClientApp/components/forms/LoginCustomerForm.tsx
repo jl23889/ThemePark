@@ -8,13 +8,13 @@ let LoginCustomerForm = props => {
     	<form onSubmit={handleSubmit}>
     		<label>Username</label>
     		<Field 
-    			name="customerUserName" 
+    			name="username" 
     			component="input" 
     			type="text" 
     		/>
     		<label>Password</label>
     		<Field 
-    			name="customerPassword" 
+    			name="password" 
     			component="input" 
     			type="text" 
     		/>

@@ -25,6 +25,20 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\actions\_WeatherTypeActions.ts" />
+    <None Remove="ClientApp\components\forms\WeatherTypeForm.tsx" />
+    <None Remove="ClientApp\components\lookupTables\WeatherType.tsx" />
+    <None Remove="ClientApp\store\WeatherType.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\actions\_WeatherTypeActions.ts" />
+    <TypeScriptCompile Include="ClientApp\components\forms\WeatherTypeForm.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\lookupTables\WeatherType.tsx" />
+    <TypeScriptCompile Include="ClientApp\store\WeatherType.ts" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

@@ -78,3 +78,10 @@ export interface TicketType {
     ticketType: string;
 }
 
+// WEATHER TYPE 
+//////////////
+export interface WeatherType {
+    weatherTypeId: number;
+    weatherType: string;
+}
+

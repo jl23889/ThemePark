@@ -6,6 +6,7 @@ import * as Rides from './Rides'
 import * as Login from './Login'
 import * as Register from './Register'
 import * as TicketType from './TicketType'
+import * as WeatherType from './WeatherType'
 
 import * as Employees from './Employees'
 import * as EmployeeType from './EmployeeType'
@@ -26,6 +27,8 @@ export interface ApplicationState {
     rides: Rides.RidesState;
 
     ticketType: TicketType.TicketTypeState;
+
+    weatherType: WeatherType.WeatherTypeState;
 
     login: Login.LoginState;
     register: Register.RegisterState;
@@ -50,6 +53,8 @@ export const reducers = {
     rideType: RideType.reducer,
 
     ticketType: TicketType.reducer,
+
+    weatherType: WeatherType.reducer,
 
     login: Login.reducer,
     register: Register.reducer,

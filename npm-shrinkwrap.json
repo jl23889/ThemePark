@@ -905,6 +905,11 @@
       "resolved": "https://registry.npmjs.org/csso/-/csso-2.3.2.tgz",
       "dev": true
     },
+    "date-arithmetic": {
+      "version": "3.1.0",
+      "from": "date-arithmetic@>=3.0.0 <4.0.0",
+      "resolved": "https://registry.npmjs.org/date-arithmetic/-/date-arithmetic-3.1.0.tgz"
+    },
     "date-now": {
       "version": "0.1.4",
       "from": "date-now@>=0.1.4 <0.2.0",
@@ -2510,8 +2515,7 @@
     "lodash": {
       "version": "4.17.4",
       "from": "lodash@>=4.2.1 <5.0.0",
-      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz"
     },
     "lodash-es": {
       "version": "4.17.4",
@@ -3388,6 +3392,30 @@
       "from": "react@15.6.1",
       "resolved": "https://registry.npmjs.org/react/-/react-15.6.1.tgz",
       "dev": true
+    },
+    "react-big-calendar": {
+      "version": "0.19.0",
+      "from": "react-big-calendar@latest",
+      "resolved": "https://registry.npmjs.org/react-big-calendar/-/react-big-calendar-0.19.0.tgz",
+      "dependencies": {
+        "react-overlays": {
+          "version": "0.7.4",
+          "from": "react-overlays@>=0.7.0 <0.8.0",
+          "resolved": "https://registry.npmjs.org/react-overlays/-/react-overlays-0.7.4.tgz",
+          "dependencies": {
+            "warning": {
+              "version": "3.0.0",
+              "from": "warning@>=3.0.0 <4.0.0",
+              "resolved": "https://registry.npmjs.org/warning/-/warning-3.0.0.tgz"
+            }
+          }
+        },
+        "warning": {
+          "version": "2.1.0",
+          "from": "warning@>=2.0.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/warning/-/warning-2.1.0.tgz"
+        }
+      }
     },
     "react-bootstrap": {
       "version": "0.32.1",

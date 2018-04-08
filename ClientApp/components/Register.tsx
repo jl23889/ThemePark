@@ -8,6 +8,8 @@ import RegisterCustomerForm from './forms/RegisterCustomerForm';
 import RegisterEmployeeForm from './forms/RegisterEmployeeForm';
 
 import { Button } from 'react-bootstrap'
+import { toast } from 'react-toastify';
+import { displayToast } from '../helpers/_displayToast'
 
 
 // At runtime, Redux will merge together...
@@ -23,6 +25,8 @@ class Register extends React.Component<DataProps, {}> {
 
     componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
+        // update unique toast 
+        displayToast(this.props.registerAlert );
     }
 
     render() {
@@ -41,11 +45,25 @@ class Register extends React.Component<DataProps, {}> {
     }
 
     registerCustomer = values => {
-        this.props.registerCustomer(values);
+        // generate unique toast
+        const toastId = 
+            toast('Registering New Customer...', {
+                type: 'info',
+                autoClose: 30000,
+            });
+
+        this.props.registerCustomer(values, toastId);
     }
 
     registerEmployee = values => {
-        this.props.registerEmployee(values);
+        // generate unique toast
+        const toastId = 
+            toast('Registering New Employee...', {
+                type: 'info',
+                autoClose: 30000,
+            });
+
+        this.props.registerEmployee(values, toastId);
     }
 
     private renderRegisterCustomerForm() {

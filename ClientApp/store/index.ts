@@ -59,7 +59,7 @@ export const reducers = {
     employeeProfile: EmployeeProfile.reducer,
 
     lookup: Lookup.reducer,
-    form: formReducer
+    form: formReducer,
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

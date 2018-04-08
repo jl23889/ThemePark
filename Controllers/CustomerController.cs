@@ -51,7 +51,7 @@ namespace ThemePark.Controllers
                 try {
                     _context.Customer.Add(customer);
                     _context.SaveChanges();
-                    return Ok(); 
+                    return Ok(customer); 
                 }  
                 catch
                 {

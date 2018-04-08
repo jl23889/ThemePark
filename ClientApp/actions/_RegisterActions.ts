@@ -6,16 +6,18 @@ import axios from 'axios';
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
-export interface UserRegisterRequestAction {
-    type: 'USER_REGISTER_REQUEST';
+export interface UserRegisterActionInProgress {
+    type: 'USER_REGISTER_IN_PROGRESS';
 }
 
-export interface UserRegisterSuccessAction {
+export interface UserRegisterActionSuccess {
     type: 'USER_REGISTER_SUCCESS';
+    toastId: number;
 }
 
-export interface UserRegisterFailAction {
+export interface UserRegisterActionFail {
     type: 'USER_REGISTER_FAIL';
+    toastId: number;
 }
 
 export interface EnableCustomerFormAction {
@@ -28,8 +30,8 @@ export interface EnableEmployeeFormAction {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type RegisterActions =  UserRegisterRequestAction 
-    | UserRegisterSuccessAction | UserRegisterFailAction;
+export type RegisterActions =  UserRegisterActionInProgress 
+    | UserRegisterActionSuccess | UserRegisterActionFail;
 
 export type RegisterFormActions = EnableCustomerFormAction | EnableEmployeeFormAction;
 
@@ -38,27 +40,39 @@ export type RegisterFormActions = EnableCustomerFormAction | EnableEmployeeFormA
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    registerCustomer: (user): AppThunkAction<RegisterActions> => (dispatch, getState) => {
-        dispatch({ type: 'USER_REGISTER_REQUEST' }); 
+    registerCustomer: (user, toastId): AppThunkAction<RegisterActions> => (dispatch, getState) => {
+        dispatch({ type: 'USER_REGISTER_IN_PROGRESS' }); 
 
-        axios.post(`api/CustomerUser/Register`, user)
+        // first create a new customer
+        axios.post(`api/Customer/CreateNewCustomer`, user)
         .then(response => {
-            dispatch({ type: 'USER_REGISTER_SUCCESS' });
+            // if customer creation is successful, create customer login
+            user.customerId = response.data.customerId; // add customerId to user object
+            axios.post(`api/CustomerUser/Register`, user)
+            .then(response => {
+                dispatch({ type: 'USER_REGISTER_SUCCESS', toastId: toastId });
+            })
+            .catch(error => {
+                // delete the customer if unable to create customer login
+                axios.post(`api/Customer/DeleteCustomer`, user);
+                dispatch({ type: 'USER_REGISTER_FAIL', toastId: toastId });
+            })
         })
         .catch(error => {
-            dispatch({ type: 'USER_REGISTER_FAIL' });
+            dispatch({ type: 'USER_REGISTER_FAIL', toastId: toastId});
         })
+        
     },
 
-    registerEmployee: (user): AppThunkAction<RegisterActions> => (dispatch, getState) => {
-        dispatch({ type: 'USER_REGISTER_REQUEST' }); 
+    registerEmployee: (user, toastId): AppThunkAction<RegisterActions> => (dispatch, getState) => {
+        dispatch({ type: 'USER_REGISTER_IN_PROGRESS' }); 
 
         axios.post(`api/EmployeeUser/Register`, user)
         .then(response => {
-            dispatch({ type: 'USER_REGISTER_SUCCESS' });
+            dispatch({ type: 'USER_REGISTER_SUCCESS', toastId: toastId });
         })
         .catch(error => {
-            dispatch({ type: 'USER_REGISTER_FAIL' });
+            dispatch({ type: 'USER_REGISTER_FAIL', toastId: toastId });
         })
     },
 

@@ -28,7 +28,7 @@ let EmployeeForm = props => {
 
     // assigns profileImage if loaded
     const profileImage = 
-        (typeof props.initialValues !== 'undefined' && 
+        (props.initialValues != null && 
             props.initialValues.empProfileImage != null ?
             props.initialValues.empProfileImage : '')  
 

@@ -64,6 +64,7 @@ export interface Employee {
     empAddressCity: string;
     empAddressState: string;
     empAddressZipCode: string;
+    empProfileImage: string;
 }
 
 export interface EmployeeType {

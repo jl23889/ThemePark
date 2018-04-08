@@ -40,6 +40,13 @@ let EmployeeForm = props => {
     // assigns usaStatesList
     const stl = usaStatesList;
 
+    // assigns profileImage if loaded
+    const profileImage = 
+        (typeof props.initialValues !== 'undefined' && 
+            props.initialValues.empProfileImage != null ?
+            props.initialValues.empProfileImage : '')  
+
+
     return <div>
         <form onSubmit={handleSubmit}>
         <label>First Name</label>
@@ -92,6 +99,18 @@ let EmployeeForm = props => {
             component="input" 
             type="text" 
         />
+        <label>Profile Picture (URL)</label>
+        <Field 
+            name="empProfileImage" 
+            component="input" 
+            type="text" 
+        />
+        { profileImage != '' ? 
+            <div>
+                <h3>Current Picture</h3>
+                <img src={profileImage} alt="ProfileImage" width="200"/>
+            </div> : <div></div>
+        }
 
 		<button type="submit" disabled={pristine || submitting}>
 			Submit

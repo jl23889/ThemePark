@@ -19,6 +19,7 @@ namespace ThemePark.Entities
         public string EmpAddressCity { get; set; }
         public string EmpAddressState { get; set; }
         public string EmpAddressZipCode { get; set; }
+        public string EmpProfileImage { get; set; }
 
         public LookUpEmployeeType EmpTypeNavigation { get; set; }
         public ICollection<Maintenance> Maintenance { get; set; }

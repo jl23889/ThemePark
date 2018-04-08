@@ -207,6 +207,9 @@ namespace ThemePark.Entities
                     .IsRequired()
                     .HasColumnType("char(9)");
 
+                entity.Property(e => e.EmpProfileImage)
+                    .IsUnicode(false);
+
                 entity.HasOne(d => d.EmpTypeNavigation)
                     .WithMany(p => p.Employee)
                     .HasForeignKey(d => d.EmpType)

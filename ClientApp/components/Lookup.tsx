@@ -13,6 +13,7 @@ import EmployeeType from './lookupTables/EmployeeType';
 import RideStatus from './lookupTables/RideStatus';
 import RideType from './lookupTables/RideType';
 import TicketType from './lookupTables/TicketType';
+import WeatherType from './lookupTables/WeatherType';
 
 
 // At runtime, Redux will merge together...
@@ -49,7 +50,9 @@ class Lookup extends React.Component<DataProps, {}> {
     		case 'employeetype':
     			return <EmployeeType/>
             case 'tickettype':
-                return <TicketType/>
+                return <TicketType />
+            case 'weathertype':
+                return <WeatherType />
     		default:
     			return
     	}
@@ -72,6 +75,9 @@ class Lookup extends React.Component<DataProps, {}> {
         	</MenuItem>
             <MenuItem eventKey="4" href='/lookup/tickettype'>
                 Ticket Type
+            </MenuItem>
+            <MenuItem eventKey="5" href='/lookup/weathertype'>
+                Weather Type
             </MenuItem>
 
         </DropdownButton>

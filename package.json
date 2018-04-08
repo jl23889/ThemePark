@@ -44,8 +44,10 @@
   "dependencies": {
     "@types/react-router": "https://registry.npmjs.org/@types/react-router/-/react-router-4.0.12.tgz",
     "axios": "^0.18.0",
+    "moment": "^2.22.0",
     "react-big-calendar": "^0.19.0",
     "react-bootstrap": "^0.32.1",
+    "react-select": "^1.2.1",
     "react-table": "^6.8.0",
     "react-toastify": "^3.4.3",
     "redux-form": "https://registry.npmjs.org/redux-form/-/redux-form-7.3.0.tgz"

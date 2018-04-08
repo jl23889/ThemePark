@@ -83,6 +83,7 @@ let RegisterCustomerForm = props => {
                 name="addressState" 
                 component="select" 
             >
+            <option value='' disabled>Select State</option>
             {...stl.map(usaStatesOption)}
             </Field>
             <label>Zip Code</label>

@@ -76,6 +76,7 @@ let RideForm = props => {
             name="status" 
             component="select" 
         >
+            <option value='' disabled>Select Status</option>
             {...rsl.map(rideStatusOption)}
         </Field>
         <label>FastPass Possible</label>
@@ -89,6 +90,7 @@ let RideForm = props => {
             name="rideType" 
             component="select"
         >
+            <option value='' disabled>Select Type</option>
             {...rtl.map(rideTypeOption)}
         </Field>
 

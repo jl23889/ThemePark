@@ -13,20 +13,6 @@ function usaStatesOption(st) {
     return <option key={st.shortName} value={st.shortName}>{st.name}</option>
 }
 
-// format dateString so it shows as initial value 
-// YYYY-MM-dd
-function formatDate(dateString) {
-    var d = new Date(dateString),
-        month = '' + (d.getMonth()+1),
-        day = '' + (d.getDate()),
-        year = '' + d.getFullYear();
-
-    if (month.length<2) month = '0' + month;
-    if (day.length<2) day = '0' + day;
-
-    return [year,month,day].join('-');
-}
-
 let EmployeeForm = props => {
 
     const { handleSubmit, pristine, reset, submitting } = props;
@@ -45,7 +31,6 @@ let EmployeeForm = props => {
         (typeof props.initialValues !== 'undefined' && 
             props.initialValues.empProfileImage != null ?
             props.initialValues.empProfileImage : '')  
-
 
     return <div>
         <form onSubmit={handleSubmit}>
@@ -66,6 +51,7 @@ let EmployeeForm = props => {
             name="empType" 
             component="select"
         >
+        <option value='' disabled>Select Type</option>
         {...etl.map(employeeTypeOption)}
         </Field>
         <label>Phone Number</label>
@@ -91,6 +77,7 @@ let EmployeeForm = props => {
             name="empAddressState" 
             component="select" 
         >
+        <option value='' disabled>Select State</option>
         {...stl.map(usaStatesOption)}
         </Field>
         <label>Zip Code</label>

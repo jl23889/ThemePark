@@ -53,6 +53,15 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideSelected: state.rideSelected,
                 reloadRides: false
             }
+        case 'FETCH_RIDE_SUCCESS':
+            return {
+                loadingRideList: state.loadingRideList,
+                rideList: state.rideList,
+                rideStatusList: state.rideStatusList,
+                rideTypeList: state.rideTypeList,
+                rideSelected: state.rideSelected,
+                reloadRides: state.reloadRides
+            }
         case 'CREATE_RIDE':
             return {
                 loadingRideList: state.loadingRideList,

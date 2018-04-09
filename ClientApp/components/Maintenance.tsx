@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
+import { ApplicationState, AppThunkAction }  from '../store';
+
 import * as MaintenanceState from '../store/Maintenance';
 import * as MaintenanceActions from '../actions/_MaintenanceActions';
 import * as EmployeeActions from '../actions/_EmployeeActions';
 import * as RideActions from '../actions/_RideActions';
 
 import MaintenanceForm from './forms/MaintenanceForm';
+import { MaintenanceListItem } from './MaintenanceListItem';
 
-import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
 
@@ -96,28 +99,14 @@ class Maintenance extends React.Component<DataProps, {}> {
     }
 
     private renderMaintenanceList() {
-        console.log(this.props.maintenanceList);
-        const maintenanceList = this.props.maintenanceList;
-
         return <ListGroup>
-            {maintenanceList.map(item => 
-                <ListGroupItem
+            {this.props.maintenanceList.map(item => 
+                <MaintenanceListItem
                     key={'listItem'+item.maintenanceId}
-                    bsStyle={item.endDate!=null ? 'info' : 
-                        moment(item.startDate)<=moment() ? 'success' : 'warning'}>
-                    {item.startDate}
-                    <Button key={'listItemEditButton'+item.maintenanceId}
-                    >
-                        Edit
-                    </Button>
-                    <Button 
-                        key={'listItemButton'+item.maintenanceId}
-                        disabled={item.endDate!=null || moment(item.startDate)>=moment()}
-                    >
-                        Mark as Complete
-                    </Button>
-                    
-                </ListGroupItem>
+                    maintenance={item}
+                    updateMaintenance={this.props.updateMaintenance}
+                    >                                      
+                </MaintenanceListItem>
             )}
         </ListGroup>
     }

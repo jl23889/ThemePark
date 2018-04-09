@@ -16,6 +16,11 @@ export interface FetchRidesActionSuccess {
     rideList: Ride[];
 }
 
+export interface FetchRideActionSuccess {
+    type: 'FETCH_RIDE_SUCCESS';
+    ride: Ride;
+}
+
 export interface CreateRideAction {
     type: 'CREATE_RIDE';
 }
@@ -36,7 +41,8 @@ export interface DeleteRideAction {
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 
-export type RideActions = FetchRidesActionInProgress | FetchRidesActionSuccess |
+export type RideActions = FetchRidesActionInProgress | 
+    FetchRidesActionSuccess | FetchRideActionSuccess |
     CreateRideAction | UpdateRideAction | UpdateRideActionFail | DeleteRideAction;
 
 // ----------------
@@ -58,6 +64,16 @@ export const actionCreators = {
                 // error dispatch goes here
             })
         }
+    },
+    // get a single ride by id
+    requestRide: (id): AppThunkAction<RideActions> => (dispatch, getState) => {
+        axios.get(`api/Employee/GetRide`, id)
+        .then(response => {
+            dispatch({ type: 'FETCH_RIDE_SUCCESS', ride: response.data });
+        })
+        .catch(error => {
+            // error dispatch goes here
+        })
     },
     createNewRide: (values): AppThunkAction<RideActions> => (dispatch, getState) => {
         axios.post(`api/Ride/CreateNewRide`, values)
@@ -88,3 +104,12 @@ export const actionCreators = {
         );
     },
 };
+
+// Individual actions (these are used by functional components) 
+// get a single employee by id
+export function requestRide(id) {
+    return axios.get(`api/Ride/GetRide`, 
+        { params: {
+            id: id 
+        }})
+}

@@ -75,7 +75,7 @@ export interface EmployeeType {
 // MAINTENANCE 
 //////////////
 export interface Maintenance {
-    maintenanceId: number;
+    maintenanceId: string;
     startDate: Date;
     endDate: Date;
     mainType: string;

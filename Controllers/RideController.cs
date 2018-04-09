@@ -31,6 +31,13 @@ namespace ThemePark.Controllers
             return _context.Ride.ToList();
         }
 
+        // return a single ride by rideId passed in as param
+        [HttpGet("[action]")]
+        public Ride GetRide(string id)
+        {
+            return _context.Ride.Find(id);
+        }
+
         [HttpPost("[action]")]
         public IActionResult CreateNewRide([FromBody] Ride ride)
         {

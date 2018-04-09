@@ -145,3 +145,12 @@ export const actionCreators = {
         );
     },
 };
+
+// Individual actions (these are used by functional components) 
+// get a single employee by id
+export function requestEmployee(id) {
+    return axios.get(`api/Employee/GetEmployee`, 
+        { params: {
+            id: id 
+        }})
+}

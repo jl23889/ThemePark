@@ -15,7 +15,7 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
-
+import BigCalendar from 'react-big-calendar'
 import * as moment from 'moment';
 
 const actionCreators = Object.assign(
@@ -27,11 +27,11 @@ const actionCreators = Object.assign(
 type DataProps =
     MaintenanceState.MaintenanceState        // ... state we've requested from the Redux store
     & typeof actionCreators    // ... plus action creators we've requested
-    & RouteComponentProps<{}>; // ... plus incoming routing parameters
+    & RouteComponentProps<{viewType: string}>; // ... plus incoming routing parameters
 
 class Maintenance extends React.Component<DataProps, {}> {
     componentDidMount() {
-        // This method runs when the component is first added to the page        
+        // This method runs when the component is first added to the page  
         this.props.requestMaintenanceEmployees();
         this.props.requestRidesList();
         this.props.requestMaintenanceList();
@@ -51,10 +51,51 @@ class Maintenance extends React.Component<DataProps, {}> {
         return <div>
             <h3>Add Maintenance Form</h3>
             { this.renderCreateNewForm() }
-
-            <h3>List View</h3>
-            { this.renderMaintenanceList() }
+            { this.renderMaintenanceView() }
         </div>
+    }
+
+    private renderMaintenanceView() {
+        switch (this.props.match.params.viewType) {
+            case 'calendar':
+                BigCalendar.momentLocalizer(moment); 
+                console.log(this.props.maintenanceList);
+                const calendarEvents = this.props.maintenanceList.map(item => 
+                    ({
+                        id: item.maintenanceId,
+                        title: item.rideId,
+                        allDay: true,
+                        start: new Date(item.startDate),
+                        end: new Date(item.endDate),
+                    }))
+                console.log(calendarEvents);
+                return <div>
+                    <h3>Calendar View</h3>
+                    <Link to='/maintenance/list'>List View</Link>
+                    <div className='calendar-container'><BigCalendar
+                        events={calendarEvents}
+                        defaultDate={new Date()}
+                        views={['month']}
+                        popup={true}
+                        showMultiDayTimes
+                    />
+                </div></div>
+            default:
+                return <div>
+                    <h3>List View</h3>
+                    <Link to='/maintenance/calendar'>Calendar View</Link>
+                    <ListGroup>
+                        {this.props.maintenanceList.map(item => 
+                            <MaintenanceListItem
+                                key={'listItem'+item.maintenanceId}
+                                maintenance={item}
+                                updateMaintenance={this.props.updateMaintenance}
+                                >                                      
+                            </MaintenanceListItem>
+                        )}
+                    </ListGroup>
+                </div>
+        }
     }
 
     createNewMaintenance = values => {
@@ -96,19 +137,6 @@ class Maintenance extends React.Component<DataProps, {}> {
                 maintenanceEmployeeList: this.props.maintenanceEmployeeList,
             }}
         />
-    }
-
-    private renderMaintenanceList() {
-        return <ListGroup>
-            {this.props.maintenanceList.map(item => 
-                <MaintenanceListItem
-                    key={'listItem'+item.maintenanceId}
-                    maintenance={item}
-                    updateMaintenance={this.props.updateMaintenance}
-                    >                                      
-                </MaintenanceListItem>
-            )}
-        </ListGroup>
     }
 }
 

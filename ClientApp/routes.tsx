@@ -25,7 +25,7 @@ export const routes =
     <Route path='/login' component={ Login } />
     <Route path='/register' component={ Register } />
     <Route path='/profile' component={ EmployeeProfile } />
-    <Route path='/maintenance' component={ Maintenance } />
+    <Route path='/maintenance/:viewType?' component={ Maintenance } />
 
     <Route path='/lookup/:tableToLoad?' component={ Lookup } />
 </Layout>;

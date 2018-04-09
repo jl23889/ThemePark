@@ -64,7 +64,9 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
         return <ListGroupItem
             key={'listGroupItem'+this.props.maintenance.maintenanceId}
             bsStyle={this.props.maintenance.endDate!=null ? 'info' : 
-                moment(this.props.maintenance.startDate)<=moment() ? 'success' : 'warning'}>
+                moment(this.props.maintenance.startDate)<=moment() ? 'success' : 'warning'}
+            header={this.props.maintenance.endDate!=null ? 'Completed' : 
+                moment(this.props.maintenance.startDate)<=moment() ? 'In Progress' : 'Scheduled'}>
             <div className="row">
                 <div className="col-md-4">
                     {this.state.ride!=null 

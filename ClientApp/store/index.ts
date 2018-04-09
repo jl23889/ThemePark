@@ -12,6 +12,7 @@ import * as Employees from './Employees'
 import * as EmployeeType from './EmployeeType'
 import * as EmployeeProfile from './EmployeeProfile'
 
+import * as Maintenance from './Maintenance'
 import * as Lookup from './Lookup'
 
 import { reducer as formReducer } from 'redux-form'
@@ -36,6 +37,8 @@ export interface ApplicationState {
     employees: Employees.EmployeesState;
     employeeType: EmployeeType.EmployeeTypeState;
     employeeProfile: EmployeeProfile.EmployeeProfileState;
+
+    maintenance: Maintenance.MaintenanceState;
 
     lookup: Lookup.LookupState;
     form: formState;
@@ -62,6 +65,8 @@ export const reducers = {
     employees: Employees.reducer,
     employeeType: EmployeeType.reducer,
     employeeProfile: EmployeeProfile.reducer,
+
+    maintenance: Maintenance.reducer,
 
     lookup: Lookup.reducer,
     form: formReducer,

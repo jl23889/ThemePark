@@ -72,6 +72,18 @@ export interface EmployeeType {
     employeeType: string;
 }
 
+// MAINTENANCE 
+//////////////
+export interface Maintenance {
+    maintenanceId: number;
+    startDate: Date;
+    endDate: Date;
+    mainType: string;
+    description: string;
+    rideId: string;
+    managerEmployeeId: string;
+}
+
 // TICKET TYPE 
 //////////////
 export interface TicketType {

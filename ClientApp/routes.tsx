@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 
 import EmployeeProfile from './components/EmployeeProfile';
+import Maintenance from './components/Maintenance';
 
 import Counter from './components/Counter';
 import { ToastContainer } from 'react-toastify';
@@ -24,6 +25,7 @@ export const routes =
     <Route path='/login' component={ Login } />
     <Route path='/register' component={ Register } />
     <Route path='/profile' component={ EmployeeProfile } />
+    <Route path='/maintenance' component={ Maintenance } />
 
     <Route path='/lookup/:tableToLoad?' component={ Lookup } />
 </Layout>;

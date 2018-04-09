@@ -66,6 +66,12 @@ class NavMenu extends React.Component<DataProps, {}> {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
                 <li>
+                    <Link to={ '/maintenance' }>
+                        <span className='glyphicon glyphicon-calendar'></span> 
+                            Ride Maintenance Schedule
+                    </Link>
+                </li>
+                <li>
                     <Link to={ '/lookup' }>
                         <span className='glyphicon glyphicon-th-list'></span> LookupTables
                     </Link>

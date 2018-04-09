@@ -13,42 +13,37 @@ using Microsoft.Extensions.Logging;
 namespace ThemePark.Controllers
 {
 	[Route("api/[controller]")]
-    public class EmployeeController : Controller
+    public class MaintenanceController : Controller
     {
 
         private readonly DataContext _context;
         private readonly ILogger _logger;
 
-        public EmployeeController(DataContext context, ILogger<SampleDataController> logger)
+        public MaintenanceController(DataContext context, ILogger<SampleDataController> logger)
         {
             _context = context;
             _logger = logger;
         }
 
+        // return all maintenances ordered by start date
         [HttpGet("[action]")]
-        public IEnumerable<Employee> GetEmployees()
+        public IEnumerable<Maintenance> GetMaintenances()
         {
-            return _context.Employee.ToList();
+            return _context.Maintenance
+            .OrderByDescending(m => m.StartDate)
+            .ToList();
         }
 
+        // return a single maintenance by maintenanceId passed in as param
         [HttpGet("[action]")]
-
-        // get all maintenance employees( maint employees have EmpType 2 )
-        public IEnumerable<Employee> GetMaintenanceEmployees()
+        public Maintenance GetMaintenance(string id)
         {
-            return _context.Employee.Where(e => e.EmpType == 2).ToList();
-        }
-
-        // return a single employee by employeeId passed in as param
-        [HttpGet("[action]")]
-        public Employee GetEmployee(string id)
-        {
-            return _context.Employee.Find(id);
+            return _context.Maintenance.Find(id);
         }
 
 
         [HttpPost("[action]")]
-        public IActionResult CreateNewEmployee([FromBody] Employee employee)
+        public IActionResult CreateNewMaintenance([FromBody] Maintenance maintenance)
         {
             // check if id generated is unique
             // TODO: add some kind of timeout or max retries to while loop
@@ -56,16 +51,16 @@ namespace ThemePark.Controllers
             string uid;
             while (!uniqueIdFound) {
                 uid = IdGenerator._generateUniqueId(); // id generator helper method
-                if (_context.Employee.Find(uid) == null) {
+                if (_context.Maintenance.Find(uid) == null) {
                     uniqueIdFound = true;
-                    employee.EmployeeId = uid;
+                    maintenance.MaintenanceId = uid;
                 }
             }
 
-            if (ModelState.IsValid && employee != null) 
+            if (ModelState.IsValid && maintenance != null) 
             {
                 try {
-                    _context.Employee.Add(employee);
+                    _context.Maintenance.Add(maintenance);
                     _context.SaveChanges();
                     return Ok(); 
                 }  
@@ -78,12 +73,12 @@ namespace ThemePark.Controllers
         }
 
         [HttpPut("[action]")]
-        public IActionResult UpdateEmployee([FromBody]Employee employee)
+        public IActionResult UpdateMaintenance([FromBody]Maintenance maintenance)
         {
-            if (ModelState.IsValid && employee != null) 
+            if (ModelState.IsValid && maintenance != null) 
             {
                 try {
-                    _context.Employee.Update(employee);
+                    _context.Maintenance.Update(maintenance);
                     _context.SaveChanges();
                     return Ok(); 
                 }  
@@ -96,13 +91,13 @@ namespace ThemePark.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult DeleteEmployee([FromBody]Employee e)
+        public IActionResult DeleteMaintenance([FromBody]Maintenance m)
         {
-            var employee = _context.Employee.Find(e.EmployeeId);
-            if (employee != null) 
+            var maintenance = _context.Maintenance.Find(m.MaintenanceId);
+            if (maintenance != null) 
             {
                 try {
-                    _context.Employee.Remove(employee);
+                    _context.Maintenance.Remove(maintenance);
                     _context.SaveChanges();
                     return Ok(); 
                 }  

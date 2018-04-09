@@ -1,6 +1,4 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization; // used for authorization
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +10,18 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.IdentityModel.Tokens.Jwt; // used to generate token
-using System.Security.Claims;
 using System.Text;
 using ThemePark.Entities;
 using ThemePark.Helpers;
 
+// jwt token auth
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+
 namespace ThemePark.Controllers
 {
+    [Authorize]
 	[Route("api/[controller]")]
     public class EmployeeUserController : Controller
     {
@@ -43,6 +46,7 @@ namespace ThemePark.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult Authenticate([FromBody] EmployeeUserDataModel userModel)
         {
@@ -81,6 +85,7 @@ namespace ThemePark.Controllers
 			});
         }
 
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult Register([FromBody]EmployeeUserDataModel userModel)
         {

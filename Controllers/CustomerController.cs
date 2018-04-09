@@ -10,8 +10,14 @@ using ThemePark.Entities;
 using ThemePark.Helpers;
 using Microsoft.Extensions.Logging;
 
+// jwt token auth
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+
 namespace ThemePark.Controllers
 {
+    [Authorize]
 	[Route("api/[controller]")]
     public class CustomerController : Controller
     {
@@ -25,6 +31,7 @@ namespace ThemePark.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public IEnumerable<Customer> GetCustomers()
         {

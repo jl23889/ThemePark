@@ -9,8 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 using ThemePark.Entities;
 using Microsoft.Extensions.Logging;
 
+// jwt token auth
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+
 namespace ThemePark.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class RideTypeController : Controller
     {
@@ -23,6 +29,7 @@ namespace ThemePark.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public IEnumerable<LookUpRideType> LookUpRideType()
         {

@@ -10,8 +10,14 @@ using ThemePark.Entities;
 using ThemePark.Helpers;
 using Microsoft.Extensions.Logging;
 
+// jwt token auth
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+
 namespace ThemePark.Controllers
 {
+    [Authorize]
 	[Route("api/[controller]")]
     public class EmployeeController : Controller
     {
@@ -25,20 +31,22 @@ namespace ThemePark.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public IEnumerable<Employee> GetEmployees()
         {
             return _context.Employee.ToList();
         }
 
+        [AllowAnonymous]
         [HttpGet("[action]")]
-
         // get all maintenance employees( maint employees have EmpType 2 )
         public IEnumerable<Employee> GetMaintenanceEmployees()
         {
             return _context.Employee.Where(e => e.EmpType == 2).ToList();
         }
 
+        [AllowAnonymous]
         // return a single employee by employeeId passed in as param
         [HttpGet("[action]")]
         public Employee GetEmployee(string id)

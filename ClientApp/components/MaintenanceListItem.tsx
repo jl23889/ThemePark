@@ -6,6 +6,7 @@ import { ApplicationState, AppThunkAction }  from '../store';
 import * as MaintenanceActions from '../actions/_MaintenanceActions';
 import { requestEmployee } from '../actions/_EmployeeActions';
 import { requestRide } from '../actions/_RideActions';
+import { requestMaintenance } from '../actions/_MaintenanceActions';
 import { Employee, Maintenance, Ride } from '../models/_DataModels'
 
 import MaintenanceForm from './forms/MaintenanceForm';
@@ -70,8 +71,19 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                 type: 'info'
             });
 
-        this.props.maintenance.endDate = new Date();
-        this.props.updateMaintenance(this.props.maintenance, toastId);
+        this.state.maintenance.endDate = new Date();
+        this.props.updateMaintenance(this.state.maintenance, toastId);
+    }
+
+    markActive = () => {
+        // generate unique toast
+        const toastId = 
+            toast('Setting Maintenance As Active...', {
+                type: 'info'
+            });
+
+        this.state.maintenance.endDate = null;
+        this.props.updateMaintenance(this.state.maintenance, toastId);
     }
 
     updateMaintenance = values => {
@@ -84,19 +96,16 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
         this.props.updateMaintenance(values, toastId);
 
         // update this component state with updated values
-        this.setState({
-            maintenance: values,
-            editMode: false,
-        })
-
         // nest the network requests so that rerendering occurs
         requestRide(values.rideId)
             .then(rideResponse=>{
                 requestEmployee(values.managerEmployeeId)
                 .then(empResponse=>{
                     this.setState({
+                        maintenance: values,
                         ride: rideResponse.data,
                         employee: empResponse.data,
+                        editMode: false
                     })
                 });
             });
@@ -144,13 +153,20 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                         >
                             Edit
                         </Button>
-                        { this.props.maintenance.endDate!=null || moment(this.state.maintenance.startDate)>=moment() ? ''
-                            : <Button 
-                                key={'listItemButton'+this.props.maintenance.maintenanceId}
-                                onClick={this.markComplete}
-                            >
-                                Mark as Complete
-                            </Button>
+                        { this.props.maintenance.endDate==null ?
+                            ( moment(this.state.maintenance.startDate)<=moment() ?
+                                <Button 
+                                    key={'listItemCompleteButton'+this.props.maintenance.maintenanceId}
+                                    onClick={this.markComplete}
+                                >
+                                    Mark as Complete
+                                </Button> : '')
+                                : <Button 
+                                    key={'listItemActiveButton'+this.props.maintenance.maintenanceId}
+                                    onClick={this.markActive}
+                                >
+                                    Mark as Active
+                                </Button>
                         }
                     </div>
                 </div>

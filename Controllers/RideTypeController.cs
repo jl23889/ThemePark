@@ -23,7 +23,7 @@ namespace ThemePark.Controllers
         private readonly DataContext _context;
         private readonly ILogger _logger;
 
-        public RideTypeController(DataContext context, ILogger<SampleDataController> logger)
+        public RideTypeController(DataContext context, ILogger<RideTypeController> logger)
         {
             _context = context;
             _logger = logger;

@@ -34,7 +34,7 @@ namespace ThemePark.Controllers
 
         public CustomerUserController(
         	DataContext context, 
-        	ILogger<SampleDataController> logger,
+        	ILogger<CustomerUserController> logger,
         	IOptions<AppSettings> appSettings,
         	IUserAuthService userAuthService,
         	IMapper mapper)

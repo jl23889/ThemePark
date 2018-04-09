@@ -25,7 +25,7 @@ namespace ThemePark.Controllers
         private readonly DataContext _context;
         private readonly ILogger _logger;
 
-        public TicketController(DataContext context, ILogger<SampleDataController> logger)
+        public TicketController(DataContext context, ILogger<TicketController> logger)
         {
             _context = context;
             _logger = logger;

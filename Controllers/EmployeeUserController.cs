@@ -34,7 +34,7 @@ namespace ThemePark.Controllers
 
         public EmployeeUserController(
         	DataContext context, 
-        	ILogger<SampleDataController> logger,
+        	ILogger<EmployeeUserController> logger,
         	IOptions<AppSettings> appSettings,
         	IUserAuthService userAuthService,
         	IMapper mapper)

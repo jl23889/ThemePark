@@ -25,7 +25,7 @@ namespace ThemePark.Controllers
         private readonly DataContext _context;
         private readonly ILogger _logger;
 
-        public EmployeeController(DataContext context, ILogger<SampleDataController> logger)
+        public EmployeeController(DataContext context, ILogger<EmployeeController> logger)
         {
             _context = context;
             _logger = logger;

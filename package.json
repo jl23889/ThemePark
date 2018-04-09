@@ -50,6 +50,7 @@
     "react-select": "^1.2.1",
     "react-table": "^6.8.0",
     "react-toastify": "^3.4.3",
+    "reactstrap": "^5.0.0-beta.3",
     "redux-form": "https://registry.npmjs.org/redux-form/-/redux-form-7.3.0.tgz"
   }
 }

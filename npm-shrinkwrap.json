@@ -2529,11 +2529,26 @@
       "resolved": "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz",
       "dev": true
     },
+    "lodash.isfunction": {
+      "version": "3.0.9",
+      "from": "lodash.isfunction@>=3.0.9 <4.0.0",
+      "resolved": "https://registry.npmjs.org/lodash.isfunction/-/lodash.isfunction-3.0.9.tgz"
+    },
+    "lodash.isobject": {
+      "version": "3.0.2",
+      "from": "lodash.isobject@>=3.0.2 <4.0.0",
+      "resolved": "https://registry.npmjs.org/lodash.isobject/-/lodash.isobject-3.0.2.tgz"
+    },
     "lodash.memoize": {
       "version": "4.1.2",
       "from": "lodash.memoize@>=4.1.2 <5.0.0",
       "resolved": "https://registry.npmjs.org/lodash.memoize/-/lodash.memoize-4.1.2.tgz",
       "dev": true
+    },
+    "lodash.tonumber": {
+      "version": "4.0.3",
+      "from": "lodash.tonumber@>=4.0.3 <5.0.0",
+      "resolved": "https://registry.npmjs.org/lodash.tonumber/-/lodash.tonumber-4.0.3.tgz"
     },
     "lodash.uniq": {
       "version": "4.5.0",
@@ -2930,6 +2945,11 @@
       "from": "pinkie-promise@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.1.tgz",
       "dev": true
+    },
+    "popper.js": {
+      "version": "1.14.3",
+      "from": "popper.js@>=1.12.9 <2.0.0",
+      "resolved": "https://registry.npmjs.org/popper.js/-/popper.js-1.14.3.tgz"
     },
     "posix-character-classes": {
       "version": "0.1.1",
@@ -3463,6 +3483,28 @@
       "from": "react-overlays@>=0.8.0 <0.9.0",
       "resolved": "https://registry.npmjs.org/react-overlays/-/react-overlays-0.8.3.tgz"
     },
+    "react-popper": {
+      "version": "0.8.3",
+      "from": "react-popper@>=0.8.3 <0.9.0",
+      "resolved": "https://registry.npmjs.org/react-popper/-/react-popper-0.8.3.tgz",
+      "dependencies": {
+        "fbjs": {
+          "version": "0.8.16",
+          "from": "fbjs@>=0.8.16 <0.9.0",
+          "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.8.16.tgz"
+        },
+        "prop-types": {
+          "version": "15.6.1",
+          "from": "prop-types@>=15.6.0 <16.0.0",
+          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.6.1.tgz"
+        }
+      }
+    },
+    "react-portal": {
+      "version": "4.1.4",
+      "from": "react-portal@>=4.1.2 <5.0.0",
+      "resolved": "https://registry.npmjs.org/react-portal/-/react-portal-4.1.4.tgz"
+    },
     "react-prop-types": {
       "version": "0.4.0",
       "from": "react-prop-types@>=0.4.0 <0.5.0",
@@ -3529,6 +3571,11 @@
       "version": "2.3.0",
       "from": "react-transition-group@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/react-transition-group/-/react-transition-group-2.3.0.tgz"
+    },
+    "reactstrap": {
+      "version": "5.0.0-beta.3",
+      "from": "reactstrap@next",
+      "resolved": "https://registry.npmjs.org/reactstrap/-/reactstrap-5.0.0-beta.3.tgz"
     },
     "read-pkg": {
       "version": "1.1.0",

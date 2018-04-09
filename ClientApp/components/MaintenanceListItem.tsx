@@ -10,22 +10,21 @@ import { Employee, Maintenance, Ride } from '../models/_DataModels'
 
 import MaintenanceForm from './forms/MaintenanceForm';
 
-import { ListGroupItem } from 'react-bootstrap';
+import { Image, ListGroupItem } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { toast } from 'react-toastify';
-import { displayToast } from '../helpers/_displayToast'
 
 import * as moment from 'moment';
 
 interface ListItemProps {
     maintenance: Maintenance;
-    updateMaintenance: (values, toastId) => AppThunkAction<MaintenanceActions.MaintenanceActions>;    
+    updateMaintenance: (values, toastId) => AppThunkAction<MaintenanceActions.MaintenanceActions>;
 } 
 
 interface ListItemState {
-    maintenance: Maintenance,
-    ride: Ride,
-    employee: Employee
+    maintenance: Maintenance;
+    ride: Ride;
+    employee: Employee;
 }
 
 export class MaintenanceListItem extends React.Component<ListItemProps,ListItemState> {
@@ -51,8 +50,14 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
     }
 
     markComplete = () => {
+        // generate unique toast
+        const toastId = 
+            toast('Setting Maintenance As Completed...', {
+                type: 'info'
+            });
+
         this.props.maintenance.endDate = new Date();
-        this.props.updateMaintenance(this.props.maintenance, null);
+        this.props.updateMaintenance(this.props.maintenance, toastId);
     }
 
     render() {
@@ -62,20 +67,21 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                 moment(this.props.maintenance.startDate)<=moment() ? 'success' : 'warning'}>
             <div className="row">
                 <div className="col-md-4">
-                    Start Date: {this.props.maintenance.startDate}
-                    <br/>
-                    {this.props.maintenance.endDate!=null 
-                        ? 'End Date: ' + this.props.maintenance.endDate 
-                        : ''}
-                </div>
-                <div className="col-md-4">
                     {this.state.ride!=null 
                         ? 'Ride: ' + this.state.ride.rideName 
                         : ''}
                     <br/>
                     {this.state.employee!=null 
                         ? 'Managing Employee: ' + this.state.employee.empFirstName + ' '
-                            + this.state.employee.empLastName 
+                            + this.state.employee.empLastName
+                        : ''}
+                    <Image src={this.state.employee!=null ? this.state.employee.empProfileImage : ''} responsive/>
+                </div>
+                <div className="col-md-4">
+                    Start Date: {moment(this.props.maintenance.startDate).format('MM-DD-YYYY')}
+                    <br/>
+                    {this.props.maintenance.endDate!=null 
+                        ? 'End Date: ' + moment(this.props.maintenance.endDate).format('MM-DD-YYYY') 
                         : ''}
                 </div>
                 <div className="col-md-4">

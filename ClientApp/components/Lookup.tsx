@@ -64,20 +64,30 @@ class Lookup extends React.Component<DataProps, {}> {
             title={'Select Table'}
             id={`dropdown-basic`}
         >
-            <MenuItem eventKey="1" href='/lookup/ridestatus'>
-            	Ride Status
+            <MenuItem eventKey="1">
+                <Link to='/lookup/ridestatus'>
+            	    Ride Status
+                </Link>
             </MenuItem>
-            <MenuItem eventKey="2" href='/lookup/ridetype'>
-            	Ride Type
+            <MenuItem eventKey="2">
+                <Link to='/lookup/ridetype'>
+            	    Ride Type
+                </Link>
         	</MenuItem>
-            <MenuItem eventKey="3" href='/lookup/employeetype'>
-            	Employee Type
+            <MenuItem eventKey="3">
+                <Link to='/lookup/employeetype'>
+            	    Employee Type
+                </Link>
         	</MenuItem>
-            <MenuItem eventKey="4" href='/lookup/tickettype'>
-                Ticket Type
+            <MenuItem eventKey="4">
+                <Link to='/lookup/tickettype'>
+                    Ticket Type
+                </Link>
             </MenuItem>
-            <MenuItem eventKey="5" href='/lookup/weathertype'>
-                Weather Type
+            <MenuItem eventKey="5">
+                <Link to='/lookup/weathertype'>
+                    Weather Type
+                </Link>
             </MenuItem>
 
         </DropdownButton>

@@ -90,6 +90,8 @@ class Maintenance extends React.Component<DataProps, {}> {
                                 key={'listItem'+item.maintenanceId}
                                 maintenance={item}
                                 updateMaintenance={this.props.updateMaintenance}
+                                rideList={this.props.rideList}
+                                employeeList={this.props.maintenanceEmployeeList}
                                 >                                      
                             </MaintenanceListItem>
                         )}

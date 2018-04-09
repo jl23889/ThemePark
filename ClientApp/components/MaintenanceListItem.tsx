@@ -10,8 +10,8 @@ import { Employee, Maintenance, Ride } from '../models/_DataModels'
 
 import MaintenanceForm from './forms/MaintenanceForm';
 
-import { Image, ListGroupItem } from 'react-bootstrap';
-import { Button } from 'reactstrap';
+import { Image } from 'react-bootstrap';
+import { Button, ListGroupItem, ListGroupItemHeading } from 'reactstrap';
 import { toast } from 'react-toastify';
 
 import * as moment from 'moment';
@@ -19,12 +19,15 @@ import * as moment from 'moment';
 interface ListItemProps {
     maintenance: Maintenance;
     updateMaintenance: (values, toastId) => AppThunkAction<MaintenanceActions.MaintenanceActions>;
+    rideList: Ride[];
+    employeeList: Employee[];
 } 
 
 interface ListItemState {
     maintenance: Maintenance;
     ride: Ride;
     employee: Employee;
+    editMode: boolean;
 }
 
 export class MaintenanceListItem extends React.Component<ListItemProps,ListItemState> {
@@ -35,18 +38,29 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
             maintenance: this.props.maintenance,
             ride: null,
             employee: null,
+            editMode: false,
         }
     }
 
     componentDidMount() {
-        requestRide(this.props.maintenance.rideId)
-            .then(response=>{
-                this.setState({ride: response.data})
+        requestRide(this.state.maintenance.rideId)
+            .then(rideResponse=>{
+                requestEmployee(this.state.maintenance.managerEmployeeId)
+                .then(empResponse=>{
+                    this.setState({
+                        ride: rideResponse.data,
+                        employee: empResponse.data,
+                    })
+                });
             });
-        requestEmployee(this.props.maintenance.managerEmployeeId)
-            .then(response=>{
-                this.setState({employee: response.data})
-            });
+    }
+
+    render() {
+        return <div>
+            { (this.state.editMode) ? 
+                this.renderEdit() : 
+                this.renderView()}
+        </div>
     }
 
     markComplete = () => {
@@ -60,13 +74,49 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
         this.props.updateMaintenance(this.props.maintenance, toastId);
     }
 
-    render() {
+    updateMaintenance = values => {
+        // generate unique toast
+        const toastId = 
+            toast('Updating Maintenance...', {
+                type: 'info'
+            });
+
+        this.props.updateMaintenance(values, toastId);
+
+        // update this component state with updated values
+        this.setState({
+            maintenance: values,
+            editMode: false,
+        })
+
+        // nest the network requests so that rerendering occurs
+        requestRide(values.rideId)
+            .then(rideResponse=>{
+                requestEmployee(values.managerEmployeeId)
+                .then(empResponse=>{
+                    this.setState({
+                        ride: rideResponse.data,
+                        employee: empResponse.data,
+                    })
+                });
+            });
+    }
+
+    toggleEdit = () => {
+        this.setState({
+            editMode: !this.state.editMode
+        })
+    }
+
+    private renderView() {
         return <ListGroupItem
-            key={'listGroupItem'+this.props.maintenance.maintenanceId}
-            bsStyle={this.props.maintenance.endDate!=null ? 'info' : 
-                moment(this.props.maintenance.startDate)<=moment() ? 'success' : 'warning'}
-            header={this.props.maintenance.endDate!=null ? 'Completed' : 
-                moment(this.props.maintenance.startDate)<=moment() ? 'In Progress' : 'Scheduled'}>
+            key={'listGroupItem'+this.state.maintenance.maintenanceId}
+            tag='div'
+            color={this.state.maintenance.endDate!=null ? 'info' : 
+                moment(this.state.maintenance.startDate)<=moment() ? 'success' : 'warning'}>
+            <ListGroupItemHeading>{this.state.maintenance.endDate!=null ? 'Completed' : 
+                moment(this.state.maintenance.startDate)<=moment() ? 'In Progress' : 'Scheduled'}
+            </ListGroupItemHeading>
             <div className="row">
                 <div className="col-md-4">
                     {this.state.ride!=null 
@@ -80,19 +130,21 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                     <Image src={this.state.employee!=null ? this.state.employee.empProfileImage : ''} responsive/>
                 </div>
                 <div className="col-md-4">
-                    Start Date: {moment(this.props.maintenance.startDate).format('MM-DD-YYYY')}
+                    Start Date: {moment(this.state.maintenance.startDate).format('MM-DD-YYYY')}
                     <br/>
                     {this.props.maintenance.endDate!=null 
-                        ? 'End Date: ' + moment(this.props.maintenance.endDate).format('MM-DD-YYYY') 
+                        ? 'End Date: ' + moment(this.state.maintenance.endDate).format('MM-DD-YYYY') 
                         : ''}
                 </div>
                 <div className="col-md-4">
                     <div className="pull-right">
-                        <Button key={'listItemEditButton'+this.props.maintenance.maintenanceId}
+                        <Button 
+                            key={'listItemEditButton'+this.props.maintenance.maintenanceId}
+                            onClick={this.toggleEdit}
                         >
                             Edit
                         </Button>
-                        { this.props.maintenance.endDate!=null || moment(this.props.maintenance.startDate)>=moment() ? ''
+                        { this.props.maintenance.endDate!=null || moment(this.state.maintenance.startDate)>=moment() ? ''
                             : <Button 
                                 key={'listItemButton'+this.props.maintenance.maintenanceId}
                                 onClick={this.markComplete}
@@ -105,4 +157,38 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
             </div>            
         </ListGroupItem>
     }
+
+    private renderEdit() {
+        return <ListGroupItem
+            key={'listGroupItem'+this.props.maintenance.maintenanceId}
+            tag='div'>
+            <ListGroupItemHeading>Editing</ListGroupItemHeading>
+            <div className="row">
+                <div className="col-md-8">
+                    <MaintenanceForm 
+                        onSubmit={this.updateMaintenance}
+                        form="updateMaintForm"
+                        initialValues={this.state.maintenance}
+                        props={{
+                            rideList: this.props.rideList,
+                            maintenanceEmployeeList: this.props.employeeList,
+                        }}
+                    />
+                </div>
+                <div className="col-md-4">
+                    <div className="pull-right">
+                        <Button 
+                            key={'listItemEditButton'+this.props.maintenance.maintenanceId}
+                            onClick={this.toggleEdit}
+                            outline color='secondary'
+                        >
+                            Back
+                        </Button>
+                    </div>
+                </div>
+            </div>            
+        </ListGroupItem>
+    }
 }
+
+

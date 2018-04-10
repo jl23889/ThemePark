@@ -1,6 +1,8 @@
 using AutoMapper;
+using System.Collections.Generic;
 using ThemePark.Helpers;
 using ThemePark.Entities;
+using ThemePark.DTO;
 
 namespace ThemePark.Helpers
 {
@@ -23,4 +25,37 @@ namespace ThemePark.Helpers
 			CreateMap<EmployeeUserDataModel, EmployeeLogin>();
 		}
 	}
+
+	// create automapper mappings
+	public class MaintenanceAutoMapperProfile : Profile
+	{
+		public MaintenanceAutoMapperProfile()
+		{
+			CreateMap<Maintenance, MaintenanceDTO>();
+            CreateMap<MaintenanceDTO, MaintenanceUpdate>();
+            CreateMap<MaintenanceUpdate, Maintenance>();
+		}
+	}
+	public class MaintenanceEmployeeWorksAtAutoMapperProfile : Profile
+	{
+		public MaintenanceEmployeeWorksAtAutoMapperProfile()
+		{
+			CreateMap<MaintenanceEmployeeWorksAt, MaintenanceEmployeeWorksAtDTO>();
+		}
+	}
+	public class MaintenanceEmployeeAutoMapperProfile : Profile
+	{
+		public MaintenanceEmployeeAutoMapperProfile()
+		{
+			CreateMap<Employee, MaintenanceEmployeeDTO>();
+		}
+	}
+	public class MaintenanceRideAutoMapperProfile : Profile
+	{
+		public MaintenanceRideAutoMapperProfile()
+		{
+			CreateMap<Ride, MaintenanceRideDTO>();
+		}
+	}
+
 }

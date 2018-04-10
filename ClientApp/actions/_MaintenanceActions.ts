@@ -1,6 +1,6 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
-import { Maintenance } from '../models/_DataModels';
+import { Employee, Maintenance } from '../models/_DataModels';
 import { authHeader } from '../helpers/_authHeader'
 import axios from 'axios';
 
@@ -128,7 +128,10 @@ export const actionCreators = {
                 toastId: toastId });
         })
         .catch(error => {
-            dispatch({ type: 'UPDATE_MAINT_FAIL', toastId: toastId })
+            dispatch({ 
+                type: 'UPDATE_MAINT_FAIL', 
+                toastId: toastId 
+            })
         })
     },
     deleteMaintenance: (values, toastId): AppThunkAction<MaintenanceActions> => (dispatch, getState) => {
@@ -156,3 +159,14 @@ export function requestMaintenance(id) {
             id: id 
         }})
 }
+
+export function updateMaintenance(values, toastId) {
+    //dispatch({ type: 'UPDATE_MAINT_IN_PROGRESS', toastId: toastId});
+    return axios({
+        method: 'put',
+        url: `api/Maintenance/UpdateMaintenance`,
+        data: values,
+        headers: authHeader(),
+    })
+}
+

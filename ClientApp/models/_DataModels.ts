@@ -81,11 +81,26 @@ export interface Maintenance {
     mainType: string;
     description: string;
     rideId: string;
+    ride: MaintenanceRide;
     managerEmployeeId: string;
+    managerEmployee: MaintenanceManagerEmployee;
+    maintenanceEmployeeWorksAt: MaintenanceEmployee;
+}
+
+export interface MaintenanceRide {
+    rideId: string;
+    rideName: string;
+}
+
+export interface MaintenanceManagerEmployee {
+    employeeId: string;
+    empFirstName: string;
+    empLastName: string;
+    empType: number;
+    empProfileImage: string;
 }
 
 export interface MaintenanceEmployee {
-    maintenanceId: string;
     employeeId: string;
 }
 

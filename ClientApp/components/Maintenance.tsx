@@ -63,7 +63,7 @@ class Maintenance extends React.Component<DataProps, {}> {
                 const calendarEvents = this.props.maintenanceList.map(item => 
                     ({
                         id: item.maintenanceId,
-                        title: item.rideId,
+                        title: item.ride.rideName,
                         allDay: true,
                         start: new Date(item.startDate),
                         end: new Date(item.endDate),
@@ -89,7 +89,6 @@ class Maintenance extends React.Component<DataProps, {}> {
                             <MaintenanceListItem
                                 key={'listItem'+item.maintenanceId}
                                 maintenance={item}
-                                updateMaintenance={this.props.updateMaintenance}
                                 rideList={this.props.rideList}
                                 employeeList={this.props.maintenanceEmployeeList}
                                 >                                      

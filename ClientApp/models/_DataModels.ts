@@ -84,11 +84,33 @@ export interface Maintenance {
     managerEmployeeId: string;
 }
 
-// TICKET TYPE 
+export interface MaintenanceEmployee {
+    maintenanceId: string;
+    employeeId: string;
+}
+
+// TICKET  
 //////////////
+export interface Ticket {
+    ticketId: string;
+    ticketType: number;
+    ticketPrice: number;
+    effectiveDate: Date;
+    expirationDate: Date;
+    fastPass: boolean;
+}
+
 export interface TicketType {
     ticketTypeId: number;
     ticketType: string;
+}
+
+// TRANSACTION  
+//////////////
+export interface Transaction {
+    transactionId: string;
+    customerId: string;
+    transactionType: number;
 }
 
 // WEATHER TYPE 

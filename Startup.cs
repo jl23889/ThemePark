@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using ThemePark.Entities;
 using ThemePark.Helpers;
 
@@ -35,7 +36,9 @@ namespace ThemePark
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddCors();
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddAutoMapper();
 
             // configure strongly typed settings objects

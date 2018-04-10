@@ -1,6 +1,7 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
 import { Employee } from '../models/_DataModels';
+import { authHeader } from '../helpers/_authHeader'
 import axios from 'axios';
 
 // -----------------
@@ -117,7 +118,12 @@ export const actionCreators = {
         })
     },
     createNewEmployee: (values): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
-        axios.post(`api/Employee/CreateNewEmployee`, values)
+        axios({
+            method: 'post',
+            url: `api/Employee/CreateNewEmployee`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(response => {
             dispatch({ type: 'CREATE_EMPLOYEE' });
         })
@@ -126,8 +132,12 @@ export const actionCreators = {
         })
     },
     updateEmployee: (values, toastId): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
-        console.log(values);
-        axios.put(`api/Employee/UpdateEmployee`, values)
+        axios({
+            method: 'put',
+            url: `api/Employee/UpdateEmployee`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(response => {
             dispatch({ type: 'UPDATE_EMPLOYEE_SUCCESS', toastId: toastId });
         })
@@ -136,8 +146,12 @@ export const actionCreators = {
         })
     },
     deleteEmployee: (values): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
-        // id is the employeeId
-        axios.post(`api/Employee/DeleteEmployee`, values)
+        axios({
+            method: 'post',
+            url: `api/Employee/DeleteEmployee`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'DELETE_EMPLOYEE' });

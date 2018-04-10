@@ -1,6 +1,7 @@
 ﻿import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
 import { WeatherType } from '../models/_DataModels'
+import { authHeader } from '../helpers/_authHeader'
 import axios from 'axios';
 
 // -----------------
@@ -44,28 +45,43 @@ export const actionCreators = {
         }
     },
     createNewWeatherType: (values): AppThunkAction<WeatherTypeActions> => (dispatch, getState) => {
-        axios.post(`api/WeatherType/CreateNewWeatherType`, values)
-            .then(
-            response => {
-                dispatch({ type: 'CREATE_WEATHER_TYPE' });
-            }
-            );
+        axios({
+            method: 'post',
+            url: `api/WeatherType/CreateNewWeatherType`,
+            data: values,
+            headers: authHeader(),
+        })
+        .then(
+        response => {
+            dispatch({ type: 'CREATE_WEATHER_TYPE' });
+        }
+        );
     },
     updateWeatherType: (values): AppThunkAction<WeatherTypeActions> => (dispatch, getState) => {
-        axios.put(`api/WeatherType/UpdateWeatherType`, values)
-            .then(
-            response => {
-                dispatch({ type: 'UPDATE_WEATHER_TYPE' });
-            }
-            );
+        axios({
+            method: 'put',
+            url: `api/WeatherType/UpdateWeatherType`,
+            data: values,
+            headers: authHeader(),
+        })
+        .then(
+        response => {
+            dispatch({ type: 'UPDATE_WEATHER_TYPE' });
+        }
+        );
     },
     deleteWeatherType: (values): AppThunkAction<WeatherTypeActions> => (dispatch, getState) => {
         // id is the WeatherTypeId
-        axios.post(`api/WeatherType/DeleteWeatherType`, values)
-            .then(
-            response => {
-                dispatch({ type: 'DELETE_WEATHER_TYPE' });
-            }
-            );
+        axios({
+            method: 'post',
+            url: `api/WeatherType/DeleteWeatherType`,
+            data: values,
+            headers: authHeader(),
+        })
+        .then(
+        response => {
+            dispatch({ type: 'DELETE_WEATHER_TYPE' });
+        }
+        );
     }
 };

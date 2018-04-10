@@ -1,6 +1,7 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
 import { TicketType } from '../models/_DataModels'
+import { authHeader } from '../helpers/_authHeader'
 import axios from 'axios';
 
 // -----------------
@@ -44,7 +45,12 @@ export const actionCreators = {
         }
     },
     createNewTicketType: (values): AppThunkAction<TicketTypeActions> => (dispatch, getState) => {
-        axios.post(`api/TicketType/CreateNewTicketType`, values)
+        axios({
+            method: 'post',
+            url: `api/TicketType/CreateNewTicketType`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'CREATE_TICKET_TYPE' });
@@ -52,7 +58,12 @@ export const actionCreators = {
         );
     },
     updateTicketType: (values): AppThunkAction<TicketTypeActions> => (dispatch, getState) => {
-        axios.put(`api/TicketType/UpdateTicketType`, values)
+        axios({
+            method: 'put',
+            url: `api/TicketType/UpdateTicketType`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'UPDATE_TICKET_TYPE' });
@@ -61,7 +72,12 @@ export const actionCreators = {
     },
     deleteTicketType: (values): AppThunkAction<TicketTypeActions> => (dispatch, getState) => {
         // id is the ticketTypeId
-        axios.post(`api/TicketType/DeleteTicketType`, values)
+        axios({
+            method: 'post',
+            url: `api/TicketType/DeleteTicketType`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'DELETE_TICKET_TYPE' });

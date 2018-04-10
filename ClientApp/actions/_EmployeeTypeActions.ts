@@ -1,6 +1,7 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
 import { EmployeeType } from '../models/_DataModels'
+import { authHeader } from '../helpers/_authHeader'
 import axios from 'axios';
 
 // -----------------
@@ -44,7 +45,12 @@ export const actionCreators = {
         }
     },
     createNewEmployeeType: (values): AppThunkAction<EmployeeTypeActions> => (dispatch, getState) => {
-        axios.post(`api/EmployeeType/CreateNewEmployeeType`, values)
+        axios({
+            method: 'post',
+            url: `api/EmployeeType/CreateNewEmployeeType`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'CREATE_EMPLOYEE_TYPE' });
@@ -52,7 +58,12 @@ export const actionCreators = {
         );
     },
     updateEmployeeType: (values): AppThunkAction<EmployeeTypeActions> => (dispatch, getState) => {
-        axios.put(`api/EmployeeType/UpdateEmployeeType`, values)
+        axios({
+            method: 'put',
+            url: `api/EmployeeType/UpdateEmployeeType`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'UPDATE_EMPLOYEE_TYPE' });
@@ -61,7 +72,12 @@ export const actionCreators = {
     },
     deleteEmployeeType: (values): AppThunkAction<EmployeeTypeActions> => (dispatch, getState) => {
         // id is the employeeTypeId
-        axios.post(`api/EmployeeType/DeleteEmployeeType`, values)
+        axios({
+            method: 'post',
+            url: `api/EmployeeType/DeleteEmployeeType`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'DELETE_EMPLOYEE_TYPE' });

@@ -1,6 +1,7 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
 import { RideStatus } from '../models/_DataModels'
+import { authHeader } from '../helpers/_authHeader'
 import axios from 'axios';
 
 // -----------------
@@ -44,7 +45,12 @@ export const actionCreators = {
         }
     },
     createNewRideStatus: (values): AppThunkAction<RideStatusActions> => (dispatch, getState) => {
-        axios.post(`api/RideStatus/CreateNewRideStatus`, values)
+        axios({
+            method: 'post',
+            url: `api/RideStatus/CreateNewRideStatus`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'CREATE_RIDE_STATUS' });
@@ -52,7 +58,12 @@ export const actionCreators = {
         );
     },
     updateRideStatus: (values): AppThunkAction<RideStatusActions> => (dispatch, getState) => {
-        axios.put(`api/RideStatus/UpdateRideStatus`, values)
+        axios({
+            method: 'put',
+            url: `api/RideStatus/UpdateRideStatus`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'UPDATE_RIDE_STATUS' });
@@ -61,7 +72,12 @@ export const actionCreators = {
     },
     deleteRideStatus: (values): AppThunkAction<RideStatusActions> => (dispatch, getState) => {
         // id is the rideStatusId
-        axios.post(`api/RideStatus/DeleteRideStatus`, values)
+        axios({
+            method: 'post',
+            url: `api/RideStatus/DeleteRideStatus`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(
             response => {
                 dispatch({ type: 'DELETE_RIDE_STATUS' });

@@ -1,6 +1,7 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
 import { Maintenance } from '../models/_DataModels';
+import { authHeader } from '../helpers/_authHeader'
 import axios from 'axios';
 
 // -----------------
@@ -98,8 +99,12 @@ export const actionCreators = {
     },
     createNewMaintenance: (values, toastId): AppThunkAction<MaintenanceActions> => (dispatch, getState) => {
         dispatch({ type: 'CREATE_MAINT_IN_PROGRESS', toastId: toastId});
-
-        axios.post(`api/Maintenance/CreateNewMaintenance`, values)
+        axios({
+            method: 'post',
+            url: `api/Maintenance/CreateNewMaintenance`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(response => {
             dispatch({ type: 'CREATE_MAINT_SUCCESS', 
                 maintenance: response.data, 
@@ -111,8 +116,12 @@ export const actionCreators = {
     },
     updateMaintenance: (values, toastId): AppThunkAction<MaintenanceActions> => (dispatch, getState) => {
         dispatch({ type: 'UPDATE_MAINT_IN_PROGRESS', toastId: toastId});
-
-        axios.put(`api/Maintenance/UpdateMaintenance`, values)
+        axios({
+            method: 'put',
+            url: `api/Maintenance/UpdateMaintenance`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(response => {
             dispatch({ type: 'UPDATE_MAINT_SUCCESS', 
                 maintenance: response.data, 
@@ -124,8 +133,12 @@ export const actionCreators = {
     },
     deleteMaintenance: (values, toastId): AppThunkAction<MaintenanceActions> => (dispatch, getState) => {
         dispatch({ type: 'DELETE_MAINT_IN_PROGRESS', toastId: toastId});
-
-        axios.post(`api/Maintenance/DeleteMaintenance`, values)
+        axios({
+            method: 'post',
+            url: `api/Maintenance/DeleteMaintenance`,
+            data: values,
+            headers: authHeader(),
+        })
         .then(response => {
             dispatch({ type: 'DELETE_MAINT_SUCCESS', toastId: toastId });
         })

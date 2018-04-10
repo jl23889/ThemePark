@@ -5,6 +5,11 @@ namespace ThemePark.Entities
 {
     public partial class Maintenance
     {
+        public Maintenance()
+        {
+            MaintenanceEmployeeWorksAt = new HashSet<MaintenanceEmployeeWorksAt>();
+        }
+
         public string MaintenanceId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
@@ -15,5 +20,6 @@ namespace ThemePark.Entities
 
         public Employee ManagerEmployee { get; set; }
         public Ride Ride { get; set; }
+        public ICollection<MaintenanceEmployeeWorksAt> MaintenanceEmployeeWorksAt { get; set; }
     }
 }

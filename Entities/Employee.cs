@@ -8,6 +8,7 @@ namespace ThemePark.Entities
         public Employee()
         {
             Maintenance = new HashSet<Maintenance>();
+            MaintenanceEmployeeWorksAt = new HashSet<MaintenanceEmployeeWorksAt>();
         }
 
         public string EmployeeId { get; set; }
@@ -22,6 +23,8 @@ namespace ThemePark.Entities
         public string EmpProfileImage { get; set; }
 
         public LookUpEmployeeType EmpTypeNavigation { get; set; }
+        public EmployeeLogin EmployeeLogin { get; set; }
         public ICollection<Maintenance> Maintenance { get; set; }
+        public ICollection<MaintenanceEmployeeWorksAt> MaintenanceEmployeeWorksAt { get; set; }
     }
 }

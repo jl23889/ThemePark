@@ -23,6 +23,7 @@ namespace ThemePark.Entities
         public virtual DbSet<LookUpTransactionType> LookUpTransactionType { get; set; }
         public virtual DbSet<LookUpWeatherType> LookUpWeatherType { get; set; }
         public virtual DbSet<Maintenance> Maintenance { get; set; }
+        public virtual DbSet<MaintenanceEmployeeWorksAt> MaintenanceEmployeeWorksAt { get; set; }
         public virtual DbSet<Ride> Ride { get; set; }
         public virtual DbSet<Shop> Shop { get; set; }
         public virtual DbSet<ShopItem> ShopItem { get; set; }
@@ -472,6 +473,29 @@ namespace ThemePark.Entities
                     .HasForeignKey(d => d.RideId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Maintenan__RideI__6D0D32F4");
+            });
+
+            modelBuilder.Entity<MaintenanceEmployeeWorksAt>(entity =>
+            {
+                entity.HasKey(e => new { e.MaintenanceId, e.EmployeeId });
+
+                entity.ToTable("MaintenanceEmployeeWorksAt", "THEMEPARK");
+
+                entity.Property(e => e.MaintenanceId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EmployeeId).HasColumnType("char(16)");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.MaintenanceEmployeeWorksAt)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MaintenanceEmployeeWorksAt_Employee");
+
+                entity.HasOne(d => d.Maintenance)
+                    .WithMany(p => p.MaintenanceEmployeeWorksAt)
+                    .HasForeignKey(d => d.MaintenanceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MaintenanceEmployeeWorksAt_Maintenance");
             });
 
             modelBuilder.Entity<Ride>(entity =>

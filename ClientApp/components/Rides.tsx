@@ -6,6 +6,7 @@ import * as RidesState from '../store/Rides';
 import * as RideActions from '../actions/_RideActions';
 import * as RideStatusActions from '../actions/_RideStatusActions';
 import * as RideTypeActions from '../actions/_RideTypeActions';
+import * as moment from 'moment'
 
 import RideForm from './forms/RideForm';
 
@@ -160,7 +161,7 @@ class Rides extends React.Component<DataProps, {}> {
                         filterable: false,
                         Cell: row => (
                             // convert dateString to Date object and convert it back to string
-                            new Date(row.value).toLocaleDateString()
+                            moment(new Date(row.value)).format('YYYY-MM-DD')
                         )
                     },
                     {
@@ -203,11 +204,6 @@ class Rides extends React.Component<DataProps, {}> {
                             }
                             return row.rideType == filter.value;
                         },
-                    },
-                    {
-                        Header: "Date of Last Maintenance",
-                        accessor: "lastMaintenanceSince",
-                        filterable: false
                     }
                 ]}
                 className="-striped -highlight"

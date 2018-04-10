@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form';
+import * as moment from 'moment'
 
 // generate option element from rideStatus
 function rideStatusOption(rs) {
@@ -12,31 +13,12 @@ function rideTypeOption(rt) {
     return <option key={rt.rideTypeId} value={rt.rideTypeId}>{rt.rideType}</option>
 }
 
-// format dateString so it shows as initial value 
-// YYYY-MM-dd
-function formatDate(dateString) {
-    var d = new Date(dateString),
-        month = '' + (d.getMonth()+1),
-        day = '' + (d.getDate()),
-        year = '' + d.getFullYear();
-
-    if (month.length<2) month = '0' + month;
-    if (day.length<2) day = '0' + day;
-
-    return [year,month,day].join('-');
-}
-
 let RideForm = props => {
     // format date initial values
     if (typeof props.initialValues !== 'undefined' &&
             typeof props.initialValues.installationDate !== 'undefined') {
         const dateString = props.initialValues.installationDate;
-        props.initialValues.installationDate = formatDate(dateString)
-    }
-    if (typeof props.initialValues !== 'undefined' &&
-            typeof props.initialValues.lastMaintenanceSince !== 'undefined') {
-        const dateString = props.initialValues.lastMaintenanceSince;
-        props.initialValues.lastMaintenanceSince = formatDate(dateString)
+        props.initialValues.installationDate = moment(dateString).format('YYYY-MM-DD')
     }
 
     const { handleSubmit, pristine, reset, submitting } = props;

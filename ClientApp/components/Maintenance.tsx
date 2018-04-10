@@ -84,18 +84,19 @@ class Maintenance extends React.Component<DataProps, {}> {
                 return <div>
                     <h3>List View</h3>
                     <Link to='/maintenance/calendar'>Calendar View</Link>
-                    <ListGroup>
-                        {this.props.maintenanceList.map(item => 
-                            <MaintenanceListItem
-                                key={'listItem'+item.maintenanceId}
-                                maintenance={item}
-                                updateMaintenance={this.props.updateMaintenance}
-                                rideList={this.props.rideList}
-                                employeeList={this.props.maintenanceEmployeeList}
-                                >                                      
-                            </MaintenanceListItem>
-                        )}
-                    </ListGroup>
+                        <ListGroup>
+                            {this.props.maintenanceList.map(item => 
+                                <MaintenanceListItem
+                                    key={'listItem'+item.maintenanceId}
+                                    maintenance={item}
+                                    updateMaintenance={this.props.updateMaintenance}
+                                    rideList={this.props.rideList}
+                                    employeeList={this.props.maintenanceEmployeeList}
+                                    >                                      
+                                </MaintenanceListItem>
+                            )}
+                        </ListGroup>
+                    }
                 </div>
         }
     }

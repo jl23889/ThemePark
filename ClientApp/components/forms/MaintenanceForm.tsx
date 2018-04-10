@@ -23,6 +23,20 @@ function rideOption(r) {
 let MaintenanceForm = props => {
     const { handleSubmit, pristine, reset, submitting } = props;
 
+    // format dates for datepicker
+    if (typeof props.initialValues !== 'undefined' &&
+            typeof props.initialValues.startDate !== 'undefined' &&
+            props.initialValues.startDate != null) {
+        const dateString = props.initialValues.startDate;
+        props.initialValues.startDate = moment(dateString).format('YYYY-MM-DD')
+    }
+    if (typeof props.initialValues !== 'undefined' &&
+            typeof props.initialValues.endDate !== 'undefined' &&
+            props.initialValues.endDate != null) {
+        const dateString = props.initialValues.endDate;
+        props.initialValues.endDate = moment(dateString).format('YYYY-MM-DD')
+    }
+
     // assigns maintenanceEmployeeList if they are loaded
     const mel =
         (typeof props.props !== 'undefined' &&

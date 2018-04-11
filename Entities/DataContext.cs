@@ -103,33 +103,43 @@ namespace ThemePark.Entities
                     .HasConstraintName("FK__Customer__Gender__05D8E0BE");
             });
 
-            modelBuilder.Entity<CustomerLogin>(entity => 
+            modelBuilder.Entity<CustomerLogin>(entity =>
             {
                 entity.HasKey(e => e.CustomerUserName);
 
                 entity.ToTable("CustomerLogin", "THEMEPARK");
 
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("UQ__Customer__A4AE64B96DDD2A13")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.CustomerUserName)
+                    .HasName("UQ__Customer__4F2A282CE4A0CEFC")
+                    .IsUnique();
+
+                entity.Property(e => e.CustomerUserName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
+
                 entity.Property(e => e.CustomerId)
                     .IsRequired()
                     .HasColumnName("CustomerID")
-                    .HasColumnType("char(16)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.CustomerUserName)
-                    .IsRequired()
-                    .HasColumnName("CustomerUserName")
-                    .HasMaxLength(30)
-                    .HasColumnType("varchar(30)");
+                    .HasColumnType("char(16)");
 
                 entity.Property(e => e.CustomerPasswordHash)
                     .IsRequired()
-                    .HasColumnName("CustomerPasswordHash")
                     .HasColumnType("binary(64)");
 
                 entity.Property(e => e.CustomerPasswordSalt)
                     .IsRequired()
-                    .HasColumnName("CustomerPasswordSalt")
                     .HasColumnType("binary(128)");
+
+                entity.HasOne(d => d.Customer)
+                    .WithOne(p => p.CustomerLogin)
+                    .HasForeignKey<CustomerLogin>(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__CustomerL__Custo__08B54D69");
             });
 
             modelBuilder.Entity<CustomerTransaction>(entity =>
@@ -204,8 +214,7 @@ namespace ThemePark.Entities
                     .IsRequired()
                     .HasColumnType("char(9)");
 
-                entity.Property(e => e.EmpProfileImage)
-                    .IsUnicode(false);
+                entity.Property(e => e.EmpProfileImage).IsUnicode(false);
 
                 entity.HasOne(d => d.EmpTypeNavigation)
                     .WithMany(p => p.Employee)
@@ -214,33 +223,43 @@ namespace ThemePark.Entities
                     .HasConstraintName("FK__Employee__EmpTyp__0B91BA14");
             });
 
-            modelBuilder.Entity<EmployeeLogin>(entity => 
+            modelBuilder.Entity<EmployeeLogin>(entity =>
             {
+                entity.HasKey(e => e.EmployeeUserName);
+
                 entity.ToTable("EmployeeLogin", "THEMEPARK");
 
-                entity.HasKey(e => e.EmployeeUserName);
+                entity.HasIndex(e => e.EmployeeId)
+                    .HasName("UQ__Employee__7AD04FF0BCB19E15")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.EmployeeUserName)
+                    .HasName("UQ__Employee__89DFCFF86856EF14")
+                    .IsUnique();
+
+                entity.Property(e => e.EmployeeUserName)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.EmployeeId)
                     .IsRequired()
                     .HasColumnName("EmployeeID")
-                    .HasColumnType("char(16)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.EmployeeUserName)
-                    .IsRequired()
-                    .HasColumnName("EmployeeUserName")
-                    .HasMaxLength(30)
-                    .HasColumnType("varchar(30)");
+                    .HasColumnType("char(16)");
 
                 entity.Property(e => e.EmployeePasswordHash)
                     .IsRequired()
-                    .HasColumnName("EmployeePasswordHash")
                     .HasColumnType("binary(64)");
 
                 entity.Property(e => e.EmployeePasswordSalt)
                     .IsRequired()
-                    .HasColumnName("EmployeePasswordSalt")
                     .HasColumnType("binary(128)");
+
+                entity.HasOne(d => d.Employee)
+                    .WithOne(p => p.EmployeeLogin)
+                    .HasForeignKey<EmployeeLogin>(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__EmployeeL__Emplo__0C85DE4D");
             });
 
             modelBuilder.Entity<Hotel>(entity =>
@@ -527,6 +546,60 @@ namespace ThemePark.Entities
                     .HasConstraintName("FK__Ride__Status__14270015");
             });
 
+            modelBuilder.Entity<RideEmployeeManages>(entity =>
+            {
+                entity.HasKey(e => new { e.RideId, e.EmployeeId });
+
+                entity.ToTable("RideEmployeeManages", "THEMEPARK");
+
+                entity.Property(e => e.RideId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EmployeeId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.RideEmployeeManages)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RideEmplo__Emplo__151B244E");
+
+                entity.HasOne(d => d.Ride)
+                    .WithMany(p => p.RideEmployeeManages)
+                    .HasForeignKey(d => d.RideId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RideEmplo__RideI__160F4887");
+            });
+
+            modelBuilder.Entity<RideEmployeeWorksAt>(entity =>
+            {
+                entity.HasKey(e => new { e.RideId, e.EmployeeId });
+
+                entity.ToTable("RideEmployeeWorksAt", "THEMEPARK");
+
+                entity.Property(e => e.RideId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EmployeeId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.RideEmployeeWorksAt)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RideEmplo__Emplo__17036CC0");
+
+                entity.HasOne(d => d.Ride)
+                    .WithMany(p => p.RideEmployeeWorksAt)
+                    .HasForeignKey(d => d.RideId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__RideEmplo__RideI__17F790F9");
+            });
+
             modelBuilder.Entity<Shop>(entity =>
             {
                 entity.ToTable("Shop", "THEMEPARK");
@@ -544,6 +617,60 @@ namespace ThemePark.Entities
                 entity.Property(e => e.ShopType)
                     .IsRequired()
                     .HasColumnType("char(1)");
+            });
+
+            modelBuilder.Entity<ShopEmployeeManages>(entity =>
+            {
+                entity.HasKey(e => new { e.ShopId, e.EmployeeId });
+
+                entity.ToTable("ShopEmployeeManages", "THEMEPARK");
+
+                entity.Property(e => e.ShopId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EmployeeId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.ShopEmployeeManages)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ShopEmplo__Emplo__18EBB532");
+
+                entity.HasOne(d => d.Shop)
+                    .WithMany(p => p.ShopEmployeeManages)
+                    .HasForeignKey(d => d.ShopId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ShopEmplo__ShopI__19DFD96B");
+            });
+
+            modelBuilder.Entity<ShopEmployeeWorksAt>(entity =>
+            {
+                entity.HasKey(e => new { e.ShopId, e.EmployeeId });
+
+                entity.ToTable("ShopEmployeeWorksAt", "THEMEPARK");
+
+                entity.Property(e => e.ShopId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EmployeeId).HasColumnType("char(16)");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.ShopEmployeeWorksAt)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ShopEmplo__Emplo__1AD3FDA4");
+
+                entity.HasOne(d => d.Shop)
+                    .WithMany(p => p.ShopEmployeeWorksAt)
+                    .HasForeignKey(d => d.ShopId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ShopEmplo__ShopI__1BC821DD");
             });
 
             modelBuilder.Entity<ShopItem>(entity =>
@@ -590,6 +717,52 @@ namespace ThemePark.Entities
                     .HasConstraintName("FK__Ticket__TicketTy__1F98B2C1");
             });
 
+            modelBuilder.Entity<TicketRideEnters>(entity =>
+            {
+                entity.HasKey(e => new { e.TicketId, e.RideId });
+
+                entity.ToTable("TicketRideEnters", "THEMEPARK");
+
+                entity.Property(e => e.TicketId).HasColumnType("char(16)");
+
+                entity.Property(e => e.RideId).HasColumnType("char(16)");
+
+                entity.HasOne(d => d.Ride)
+                    .WithMany(p => p.TicketRideEnters)
+                    .HasForeignKey(d => d.RideId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TicketRid__RideI__208CD6FA");
+
+                entity.HasOne(d => d.Ticket)
+                    .WithMany(p => p.TicketRideEnters)
+                    .HasForeignKey(d => d.TicketId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TicketRid__Ticke__2180FB33");
+            });
+
+            modelBuilder.Entity<TransactionTicketPurchases>(entity =>
+            {
+                entity.HasKey(e => new { e.TransactionId, e.TicketId });
+
+                entity.ToTable("TransactionTicketPurchases", "THEMEPARK");
+
+                entity.Property(e => e.TransactionId).HasColumnType("char(16)");
+
+                entity.Property(e => e.TicketId).HasColumnType("char(16)");
+
+                entity.HasOne(d => d.Ticket)
+                    .WithMany(p => p.TransactionTicketPurchases)
+                    .HasForeignKey(d => d.TicketId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Transacti__Ticke__2BFE89A6");
+
+                entity.HasOne(d => d.Transaction)
+                    .WithMany(p => p.TransactionTicketPurchases)
+                    .HasForeignKey(d => d.TransactionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Transacti__Trans__2B0A656D");
+            });
+
             modelBuilder.Entity<Weather>(entity =>
             {
                 entity.HasKey(e => e.Date);
@@ -603,6 +776,25 @@ namespace ThemePark.Entities
                     .HasForeignKey(d => d.WeatherType)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Weather__Weather__2A164134");
+            });
+
+            modelBuilder.Entity<WeatherTypeRideTypeAffects>(entity =>
+            {
+                entity.HasKey(e => new { e.WeatherTypeId, e.RideTypeId });
+
+                entity.ToTable("WeatherTypeRideTypeAffects", "THEMEPARK");
+
+                entity.HasOne(d => d.RideType)
+                    .WithMany(p => p.WeatherTypeRideTypeAffects)
+                    .HasForeignKey(d => d.RideTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__WeatherTy__RideT__2B0A656D");
+
+                entity.HasOne(d => d.WeatherType)
+                    .WithMany(p => p.WeatherTypeRideTypeAffects)
+                    .HasForeignKey(d => d.WeatherTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__WeatherTy__Weath__2BFE89A6");
             });
         }
     }

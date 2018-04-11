@@ -7,6 +7,11 @@ import * as LoginActions from '../actions/_LoginActions'
 import LoginCustomerForm from './forms/LoginCustomerForm';
 import LoginEmployeeForm from './forms/LoginEmployeeForm';
 
+// notification toasts
+import { toast } from 'react-toastify';
+import { displayToast } from '../helpers/_displayToast'
+import { Alert } from '../models/_DataModels'
+
 import { Button } from 'react-bootstrap'
 
 // At runtime, Redux will merge together...
@@ -22,6 +27,9 @@ class Login extends React.Component<DataProps, {}> {
 
     componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
+
+        // update unique toast 
+        displayToast(this.props.loginAlert );
     }
 
     render() {
@@ -48,11 +56,22 @@ class Login extends React.Component<DataProps, {}> {
     }
 
     loginCustomer = values => {
-        this.props.loginCustomer(values.username, values.password);
+        // generate unique toast
+        const toastId = 
+            toast('Attempting Customer Login...', {
+                type: 'info'
+            });
+
+        this.props.loginCustomer(values.username, values.password, toastId);
     }
 
     loginEmployee = values => {
-        this.props.loginEmployee(values.username, values.password);
+        // generate unique toast
+        const toastId = 
+            toast('Attempting Employee Login...', {
+                type: 'info'
+            });
+        this.props.loginEmployee(values.username, values.password, toastId);
     }
 
     private renderLoginCustomerForm() {

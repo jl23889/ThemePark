@@ -1,5 +1,6 @@
 import { Action, Reducer } from 'redux';
 import { LoginActions, LoginFormActions } from '../actions/_LoginActions'
+import { Alert } from '../models/_DataModels'
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -9,6 +10,7 @@ export interface LoginState {
     accessLevel: number;
     disableCustomerForm: boolean;
     disableEmployeeForm: boolean;
+    loginAlert: Alert;
 }
 
 // ----------------
@@ -18,7 +20,8 @@ const unloadedState: LoginState = {
     loggedIn: false, // returns true if user object exists in localstorage
     accessLevel: 0,
     disableCustomerForm: true,
-    disableEmployeeForm: true
+    disableEmployeeForm: true,
+    loginAlert: null,
 };
 
 type KnownAction = LoginActions | LoginFormActions // list of known actions
@@ -32,6 +35,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
                 accessLevel: action.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
+                loginAlert: state.loginAlert,
             }
         case 'USER_LOGIN_REQUEST':
             return {
@@ -39,13 +43,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
                 accessLevel: state.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
-            }
-        case 'USER_LOGIN_REQUEST':
-            return {
-                loggedIn: state.loggedIn,
-                accessLevel: state.accessLevel,
-                disableCustomerForm: state.disableCustomerForm,
-                disableEmployeeForm: state.disableEmployeeForm,
+                loginAlert: state.loginAlert,
             }
         case 'USER_LOGIN_SUCCESS':
             return {
@@ -53,6 +51,11 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
                 accessLevel: state.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
+                loginAlert: {
+                    toastId: action.toastId,
+                    alertType: 'success',
+                    alertMessage: 'Login Successful',
+                },
             }
         case 'USER_LOGIN_FAIL':
             return {
@@ -60,6 +63,11 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
                 accessLevel: state.accessLevel,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
+                loginAlert: {
+                    toastId: action.toastId,
+                    alertType: 'error',
+                    alertMessage: 'Login Failed. Please try again',
+                },
             }
         case 'USER_LOGOUT':
             return {
@@ -67,6 +75,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
                 accessLevel: 0,
                 disableCustomerForm: state.disableCustomerForm,
                 disableEmployeeForm: state.disableEmployeeForm,
+                loginAlert: state.loginAlert,
             }
         case 'SHOW_CUSTOMER_FORM':
             return {
@@ -74,6 +83,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
                 accessLevel: state.accessLevel,
                 disableCustomerForm: false,
                 disableEmployeeForm: true,
+                loginAlert: state.loginAlert,
             }
         case 'SHOW_EMPLOYEE_FORM':
             return {
@@ -81,6 +91,7 @@ export const reducer: Reducer<LoginState> = (state: LoginState, incomingAction: 
                 accessLevel: state.accessLevel,
                 disableCustomerForm: true,
                 disableEmployeeForm: false,
+                loginAlert: state.loginAlert,
             }
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

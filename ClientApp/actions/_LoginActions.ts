@@ -26,10 +26,12 @@ export interface UserLoginRequestAction {
 
 export interface UserLoginSuccessAction {
     type: 'USER_LOGIN_SUCCESS';
+    toastId: number;
 }
 
 export interface UserLoginFailAction {
     type: 'USER_LOGIN_FAIL';
+    toastId: number;
 }
 
 export interface UserLogoutAction {
@@ -58,7 +60,7 @@ export type LoginNavMenuActions = UserLoggedInCheckAction | UserLogoutAction; //
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    loginCustomer: (username, password): AppThunkAction<LoginActions> => (dispatch, getState) => {
+    loginCustomer: (username, password, toastId): AppThunkAction<LoginActions> => (dispatch, getState) => {
         dispatch({ type: 'USER_LOGIN_REQUEST' }); 
 
         // create an object before passing to api
@@ -78,13 +80,13 @@ export const actionCreators = {
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
             }
-            dispatch({ type: 'USER_LOGIN_SUCCESS' });
+            dispatch({ type: 'USER_LOGIN_SUCCESS', toastId: toastId });
         })
         .catch(error => {
-            dispatch({ type: 'USER_LOGIN_FAIL' });
+            dispatch({ type: 'USER_LOGIN_FAIL', toastId: toastId });
         })
     },
-    loginEmployee: (username, password): AppThunkAction<LoginActions> => (dispatch, getState) => {
+    loginEmployee: (username, password, toastId): AppThunkAction<LoginActions> => (dispatch, getState) => {
         dispatch({ type: 'USER_LOGIN_REQUEST' }); 
 
         // create an object before passing to api
@@ -104,11 +106,11 @@ export const actionCreators = {
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
             }
-            dispatch({ type: 'USER_LOGIN_SUCCESS'});
+            dispatch({ type: 'USER_LOGIN_SUCCESS', toastId: toastId });
 
         })
         .catch(error => {
-            dispatch({ type: 'USER_LOGIN_FAIL' });
+            dispatch({ type: 'USER_LOGIN_FAIL', toastId: toastId });
         })
     },
     logout: (): AppThunkAction<LoginActions> => (dispatch, getState) => {

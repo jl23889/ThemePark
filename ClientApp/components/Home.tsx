@@ -4,7 +4,8 @@ import { RouteComponentProps } from 'react-router-dom';
 export default class Home extends React.Component<RouteComponentProps<{}>, {}> {
     public render() {
         return <div>
-            <h1>Hello, WORLD!</h1>
+            <h1>Hello, Martin!</h1>
+           
             <p>IM EDITING THIS DONT TOUCH IT FFS</p>
             <p>Welcome to your new single-page application, built with:</p>
             <ul>

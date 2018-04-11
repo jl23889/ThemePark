@@ -8,6 +8,9 @@ namespace ThemePark.Entities
         public Ride()
         {
             Maintenance = new HashSet<Maintenance>();
+            RideEmployeeManages = new HashSet<RideEmployeeManages>();
+            RideEmployeeWorksAt = new HashSet<RideEmployeeWorksAt>();
+            TicketRideEnters = new HashSet<TicketRideEnters>();
         }
 
         public string RideId { get; set; }
@@ -22,5 +25,8 @@ namespace ThemePark.Entities
         public LookUpRideType RideTypeNavigation { get; set; }
         public LookUpRideStatus StatusNavigation { get; set; }
         public ICollection<Maintenance> Maintenance { get; set; }
+        public ICollection<RideEmployeeManages> RideEmployeeManages { get; set; }
+        public ICollection<RideEmployeeWorksAt> RideEmployeeWorksAt { get; set; }
+        public ICollection<TicketRideEnters> TicketRideEnters { get; set; }
     }
 }

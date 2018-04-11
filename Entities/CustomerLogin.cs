@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ThemePark.Entities
@@ -9,5 +9,7 @@ namespace ThemePark.Entities
         public string CustomerUserName { get; set; }
         public byte[] CustomerPasswordHash { get; set; }
         public byte[] CustomerPasswordSalt { get; set; }
+
+        public Customer Customer { get; set; }
     }
 }

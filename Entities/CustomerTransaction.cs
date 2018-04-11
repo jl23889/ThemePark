@@ -5,6 +5,11 @@ namespace ThemePark.Entities
 {
     public partial class CustomerTransaction
     {
+        public CustomerTransaction()
+        {
+            TransactionTicketPurchases = new HashSet<TransactionTicketPurchases>();
+        }
+
         public string TransactionId { get; set; }
         public string CustomerId { get; set; }
         public short TransactionType { get; set; }
@@ -13,5 +18,6 @@ namespace ThemePark.Entities
 
         public Customer Customer { get; set; }
         public LookUpTransactionType TransactionTypeNavigation { get; set; }
+        public ICollection<TransactionTicketPurchases> TransactionTicketPurchases { get; set; }
     }
 }

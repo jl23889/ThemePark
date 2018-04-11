@@ -9,6 +9,10 @@ namespace ThemePark.Entities
         {
             Maintenance = new HashSet<Maintenance>();
             MaintenanceEmployeeWorksAt = new HashSet<MaintenanceEmployeeWorksAt>();
+            RideEmployeeManages = new HashSet<RideEmployeeManages>();
+            RideEmployeeWorksAt = new HashSet<RideEmployeeWorksAt>();
+            ShopEmployeeManages = new HashSet<ShopEmployeeManages>();
+            ShopEmployeeWorksAt = new HashSet<ShopEmployeeWorksAt>();
         }
 
         public string EmployeeId { get; set; }
@@ -26,5 +30,9 @@ namespace ThemePark.Entities
         public EmployeeLogin EmployeeLogin { get; set; }
         public ICollection<Maintenance> Maintenance { get; set; }
         public ICollection<MaintenanceEmployeeWorksAt> MaintenanceEmployeeWorksAt { get; set; }
+        public ICollection<RideEmployeeManages> RideEmployeeManages { get; set; }
+        public ICollection<RideEmployeeWorksAt> RideEmployeeWorksAt { get; set; }
+        public ICollection<ShopEmployeeManages> ShopEmployeeManages { get; set; }
+        public ICollection<ShopEmployeeWorksAt> ShopEmployeeWorksAt { get; set; }
     }
 }

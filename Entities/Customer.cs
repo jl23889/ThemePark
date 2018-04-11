@@ -25,6 +25,7 @@ namespace ThemePark.Entities
         public int? TotalVisit { get; set; }
 
         public LookUpGender GenderNavigation { get; set; }
+        public CustomerLogin CustomerLogin { get; set; }
         public ICollection<CustomerTransaction> CustomerTransaction { get; set; }
     }
 }

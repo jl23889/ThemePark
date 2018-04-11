@@ -84,7 +84,7 @@ export interface Maintenance {
     ride: MaintenanceRide;
     managerEmployeeId: string;
     managerEmployee: MaintenanceManagerEmployee;
-    maintenanceEmployeeWorksAt: MaintenanceEmployee;
+    maintenanceEmployeeWorksAt: MaintenanceEmployee[];
 }
 
 export interface MaintenanceRide {
@@ -102,6 +102,11 @@ export interface MaintenanceManagerEmployee {
 
 export interface MaintenanceEmployee {
     employeeId: string;
+}
+
+export interface MaintenanceEmployeeWorksAt {
+    employeeId: string;
+    maintenanceId: string;
 }
 
 // TICKET  

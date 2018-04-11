@@ -169,3 +169,15 @@ export function requestEmployee(id) {
             id: id 
         }})
 }
+
+// get multiple employees by array of ids
+export function requestEmployees(ids) {
+    var params = new URLSearchParams();
+    ids.forEach(element => {
+        params.append('id', element)
+    })
+
+    return axios.get(`api/Employee/GetEmployeesById`, 
+        { params: params })
+}
+

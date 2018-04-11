@@ -170,3 +170,23 @@ export function updateMaintenance(values, toastId) {
     })
 }
 
+// assign employee to maintenance task
+export function assignMaintenanceEmployee(values, toastId) {
+    return axios({
+        method: 'post',
+        url: `api/Maintenance/AssignMaintenanceEmployee`,
+        data: values,
+        headers: authHeader(),
+    })
+}
+
+// remove all employees from maintenance task
+export function removeAllMaintenanceEmployees(values) {
+    return axios({
+        method: 'post',
+        url: `api/Maintenance/RemoveAllMaintenanceEmployees`,
+        data: values,
+        headers: authHeader(),
+    })
+}
+

@@ -61,7 +61,6 @@ namespace ThemePark.Controllers
             return _context.Maintenance.Find(id);
         }
 
-
         [HttpPost("[action]")]
         public IActionResult CreateNewMaintenance([FromBody] Maintenance maintenance)
         {
@@ -98,19 +97,14 @@ namespace ThemePark.Controllers
             // ensure maintenance object is created and employees are valid
             var maintenance = _context.Maintenance.Find(me.MaintenanceId);
             var employee = _context.Employee.Find(me.EmployeeId);
+            var maintenanceEmployee = _context.MaintenanceEmployeeWorksAt.Find(me.MaintenanceId, me.EmployeeId);
 
-            if (maintenance != null && employee != null) 
+            if (maintenance != null && employee != null && maintenanceEmployee == null) 
             {
                 try {              
                     _context.MaintenanceEmployeeWorksAt.Add(me);
                     _context.SaveChanges();
-                    // return maintenance and employee objects
-                    return Ok(
-                        new {
-                            maintenance = maintenance,
-                            employee = employee
-                        }
-                    ); 
+                    return Ok(); 
                 }  
                 catch
                 {
@@ -118,6 +112,29 @@ namespace ThemePark.Controllers
                 }  
             }
             return BadRequest();   
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult RemoveAllMaintenanceEmployees([FromBody] MaintenanceEmployeeWorksAt me)
+        {   
+            // ensure maintenance object is created and employees are valid
+            var maintenanceEmployees = 
+                _context.MaintenanceEmployeeWorksAt
+                .Where(m => m.MaintenanceId.Contains(me.MaintenanceId))
+                .ToList();
+            try {        
+                foreach (MaintenanceEmployeeWorksAt m in maintenanceEmployees) {
+                    _logger.LogWarning(m.MaintenanceId);
+                    _context.MaintenanceEmployeeWorksAt.Remove(m);
+                }     
+
+                _context.SaveChanges();
+                return Ok(); 
+            }  
+            catch
+            {
+                return BadRequest();
+            }  
         }
 
         [HttpPut("[action]")]

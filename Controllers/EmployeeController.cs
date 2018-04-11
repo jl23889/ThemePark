@@ -54,6 +54,19 @@ namespace ThemePark.Controllers
             return _context.Employee.Find(id);
         }
 
+        [AllowAnonymous]
+        // return employees by array of ids passed in as param
+        // sample query: 
+        // /getemployeesbyid?id=ed2db3b7b1d942b8&id=ed2db3b7b1d942b8
+        [HttpGet("[action]")]
+        public List<Employee> GetEmployeesById([FromQuery] string[] id)
+        {
+            List<Employee> employeeList = new List<Employee>();
+            foreach(string i in id) {
+                employeeList.Add(_context.Employee.Find(i));
+            }
+            return employeeList;
+        }
 
         [HttpPost("[action]")]
         public IActionResult CreateNewEmployee([FromBody] Employee employee)

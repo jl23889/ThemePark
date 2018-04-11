@@ -29,6 +29,7 @@ export interface FetchEmployeeAction {
 
 export interface CreateEmployeeAction {
     type: 'CREATE_EMPLOYEE';
+    toastId: number;
 }
 
 export interface UpdateEmployeeActionSuccess {
@@ -117,7 +118,7 @@ export const actionCreators = {
             // error dispatch goes here
         })
     },
-    createNewEmployee: (values): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
+    createNewEmployee: (values, toastId): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
         axios({
             method: 'post',
             url: `api/Employee/CreateNewEmployee`,
@@ -125,7 +126,7 @@ export const actionCreators = {
             headers: authHeader(),
         })
         .then(response => {
-            dispatch({ type: 'CREATE_EMPLOYEE' });
+            dispatch({ type: 'CREATE_EMPLOYEE' , toastId: toastId});
         })
         .catch(error => {
             // error dispatch goes here

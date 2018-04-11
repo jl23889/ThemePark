@@ -53,7 +53,11 @@ class Employees extends React.Component<DataProps, {}> {
     }
 
     createNewEmployee = values => {
-        this.props.createNewEmployee(values);
+        const toastId = 
+            toast('Creating Employee...', {
+                type: 'info'
+            });
+        this.props.createNewEmployee(values,toastId);
     }
 
     updateEmployee = values => {

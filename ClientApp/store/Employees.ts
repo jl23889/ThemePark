@@ -78,7 +78,12 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
                 reloadEmployees: true,
-                employeeAlert: state.employeeAlert,
+                employeeAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Created Employee Successfully'
+                },
+
             }
         case 'UPDATE_EMPLOYEE_SUCCESS':
             return {

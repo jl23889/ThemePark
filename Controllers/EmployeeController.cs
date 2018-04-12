@@ -47,6 +47,14 @@ namespace ThemePark.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("[action]")]
+        // get all ride employees( ride employees have EmpType 3 )
+        public IEnumerable<Employee> GetRideEmployees()
+        {
+            return _context.Employee.Where(e => e.EmpType == 3).ToList();
+        }
+
+        [AllowAnonymous]
         // return a single employee by employeeId passed in as param
         [HttpGet("[action]")]
         public Employee GetEmployee(string id)

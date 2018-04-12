@@ -58,4 +58,25 @@ namespace ThemePark.Helpers
 		}
 	}
 
+	public class RideAutoMapperProfile : Profile
+	{
+		public RideAutoMapperProfile()
+		{
+			CreateMap<Ride, RideDTO>();
+            CreateMap<RideDTO, Ride>();
+
+            CreateMap<Maintenance, RideMaintenanceDTO>();
+            CreateMap<RideMaintenanceDTO, Maintenance>();
+
+            CreateMap<RideEmployeeManages, RideEmployeeManagesDTO>();
+            CreateMap<RideEmployeeManagesDTO, RideEmployeeManages>();
+
+            CreateMap<RideEmployeeWorksAt, RideEmployeeWorksAtDTO>();
+            CreateMap<RideEmployeeWorksAtDTO, RideEmployeeWorksAt>();
+
+            CreateMap<RideTicketEntersDTO, TicketRideEnters>();
+            CreateMap<TicketRideEnters, RideTicketEntersDTO>();
+		}
+	}
+
 }

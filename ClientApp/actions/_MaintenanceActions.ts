@@ -71,7 +71,7 @@ export interface DeleteMaintenanceActionFail {
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 
-export type MaintenanceActions = 
+export type MaintenanceActions =
     FetchMaintenancesActionInProgress | FetchMaintenancesActionSuccess | FetchMaintenancesActionFail |
     CreateMaintenanceActionInProgress | CreateMaintenanceActionSuccess | CreateMaintenanceActionFail | 
     UpdateMaintenanceActionInProgress | UpdateMaintenanceActionSuccess | UpdateMaintenanceActionFail | 
@@ -82,20 +82,19 @@ export type MaintenanceActions =
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
+
     requestMaintenanceList: (): AppThunkAction<MaintenanceActions> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
-        if (getState().maintenance.reloadMaintenanceList) {
-            dispatch({ type: 'FETCH_MAINTS_IN_PROGRESS' });
-            axios.get(`api/Maintenance/GetMaintenances`)
-            .then(response => {
-                dispatch({ type: 'FETCH_MAINTS_SUCCESS', 
-                    maintenanceList: response.data
-                });
-            }) 
-            .catch(error => {
-                dispatch({ type: 'FETCH_MAINTS_FAIL' });
-            })
-        }
+        dispatch({ type: 'FETCH_MAINTS_IN_PROGRESS' });
+        axios.get(`api/Maintenance/GetMaintenances`)
+        .then(response => {
+            dispatch({ type: 'FETCH_MAINTS_SUCCESS', 
+                maintenanceList: response.data
+            });
+        }) 
+        .catch(error => {
+            dispatch({ type: 'FETCH_MAINTS_FAIL' });
+        })
     },
     createNewMaintenance: (values, toastId): AppThunkAction<MaintenanceActions> => (dispatch, getState) => {
         dispatch({ type: 'CREATE_MAINT_IN_PROGRESS', toastId: toastId});

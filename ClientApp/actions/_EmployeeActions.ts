@@ -27,8 +27,13 @@ export interface FetchEmployeeAction {
     employee: Employee;
 }
 
-export interface CreateEmployeeAction {
-    type: 'CREATE_EMPLOYEE';
+export interface CreateEmployeeSuccessAction {
+    type: 'CREATE_EMPLOYEE_SUCCESS';
+    toastId: number;
+}
+
+export interface CreateEmployeeFailureAction {
+    type: 'CREATE_EMPLOYEE_FAIL';
     toastId: number;
 }
 
@@ -42,17 +47,23 @@ export interface UpdateEmployeeActionFail {
     toastId: number;
 }
 
-export interface DeleteEmployeeAction {
-    type: 'DELETE_EMPLOYEE';
+export interface DeleteEmployeeSuccessAction {
+    type: 'DELETE_EMPLOYEE_SUCCESS';
+    toastId: number;
+}
+
+export interface DeleteEmployeeFailureAction {
+    type: 'DELETE_EMPLOYEE_FAIL';
+    toastId: number;
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 
 export type EmployeeActions =  FetchMaintenanceEmployeesAction |
-    FetchEmployeesActionInProgress | FetchEmployeesActionSuccess | 
-    FetchEmployeeAction | CreateEmployeeAction | UpdateEmployeeActionSuccess | 
-    UpdateEmployeeActionFail | DeleteEmployeeAction;
+    FetchEmployeesActionInProgress | FetchEmployeesActionSuccess |
+    FetchEmployeeAction | CreateEmployeeSuccessAction | CreateEmployeeFailureAction | UpdateEmployeeActionSuccess |
+    UpdateEmployeeActionFail | DeleteEmployeeSuccessAction | DeleteEmployeeFailureAction;
 
 export type EmployeeProfileActions = FetchEmployeeAction |
     UpdateEmployeeActionSuccess | UpdateEmployeeActionFail;
@@ -126,10 +137,10 @@ export const actionCreators = {
             headers: authHeader(),
         })
         .then(response => {
-            dispatch({ type: 'CREATE_EMPLOYEE' , toastId: toastId});
+            dispatch({ type: 'CREATE_EMPLOYEE_SUCCESS' , toastId: toastId});
         })
         .catch(error => {
-            // error dispatch goes here
+            dispatch({ type: 'CREATE_EMPLOYEE_FAIL', toastId: toastId });
         })
     },
     updateEmployee: (values, toastId): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
@@ -146,7 +157,7 @@ export const actionCreators = {
             dispatch({ type: 'UPDATE_EMPLOYEE_FAIL', toastId: toastId })
         })
     },
-    deleteEmployee: (values): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
+    deleteEmployee: (values, toastId): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
         axios({
             method: 'post',
             url: `api/Employee/DeleteEmployee`,
@@ -155,9 +166,11 @@ export const actionCreators = {
         })
         .then(
             response => {
-                dispatch({ type: 'DELETE_EMPLOYEE' });
-            }
-        );
+                dispatch({ type: 'DELETE_EMPLOYEE_SUCCESS', toastId: toastId});
+            })
+        .catch(error => {
+                dispatch({type: 'DELETE_EMPLOYEE_FAIL', toastId: toastId})
+            })
     },
 };
 

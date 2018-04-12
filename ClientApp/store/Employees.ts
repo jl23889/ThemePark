@@ -34,6 +34,7 @@ type KnownAction = EmployeeActions | FetchEmployeeTypeAction;
 export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
+
         // employees
         case 'FETCH_EMPLOYEES_IN_PROGRESS':
             return {
@@ -44,6 +45,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 reloadEmployees: false,
                 employeeAlert: state.employeeAlert,
             }
+
         case 'FETCH_EMPLOYEES_SUCCESS':
             return {
                 loadingEmployeeList: false,
@@ -62,6 +64,7 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 reloadEmployees: state.reloadEmployees,
                 employeeAlert: state.employeeAlert,
             }
+
         case 'FETCH_EMPLOYEE':
             return {
                 loadingEmployeeList: state.loadingEmployeeList,
@@ -71,7 +74,8 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 reloadEmployees: state.reloadEmployees,
                 employeeAlert: state.employeeAlert,
             }
-        case 'CREATE_EMPLOYEE':
+
+        case 'CREATE_EMPLOYEE_SUCCESS':
             return {
                 loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
@@ -85,6 +89,22 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                 },
 
             }
+
+        case 'CREATE_EMPLOYEE_FAIL':
+            return {
+                loadingEmployeeList: state.loadingEmployeeList,
+                employeeList: state.employeeList,
+                employeeTypeList: state.employeeTypeList,
+                employeeSelected: state.employeeSelected,
+                reloadEmployees: true,
+                employeeAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'COuld not create Employee. Please Try Again!'
+                },
+
+            }
+
         case 'UPDATE_EMPLOYEE_SUCCESS':
             return {
                 loadingEmployeeList: state.loadingEmployeeList,
@@ -111,14 +131,32 @@ export const reducer: Reducer<EmployeesState> = (state: EmployeesState, incoming
                     'alertMessage': 'Update Failed! Please try again'
                 },
             }
-        case 'DELETE_EMPLOYEE':
+        case 'DELETE_EMPLOYEE_SUCCESS':
             return {
                 loadingEmployeeList: state.loadingEmployeeList,
                 employeeList: state.employeeList,
                 employeeTypeList: state.employeeTypeList,
                 employeeSelected: state.employeeSelected,
                 reloadEmployees: true,
-                employeeAlert: state.employeeAlert,
+                employeeAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Deleted Employee!'
+                },
+            }
+
+        case 'DELETE_EMPLOYEE_FAIL':
+            return {
+                loadingEmployeeList: state.loadingEmployeeList,
+                employeeList: state.employeeList,
+                employeeTypeList: state.employeeTypeList,
+                employeeSelected: state.employeeSelected,
+                reloadEmployees: true,
+                employeeAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'Could not delete employee. Try again!'
+                },
             }
 
         // employee type

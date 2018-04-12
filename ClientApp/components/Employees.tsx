@@ -66,12 +66,15 @@ class Employees extends React.Component<DataProps, {}> {
             toast('Updating Employee...', {
                 type: 'info'
             });
-
         this.props.updateEmployee(values, toastId);
     }
 
     deleteEmployee(id) {
-        this.props.deleteEmployee(id);
+        const toastId =
+            toast('Deleting Employee...', {
+                type: 'info'
+            });
+        this.props.deleteEmployee(id,toastId);
     }
 
     // lookup employee type by id from employeeStatusType prop

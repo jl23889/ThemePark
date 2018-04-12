@@ -5,8 +5,8 @@ import { Button, Form, FormGroup } from 'reactstrap';
 
 import * as moment from 'moment';
 
-// generate option element from maintenance employees
-function maintEmployeeOption(me) {
+// generate option element from manager employees
+function managerEmployeeOption(me) {
     return <option key={me.employeeId} 
         value={me.employeeId}>{me.empFirstName + ' ' + me.empLastName}
     </option>
@@ -37,11 +37,11 @@ let MaintenanceForm = props => {
         props.initialValues.endDate = moment(dateString).format('YYYY-MM-DD')
     }
 
-    // assigns maintenanceEmployeeList if they are loaded
+    // assigns managerEmployeeList if they are loaded
     const mel =
         (typeof props.props !== 'undefined' &&
-            typeof props.props.maintenanceEmployeeList !== 'undefined' ?
-            props.props.maintenanceEmployeeList : []);
+            typeof props.props.managerEmployeeList !== 'undefined' ?
+            props.props.managerEmployeeList : []);
 
     // assigns rideList if they are loaded
     const rl =
@@ -90,13 +90,13 @@ let MaintenanceForm = props => {
                 </Field>
             </FormGroup>
             <FormGroup className="row">
-                <label>Manager EmployeeId</label>
+                <label>Manager Employee</label>
                 <Field 
                     name="managerEmployeeId" 
                     component="select" 
                 >
                     <option value='' disabled>Select Employee</option>
-                    {...mel.map(maintEmployeeOption)}
+                    {...mel.map(managerEmployeeOption)}
                 </Field>
             </FormGroup>
 

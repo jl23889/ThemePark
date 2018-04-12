@@ -8,6 +8,11 @@ import axios from 'axios';
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
+export interface FetchManagerEmployeesAction {
+    type: 'FETCH_MANAGER_EMPLOYEES';
+    employeeList: Employee[];
+}
+
 export interface FetchMaintenanceEmployeesAction {
     type: 'FETCH_MAINT_EMPLOYEES';
     employeeList: Employee[];
@@ -60,7 +65,7 @@ export interface DeleteEmployeeFailureAction {
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 
-export type EmployeeActions =  FetchMaintenanceEmployeesAction |
+export type EmployeeActions =  FetchMaintenanceEmployeesAction | FetchManagerEmployeesAction |
     FetchEmployeesActionInProgress | FetchEmployeesActionSuccess |
     FetchEmployeeAction | CreateEmployeeSuccessAction | CreateEmployeeFailureAction | UpdateEmployeeActionSuccess |
     UpdateEmployeeActionFail | DeleteEmployeeSuccessAction | DeleteEmployeeFailureAction;
@@ -84,6 +89,16 @@ export const actionCreators = {
             //
         })
     }, 
+    // get all maintenance employees
+    requestManagerEmployees: (): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
+        axios.get(`api/Employee/GetManagerEmployees`)
+        .then(response => {
+            dispatch({ type: 'FETCH_MANAGER_EMPLOYEES', employeeList: response.data });
+        })
+        .catch(error => {
+            // error dispatch goes here
+        })
+    },
     // get all maintenance employees
     requestMaintenanceEmployees: (): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
         axios.get(`api/Employee/GetMaintenanceEmployees`)

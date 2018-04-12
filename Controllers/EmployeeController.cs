@@ -40,8 +40,8 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        // get all maintenance employees( maint employees have EmpType 2 )
-        public IEnumerable<Employee> GetMaintenanceEmployees()
+        // get all manager employees( manager employees have EmpType 2 )
+        public IEnumerable<Employee> GetManagerEmployees()
         {
             return _context.Employee.Where(e => e.EmpType == 2).ToList();
         }
@@ -52,6 +52,14 @@ namespace ThemePark.Controllers
         public IEnumerable<Employee> GetRideEmployees()
         {
             return _context.Employee.Where(e => e.EmpType == 3).ToList();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        // get all maintenance employees( maint employees have EmpType 5 )
+        public IEnumerable<Employee> GetMaintenanceEmployees()
+        {
+            return _context.Employee.Where(e => e.EmpType == 5).ToList();
         }
 
         [AllowAnonymous]

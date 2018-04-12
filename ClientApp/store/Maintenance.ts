@@ -1,6 +1,7 @@
 import { Action, Reducer } from 'redux';
 import { MaintenanceActions } from '../actions/_MaintenanceActions'
-import { FetchMaintenanceEmployeesAction } from '../actions/_EmployeeActions'
+import { FetchManagerEmployeesAction,
+    FetchMaintenanceEmployeesAction } from '../actions/_EmployeeActions'
 import { FetchRidesActionSuccess } from '../actions/_RideActions'
 
 import { Alert, Employee, Maintenance, Ride } from '../models/_DataModels'
@@ -12,6 +13,7 @@ export interface MaintenanceState {
     loadingMaintenanceList: boolean;
     maintenanceList: Maintenance[];
     rideList: Ride[];
+    managerEmployeeList: Employee[];
     maintenanceEmployeeList: Employee[];
     reloadMaintenanceList: boolean;
     maintenanceAlert: Alert;
@@ -24,12 +26,14 @@ const unloadedState: MaintenanceState = {
     loadingMaintenanceList: false,
     maintenanceList: [],
     rideList: [],
+    managerEmployeeList: [],
     maintenanceEmployeeList: [],
     reloadMaintenanceList: true,
     maintenanceAlert: null
 };
 
-type KnownAction = MaintenanceActions | FetchMaintenanceEmployeesAction | FetchRidesActionSuccess;
+type KnownAction = MaintenanceActions | 
+    FetchManagerEmployeesAction | FetchMaintenanceEmployeesAction | FetchRidesActionSuccess;
 
 export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
@@ -39,7 +43,18 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: action.employeeList,
+                reloadMaintenanceList: false,
+                maintenanceAlert: state.maintenanceAlert,
+            }
+        case 'FETCH_MANAGER_EMPLOYEES':
+            return {
+                loadingMaintenanceList: state.loadingMaintenanceList,
+                maintenanceList: state.maintenanceList,
+                rideList: state.rideList,
+                managerEmployeeList: action.employeeList,
+                maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert,
             }
@@ -48,6 +63,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: action.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert,
@@ -58,6 +74,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: true,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert,
@@ -67,6 +84,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: false,
                 maintenanceList: action.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert
@@ -76,6 +94,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: false,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert
@@ -85,6 +104,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert,
@@ -94,6 +114,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: true,
                 maintenanceAlert: {
@@ -107,6 +128,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: {
@@ -120,6 +142,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert,
@@ -129,6 +152,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: true,
                 maintenanceAlert: {
@@ -142,6 +166,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: {
@@ -155,6 +180,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: state.maintenanceAlert,
@@ -164,6 +190,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: true,
                 maintenanceAlert: {
@@ -177,6 +204,7 @@ export const reducer: Reducer<MaintenanceState> = (state: MaintenanceState, inco
                 loadingMaintenanceList: state.loadingMaintenanceList,
                 maintenanceList: state.maintenanceList,
                 rideList: state.rideList,
+                managerEmployeeList: state.managerEmployeeList,
                 maintenanceEmployeeList: state.maintenanceEmployeeList,
                 reloadMaintenanceList: false,
                 maintenanceAlert: {

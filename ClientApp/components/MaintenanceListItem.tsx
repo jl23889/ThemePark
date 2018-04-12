@@ -29,7 +29,8 @@ import * as moment from 'moment';
 interface ListItemProps {
     maintenance: Maintenance;
     rideList: Ride[];
-    employeeList: Employee[];
+    managerEmployeeList: Employee[];
+    maintenanceEmployeeList: Employee[];
 } 
 
 interface EmployeeSelect {
@@ -46,7 +47,7 @@ interface ListItemState {
     maintenanceAlert: Alert;
     employees: Employee[]; // this is what is currently stored in the database
     employeesToUpdate: Employee[]; // this is what user has currently selected
-    employeeList: Employee[]; // this what is shown in select dropdown
+    maintenanceEmployeeList: Employee[]; // this what is shown in select dropdown
 }
 
 export class MaintenanceListItem extends React.Component<ListItemProps,ListItemState> {
@@ -54,7 +55,7 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
         super(props);
 
         // make a copy of the employeeList prop so that we can mutate it in local state
-        const employeeList = JSON.parse(JSON.stringify(this.props.employeeList))
+        const maintenanceEmployeeList = JSON.parse(JSON.stringify(this.props.maintenanceEmployeeList))
 
         // make a copy of the maintenance prop so that we can mutate it in local state
         const maintenance = JSON.parse(JSON.stringify(this.props.maintenance))
@@ -67,13 +68,13 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
             maintenanceAlert: null,
             employees: [],
             employeesToUpdate: [],
-            employeeList: employeeList,
+            maintenanceEmployeeList: maintenanceEmployeeList,
         }
     }
 
     componentDidMount() {
-        // employeeList should be (employeeList - managerEmployee)
-        var employeeList = this.state.employeeList;
+        // maintenanceEmployeeList should be (maintenanceEmployeeList - managerEmployee)
+        var employeeList = this.state.maintenanceEmployeeList;
         for (var i = 0; i < employeeList.length; i++) {
             if (employeeList[i].employeeId == this.state.maintenance.managerEmployeeId) {
                 employeeList.splice(i, 1);
@@ -82,7 +83,7 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
         }
 
         this.setState({
-            employeeList: employeeList
+            maintenanceEmployeeList: employeeList,
         })
 
         // get list of employees
@@ -101,20 +102,22 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                 employeesToUpdate: response.data,
             })
         }) 
+
+
     }
 
     componentDidUpdate() {
         // recalculate employeeList if managerEmployee changed
         if (this.state.employee.employeeId != this.state.maintenance.managerEmployeeId) {   
-            // make a copy of the employeeList prop
-            var employeeList = JSON.parse(JSON.stringify(this.props.employeeList));
+            // make a copy of the maintenanceEmployeeList prop
+            var employeeList = JSON.parse(JSON.stringify(this.props.maintenanceEmployeeList));
             for (var i = 0; i < employeeList.length; i++) {
                 if (employeeList[i].employeeId == this.state.maintenance.managerEmployeeId) {
                     employeeList.splice(i, 1);
                     requestEmployee(this.state.maintenance.managerEmployeeId)
                         .then(response=>{
                             this.setState({
-                                employeeList: employeeList,
+                                maintenanceEmployeeList: employeeList,
                                 // update employee being displayed
                                 employee: response.data,
 
@@ -372,7 +375,7 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                         value={this.formatEmployeesSelect(this.state.employeesToUpdate)}
                         onChange={this.handleChange}
                         multi={true}
-                        options={this.formatEmployeesSelect(this.state.employeeList)}
+                        options={this.formatEmployeesSelect(this.state.maintenanceEmployeeList)}
                     />
                     <br/>
                     <Button key={'listItemSaveEmployeesButton'+this.props.maintenance.maintenanceId}
@@ -426,7 +429,7 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                         initialValues={this.state.maintenance}
                         props={{
                             rideList: this.props.rideList,
-                            maintenanceEmployeeList: this.props.employeeList,
+                            managerEmployeeList: this.props.managerEmployeeList,
                         }}
                     />
                 </div>

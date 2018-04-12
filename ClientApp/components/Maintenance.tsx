@@ -33,6 +33,7 @@ class Maintenance extends React.Component<DataProps, {}> {
     componentDidMount() {
         // This method runs when the component is first added to the page  
         this.props.requestMaintenanceEmployees();
+        this.props.requestManagerEmployees();
         this.props.requestRidesList();
         this.props.requestMaintenanceList();
     }
@@ -59,7 +60,6 @@ class Maintenance extends React.Component<DataProps, {}> {
         switch (this.props.match.params.viewType) {
             case 'calendar':
                 BigCalendar.momentLocalizer(moment); 
-                console.log(this.props.maintenanceList);
                 const calendarEvents = this.props.maintenanceList.map(item => 
                     ({
                         id: item.maintenanceId,
@@ -68,7 +68,6 @@ class Maintenance extends React.Component<DataProps, {}> {
                         start: new Date(item.startDate),
                         end: new Date(item.endDate),
                     }))
-                console.log(calendarEvents);
                 return <div>
                     <h3>Calendar View</h3>
                     <Link to='/maintenance/list'>List View</Link>
@@ -90,7 +89,8 @@ class Maintenance extends React.Component<DataProps, {}> {
                                 key={'listItem'+item.maintenanceId}
                                 maintenance={item}
                                 rideList={this.props.rideList}
-                                employeeList={this.props.maintenanceEmployeeList}
+                                managerEmployeeList={this.props.managerEmployeeList}
+                                maintenanceEmployeeList={this.props.maintenanceEmployeeList}
                                 >                                      
                             </MaintenanceListItem>
                         )}
@@ -135,7 +135,7 @@ class Maintenance extends React.Component<DataProps, {}> {
             form="newMaintenanceForm"
             props={{
                 rideList: this.props.rideList,
-                maintenanceEmployeeList: this.props.maintenanceEmployeeList,
+                managerEmployeeList: this.props.managerEmployeeList,
             }}
         />
     }

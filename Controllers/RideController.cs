@@ -51,14 +51,6 @@ namespace ThemePark.Controllers
             .ToList());
         }
 
-        [AllowAnonymous]
-        [HttpGet("[action]")]
-        public IEnumerable<RideDTO> GetRides()
-        {
-            return _context.Ride.ToList();
-        }
-
-
         // return a single ride by rideId passed in as param
         [AllowAnonymous]
         [HttpGet("[action]")]

@@ -11,6 +11,8 @@ import * as moment from 'moment'
 import RideForm from './forms/RideForm';
 
 import ReactTable from 'react-table';
+import { toast } from 'react-toastify';
+import { displayToast } from '../helpers/_displayToast'
 
 // combines action creators from ride, ridestatus, and ridetype
 const actionCreators = Object.assign(
@@ -36,6 +38,9 @@ class Rides extends React.Component<DataProps, {}> {
         // This method runs when incoming props (e.g., route params) change
         if (!this.props.loadingRideList && this.props.reloadRides) 
             this.props.requestRidesList();
+
+        // update unique toast 
+        displayToast(this.props.rideAlert);
     }
 
     render() {
@@ -49,15 +54,27 @@ class Rides extends React.Component<DataProps, {}> {
     }
 
     createNewRide = values => {
-        this.props.createNewRide(values);
+        const toastId =
+            toast('Creating Ride...', {
+                type: 'info'
+            });
+        this.props.createNewRide(values,toastId);
     }
 
     updateRide = values => {
-        this.props.updateRide(values);
+        const toastId =
+            toast('Updating Ride...', {
+            type: 'info'
+        });
+        this.props.updateRide(values, toastId);
     }
 
     deleteRide(id) {
-        this.props.deleteRide(id);
+        const toastId =
+            toast('Deleting Ride...', {
+            type: 'info'
+        });
+        this.props.deleteRide(id, toastId);
     }
 
     // lookup ride status by id from rideStatusList prop

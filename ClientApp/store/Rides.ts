@@ -3,7 +3,7 @@ import { FetchRideStatusAction } from '../actions/_RideStatusActions'
 import { FetchRideTypeAction } from '../actions/_RideTypeActions'
 import { RideActions } from '../actions/_RideActions'
 
-import { Ride, RideStatus, RideType } from '../models/_DataModels'
+import { Alert, Ride, RideStatus, RideType } from '../models/_DataModels'
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -15,6 +15,7 @@ export interface RidesState {
     rideTypeList: RideType[];
     rideSelected: Ride;
     reloadRides: boolean;
+    rideAlert: Alert,
 }
 
 // ----------------
@@ -27,6 +28,7 @@ const unloadedState: RidesState = {
     rideTypeList: [],
     rideSelected: null,
     reloadRides: true,
+    rideAlert: null,
 };
 
 type KnownAction = RideActions | FetchRideStatusAction | FetchRideTypeAction;
@@ -42,7 +44,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: false
+                reloadRides: false,
+                rideAlert: state.rideAlert,
             }
         case 'FETCH_RIDES_SUCCESS':
             return {
@@ -51,7 +54,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: false
+                reloadRides: false,
+                rideAlert: state.rideAlert,
             }
         case 'FETCH_RIDE_SUCCESS':
             return {
@@ -60,25 +64,51 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: state.reloadRides
+                reloadRides: state.reloadRides,
+                rideAlert: state.rideAlert,
             }
-        case 'CREATE_RIDE':
+        case 'CREATE_RIDE_SUCCESS':
             return {
                 loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: true
+                reloadRides: true,
+                rideAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Created Ride Successfully'
+                },
             }
-        case 'UPDATE_RIDE':
+
+        case 'CREATE_RIDE_FAIL':
             return {
                 loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: true
+                reloadRides: true,
+                rideAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'Could not create ride. Please try again!'
+                },
+            }
+        case 'UPDATE_RIDE_SUCCESS':
+            return {
+                loadingRideList: state.loadingRideList,
+                rideList: state.rideList,
+                rideStatusList: state.rideStatusList,
+                rideTypeList: state.rideTypeList,
+                rideSelected: state.rideSelected,
+                reloadRides: true,
+                rideAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Updated Ride Successfully'
+                },
             }
         case 'UPDATE_RIDE_FAIL':
             return {
@@ -87,17 +117,41 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: action.rideSelected,
-                reloadRides: false
+                reloadRides: false,
+                rideAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'Could not update ride. Please try again!'
+                },
             }
-        case 'DELETE_RIDE':
+        case 'DELETE_RIDE_SUCCESS':
             return {
                 loadingRideList: state.loadingRideList,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: true
+                reloadRides: true,
+                rideAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Deleted Ride Successfully!'
+                },
             }    
+        case 'DELETE_RIDE_FAIL':
+            return {
+                loadingRideList: state.loadingRideList,
+                rideList: state.rideList,
+                rideStatusList: state.rideStatusList,
+                rideTypeList: state.rideTypeList,
+                rideSelected: state.rideSelected,
+                reloadRides: true,
+                rideAlert: {
+                    'toastId': action.toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'Could not update ride. Please try again!'
+                },
+            } 
 
         // ride status
         case 'FETCH_RIDE_STATUS':
@@ -107,7 +161,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideStatusList: action.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: false
+                reloadRides: false,
+                rideAlert: state.rideAlert,
             }
 
         // ride type
@@ -118,7 +173,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideStatusList: state.rideStatusList,
                 rideTypeList: action.rideTypeList,
                 rideSelected: state.rideSelected,
-                reloadRides: false
+                reloadRides: false,
+                rideAlert: state.rideAlert,
             }
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

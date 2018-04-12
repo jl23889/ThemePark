@@ -22,21 +22,36 @@ export interface FetchRideActionSuccess {
     ride: Ride;
 }
 
-export interface CreateRideAction {
-    type: 'CREATE_RIDE';
+export interface CreateRideActionSuccess {
+    type: 'CREATE_RIDE_SUCCESS';
+    toastId: number;
 }
 
-export interface UpdateRideAction {
-    type: 'UPDATE_RIDE';
+export interface CreateRideActionFail {
+    type: 'CREATE_RIDE_FAIL';
+    toastId: number;
+}
+
+export interface UpdateRideActionSuccess {
+    type: 'UPDATE_RIDE_SUCCESS';
+    toastId: number;
 }
 
 export interface UpdateRideActionFail {
     type: 'UPDATE_RIDE_FAIL';
     rideSelected: Ride;
+    toastId: number;
 }
 
-export interface DeleteRideAction {
-    type: 'DELETE_RIDE';
+export interface DeleteRideActionSuccess {
+    type: 'DELETE_RIDE_SUCCESS';
+    toastId: number;
+}
+
+export interface DeleteRideActionFail {
+    type: 'DELETE_RIDE_FAIL';
+    rideSelected: Ride;
+    toastId: number;
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
@@ -44,14 +59,14 @@ export interface DeleteRideAction {
 
 export type RideActions = FetchRidesActionInProgress | 
     FetchRidesActionSuccess | FetchRideActionSuccess |
-    CreateRideAction | UpdateRideAction | UpdateRideActionFail | DeleteRideAction;
+    CreateRideActionSuccess | CreateRideActionFail | UpdateRideActionSuccess | UpdateRideActionFail |
+    UpdateRideActionFail | DeleteRideActionSuccess | DeleteRideActionFail;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-
     // rides 
     requestRidesList: (): AppThunkAction<RideActions> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
@@ -66,6 +81,7 @@ export const actionCreators = {
             })
         }
     },
+
     // get a single ride by id
     requestRide: (id): AppThunkAction<RideActions> => (dispatch, getState) => {
         axios.get(`api/Employee/GetRide`, id)
@@ -76,7 +92,8 @@ export const actionCreators = {
             // error dispatch goes here
         })
     },
-    createNewRide: (values): AppThunkAction<RideActions> => (dispatch, getState) => {
+
+    createNewRide: (values,toastId): AppThunkAction<RideActions> => (dispatch, getState) => {
         axios({
             method: 'post',
             url: `api/Ride/CreateNewRide`,
@@ -84,13 +101,13 @@ export const actionCreators = {
             headers: authHeader(),
         })
         .then(response => {
-            dispatch({ type: 'CREATE_RIDE' });
+            dispatch({ type: 'CREATE_RIDE_SUCCESS', toastId: toastId });
         })
         .catch(error => {
-            // error dispatch goes here
+            dispatch({ type: 'CREATE_RIDE_FAIL', toastId: toastId });
         })
     },
-    updateRide: (values): AppThunkAction<RideActions> => (dispatch, getState) => {
+    updateRide: (values, toastId): AppThunkAction<RideActions> => (dispatch, getState) => {
         axios({
             method: 'put',
             url: `api/Ride/UpdateRide`,
@@ -98,13 +115,14 @@ export const actionCreators = {
             headers: authHeader(),
         })
         .then(response => {
-            dispatch({ type: 'UPDATE_RIDE' });
+            dispatch({ type: 'UPDATE_RIDE_SUCCESS', toastId: toastId });
         })
         .catch(error => {
-            dispatch({ type: 'UPDATE_RIDE_FAIL', rideSelected: values })
+            dispatch({ type: 'UPDATE_RIDE_FAIL', rideSelected: values , toastId: toastId })
         })
     },
-    deleteRide: (values): AppThunkAction<RideActions> => (dispatch, getState) => {
+
+    deleteRide: (values,toastId): AppThunkAction<RideActions> => (dispatch, getState) => {
         // id is the rideId
         axios({
             method: 'post',
@@ -112,11 +130,12 @@ export const actionCreators = {
             data: values,
             headers: authHeader(),
         })
-        .then(
-            response => {
-                dispatch({ type: 'DELETE_RIDE' });
-            }
-        );
+        .then(response => {
+                dispatch({ type: 'DELETE_RIDE_SUCCESS', toastId: toastId });
+        })
+            .catch(error => {
+                dispatch({ type: 'DELETE_RIDE_FAIL', rideSelected: values , toastId: toastId });
+        })
     },
 };
 

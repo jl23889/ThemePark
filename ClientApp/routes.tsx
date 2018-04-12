@@ -18,9 +18,9 @@ import { ToastContainer } from 'react-toastify';
 export const routes =
 <Layout>
 	<ToastContainer/>
-    <Route exact path='/' component={ Home } />
+    <Route exact path='/' component={ Login } />
     <Route path='/counter' component={ Counter } />
-    <Route path='/rides' component={ Rides } />
+    <Route path='/rides/:viewType?' component={ Rides } />
     <Route path='/employees' component={ Employees } />    
     <Route path='/login' component={ Login } />
     <Route path='/register' component={ Register } />

@@ -66,12 +66,6 @@ class NavMenu extends React.Component<DataProps, {}> {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
                 <li>
-                    <Link to={ '/maintenance' }>
-                        <span className='glyphicon glyphicon-calendar'></span> 
-                            Ride Maintenance Schedule
-                    </Link>
-                </li>
-                <li>
                     <Link to={ '/lookup' }>
                         <span className='glyphicon glyphicon-th-list'></span> LookupTables
                     </Link>
@@ -84,13 +78,24 @@ class NavMenu extends React.Component<DataProps, {}> {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
                 <li>
-                    <Link to={ '/rides' }>
-                        <span className='glyphicon glyphicon-th-list'></span> Ride Table
+                    <Link to={ '/rides/table' }>
+                        <span className='glyphicon glyphicon-th-list'></span> Manage Ride Information
+                    </Link>
+                </li>
+                <li>
+                    <Link to={ '/rides/employees' }>
+                        <span className='glyphicon glyphicon-th-list'></span> Assign Ride Employees
                     </Link>
                 </li>
                 <li>
                     <Link to={ '/employees' }>
-                        <span className='glyphicon glyphicon-th-list'></span> Manage Employees
+                        <span className='glyphicon glyphicon-th-list'></span> Manage Employee Information
+                    </Link>
+                </li>
+                <li>
+                    <Link to={ '/maintenance' }>
+                        <span className='glyphicon glyphicon-calendar'></span> 
+                            Assign Maintenance Employees
                     </Link>
                 </li>
             </ul>

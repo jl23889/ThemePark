@@ -2,8 +2,10 @@ import { Action, Reducer } from 'redux';
 import { FetchRideStatusAction } from '../actions/_RideStatusActions'
 import { FetchRideTypeAction } from '../actions/_RideTypeActions'
 import { RideActions } from '../actions/_RideActions'
+import { FetchManagerEmployeesAction, 
+    FetchRideEmployeesAction } from '../actions/_EmployeeActions'
 
-import { Alert, Ride, RideStatus, RideType } from '../models/_DataModels'
+import { Alert, Employee, Ride, RideStatus, RideType } from '../models/_DataModels'
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -13,6 +15,8 @@ export interface RidesState {
     rideList: Ride[];
     rideStatusList: RideStatus[];
     rideTypeList: RideType[];
+    managerEmployeeList: Employee[],
+    rideEmployeeList: Employee[],
     rideSelected: Ride;
     reloadRides: boolean;
     rideAlert: Alert,
@@ -26,23 +30,53 @@ const unloadedState: RidesState = {
     rideList: [], 
     rideStatusList: [],
     rideTypeList: [],
+    managerEmployeeList: [],
+    rideEmployeeList: [],
     rideSelected: null,
     reloadRides: true,
     rideAlert: null,
 };
 
-type KnownAction = RideActions | FetchRideStatusAction | FetchRideTypeAction;
+type KnownAction = RideActions |
+    FetchManagerEmployeesAction | FetchRideEmployeesAction | FetchRideStatusAction | FetchRideTypeAction;
 
 export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: Action) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
         // rides
+        case 'FETCH_RIDE_EMPLOYEES':
+            return {
+                loadingRideList: state.loadingRideList,
+                rideList: state.rideList,
+                rideStatusList: state.rideStatusList,
+                rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: action.employeeList,
+                rideSelected: state.rideSelected,
+                reloadRides: state.reloadRides,
+                rideAlert: state.rideAlert,
+            }
+        case 'FETCH_MANAGER_EMPLOYEES':
+            return {
+                loadingRideList: state.loadingRideList,
+                rideList: state.rideList,
+                rideStatusList: state.rideStatusList,
+                rideTypeList: state.rideTypeList,
+                managerEmployeeList: action.employeeList,
+                rideEmployeeList: action.employeeList,
+                rideSelected: state.rideSelected,
+                reloadRides: state.reloadRides,
+                rideAlert: state.rideAlert,
+            }
+
         case 'FETCH_RIDES_IN_PROGRESS':
             return {
                 loadingRideList: true,
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: false,
                 rideAlert: state.rideAlert,
@@ -53,6 +87,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: action.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: false,
                 rideAlert: state.rideAlert,
@@ -63,6 +99,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: state.reloadRides,
                 rideAlert: state.rideAlert,
@@ -73,6 +111,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: true,
                 rideAlert: {
@@ -88,6 +128,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: true,
                 rideAlert: {
@@ -102,6 +144,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: true,
                 rideAlert: {
@@ -116,6 +160,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: action.rideSelected,
                 reloadRides: false,
                 rideAlert: {
@@ -130,6 +176,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: true,
                 rideAlert: {
@@ -144,6 +192,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: true,
                 rideAlert: {
@@ -160,6 +210,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: action.rideStatusList,
                 rideTypeList: state.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: false,
                 rideAlert: state.rideAlert,
@@ -172,6 +224,8 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideList: state.rideList,
                 rideStatusList: state.rideStatusList,
                 rideTypeList: action.rideTypeList,
+                managerEmployeeList: state.managerEmployeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: false,
                 rideAlert: state.rideAlert,

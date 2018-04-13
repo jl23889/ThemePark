@@ -17,6 +17,9 @@ export interface Ride {
     fastPassPossible: boolean;
     rideType: number;
     lastMaintenanceSince(): Date;
+
+    rideEmployeeWorksAt: RideEmployee[];
+    rideEmployeeManages: RideEmployee[];
 }
 
 export interface RideStatus {
@@ -27,6 +30,11 @@ export interface RideStatus {
 export interface RideType {
     rideTypeId: number;
     rideType: string;
+}
+
+export interface RideEmployee {
+    rideId: string;
+    employeeId: string;
 }
 
 // Customers 

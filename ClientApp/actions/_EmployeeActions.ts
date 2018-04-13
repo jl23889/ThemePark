@@ -18,6 +18,11 @@ export interface FetchMaintenanceEmployeesAction {
     employeeList: Employee[];
 }
 
+export interface FetchRideEmployeesAction {
+    type: 'FETCH_RIDE_EMPLOYEES';
+    employeeList: Employee[];
+}
+
 export interface FetchEmployeesActionInProgress {
     type: 'FETCH_EMPLOYEES_IN_PROGRESS';
 }
@@ -66,7 +71,7 @@ export interface DeleteEmployeeFailureAction {
 // declared type strings (and not any other arbitrary string).
 
 export type EmployeeActions =  FetchMaintenanceEmployeesAction | FetchManagerEmployeesAction |
-    FetchEmployeesActionInProgress | FetchEmployeesActionSuccess |
+    FetchRideEmployeesAction | FetchEmployeesActionInProgress | FetchEmployeesActionSuccess |
     FetchEmployeeAction | CreateEmployeeSuccessAction | CreateEmployeeFailureAction | UpdateEmployeeActionSuccess |
     UpdateEmployeeActionFail | DeleteEmployeeSuccessAction | DeleteEmployeeFailureAction;
 
@@ -89,7 +94,7 @@ export const actionCreators = {
             //
         })
     }, 
-    // get all maintenance employees
+    // get all manager employees
     requestManagerEmployees: (): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
         axios.get(`api/Employee/GetManagerEmployees`)
         .then(response => {
@@ -104,6 +109,16 @@ export const actionCreators = {
         axios.get(`api/Employee/GetMaintenanceEmployees`)
         .then(response => {
             dispatch({ type: 'FETCH_MAINT_EMPLOYEES', employeeList: response.data });
+        })
+        .catch(error => {
+            // error dispatch goes here
+        })
+    },
+    // get all ride employees
+    requestRideEmployees: (): AppThunkAction<EmployeeActions> => (dispatch, getState) => {
+        axios.get(`api/Employee/GetRideEmployees`)
+        .then(response => {
+            dispatch({ type: 'FETCH_RIDE_EMPLOYEES', employeeList: response.data });
         })
         .catch(error => {
             // error dispatch goes here

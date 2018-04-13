@@ -6,10 +6,13 @@ import * as RidesState from '../store/Rides';
 import * as RideActions from '../actions/_RideActions';
 import * as RideStatusActions from '../actions/_RideStatusActions';
 import * as RideTypeActions from '../actions/_RideTypeActions';
+import * as EmployeeActions from '../actions/_EmployeeActions';
 import * as moment from 'moment'
 
 import RideForm from './forms/RideForm';
+import { RideEmployeeListItem } from './RideEmployeeListItem';
 
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import ReactTable from 'react-table';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
@@ -18,13 +21,14 @@ import { displayToast } from '../helpers/_displayToast'
 const actionCreators = Object.assign(
     RideActions.actionCreators, 
     RideStatusActions.actionCreators, 
-    RideTypeActions.actionCreators);
+    RideTypeActions.actionCreators,
+    EmployeeActions.actionCreators);
 
 // At runtime, Redux will merge together...
 type DataProps =
     RidesState.RidesState        // ... state we've requested from the Redux store
     & typeof actionCreators    // ... plus action creators we've requested
-    & RouteComponentProps<{ entity: string }>; // ... plus incoming routing parameters
+    & RouteComponentProps<{ viewType: string }>; // ... plus incoming routing parameters
 
 class Rides extends React.Component<DataProps, {}> {
     componentDidMount() {
@@ -32,6 +36,8 @@ class Rides extends React.Component<DataProps, {}> {
         this.props.requestRideStatusList();
         this.props.requestRideTypeList();
         this.props.requestRidesList();
+        this.props.requestManagerEmployees();
+        this.props.requestRideEmployees();
     }
 
     componentDidUpdate(prevProps: DataProps) {
@@ -44,13 +50,22 @@ class Rides extends React.Component<DataProps, {}> {
     }
 
     render() {
-        return <div>
-            <h3>Add Ride</h3>
-            { this.renderCreateNewForm() }
-            <h1>Ride Table</h1>
-            { (!this.props.loadingRideList) ? this.renderRidesTable() : 
-                <h3>LOADING TABLE...</h3>}
-        </div>
+        switch (this.props.match.params.viewType) {
+            case 'table':
+                return <div>
+                    <h3>Add Ride</h3>
+                    { this.renderCreateNewForm() }
+                    <h1>Ride Table</h1>
+                    { (!this.props.loadingRideList) ? this.renderRidesTable() : 
+                        <h3>LOADING TABLE...</h3>}
+                </div>
+            case 'employees':
+                return <div> 
+                    <h1>Assign Employee To Ride</h1>
+                    { (!this.props.loadingRideList) ? this.renderRideEmployees() : 
+                        <h3>LOADING RIDES...</h3>}
+                </div>
+        }
     }
 
     createNewRide = values => {
@@ -156,6 +171,24 @@ class Rides extends React.Component<DataProps, {}> {
                 rideTypeList: this.props.rideTypeList
             }}
         />
+    }
+
+    // render a list of statless RideEmployeeListItem components
+    private renderRideEmployees() {
+        return <div>
+            <ListGroup>
+                {this.props.rideList.map(item =>
+                    <RideEmployeeListItem
+                        key={'listItem'+item.rideId}
+                        ride={item}
+                        rideList={this.props.rideList}
+                        rideEmployeeList={this.props.rideEmployeeList}
+                        managerEmployeeList={this.props.managerEmployeeList}
+                        >                                      
+                    </RideEmployeeListItem>
+                )}
+            </ListGroup>
+        </div>
     }
 
     private renderRidesTable() {

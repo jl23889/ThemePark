@@ -147,3 +147,43 @@ export function requestRide(id) {
             id: id 
         }})
 }
+
+// assign employee to ride
+export function assignRideEmployees(values, toastId) {
+    return axios({
+        method: 'post',
+        url: `api/Ride/AssignRideEmployees`,
+        data: values,
+        headers: authHeader(),
+    })
+}
+
+// assign employee to ride
+export function assignRideManagers(values, toastId) {
+    return axios({
+        method: 'post',
+        url: `api/Ride/AssignRideManagers`,
+        data: values,
+        headers: authHeader(),
+    })
+}
+
+// remove all employees from ride
+export function removeAllRideEmployees(values) {
+    return axios({
+        method: 'post',
+        url: `api/Ride/RemoveAllRideEmployees`,
+        data: values,
+        headers: authHeader(),
+    })
+}
+
+// remove all managers from ride
+export function removeAllRideManagers(values) {
+    return axios({
+        method: 'post',
+        url: `api/Ride/RemoveAllRideManagers`,
+        data: values,
+        headers: authHeader(),
+    })
+}

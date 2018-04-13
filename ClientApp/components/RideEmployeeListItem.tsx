@@ -233,6 +233,12 @@ export class RideEmployeeListItem extends React.Component<ListItemProps,ListItem
                     toast('Updated Managers!', {
                         type: 'success'
                     })
+
+                // reload managers state
+                this.setState({
+                    managers: this.state.managersToUpdate,
+
+                })
             })
         })
     }
@@ -271,6 +277,12 @@ export class RideEmployeeListItem extends React.Component<ListItemProps,ListItem
                     toast('Updated Employees!', {
                         type: 'success'
                     })
+
+                // reload employees state
+                this.setState({
+                    employees: this.state.employeesToUpdate,
+
+                })
             })
         })
     }
@@ -278,10 +290,16 @@ export class RideEmployeeListItem extends React.Component<ListItemProps,ListItem
     private renderView() {
         return <ListGroupItem
             key={'listGroupItem'+this.state.ride.rideId}
-            tag='div'>
+            tag='div'
+            color={this.state.employees.length && this.state.managers.length 
+                ? 'success' : 'warning'}>
             <ListGroupItemHeading>
                 {this.state.ride.rideName}
             </ListGroupItemHeading>
+            {this.state.employees.length && this.state.managers.length ? ''
+                : <div className="row"><div className="col-md-12">
+                NO EMPLOYEE OR MANAGER SELECTED
+                </div></div> }
             <div className="row">
                 <div className="col-md-6">
                     Managers:

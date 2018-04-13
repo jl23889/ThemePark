@@ -12,7 +12,7 @@ import * as moment from 'moment'
 import RideForm from './forms/RideForm';
 import { RideEmployeeListItem } from './RideEmployeeListItem';
 
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import ReactTable from 'react-table';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
@@ -55,13 +55,22 @@ class Rides extends React.Component<DataProps, {}> {
                 return <div>
                     <h3>Add Ride</h3>
                     { this.renderCreateNewForm() }
-                    <h1>Ride Table</h1>
+                    <h1>Ride Table
+                        <Button>
+                            <Link to='/rides/employees'>Go To Assign Employees</Link>
+                        </Button>
+                    </h1>
                     { (!this.props.loadingRideList) ? this.renderRidesTable() : 
                         <h3>LOADING TABLE...</h3>}
                 </div>
             case 'employees':
                 return <div> 
-                    <h1>Assign Employee To Ride</h1>
+                    <h1>Assign Employee To Ride
+                        <Button>
+                            <Link to='/rides/table'>Go To Rides Table</Link>
+                        </Button>
+                    </h1>
+                    
                     { (!this.props.loadingRideList) ? this.renderRideEmployees() : 
                         <h3>LOADING RIDES...</h3>}
                 </div>

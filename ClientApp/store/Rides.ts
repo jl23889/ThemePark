@@ -63,7 +63,7 @@ export const reducer: Reducer<RidesState> = (state: RidesState, incomingAction: 
                 rideStatusList: state.rideStatusList,
                 rideTypeList: state.rideTypeList,
                 managerEmployeeList: action.employeeList,
-                rideEmployeeList: action.employeeList,
+                rideEmployeeList: state.rideEmployeeList,
                 rideSelected: state.rideSelected,
                 reloadRides: state.reloadRides,
                 rideAlert: state.rideAlert,

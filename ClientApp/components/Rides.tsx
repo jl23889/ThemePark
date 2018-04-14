@@ -227,7 +227,19 @@ class Rides extends React.Component<DataProps, {}> {
                         Header: "Ride Status",
                         accessor: "status",
                         Cell: row => (
-                            this.lookupRideStatus(row.value)
+                        <span>
+                            <span style={{
+                              color: row.value === 2 || row.value === 3 ? '#ff2e00'
+                                : '#57d500',
+                              transition: 'all .3s ease'
+                            }}>
+                              &#x25cf;
+                            </span> {
+                              row.value === 3 ? 'Weather'
+                              : row.value === 2 ? `Maintenance`
+                              : 'Open'
+                            }
+                          </span>
                         ),
                         Filter: ({ filter, onChange }) =>
                             this.lookupRideStatusFilter(filter, onChange),

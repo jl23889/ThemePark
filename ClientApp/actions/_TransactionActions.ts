@@ -84,7 +84,7 @@ export const actionCreators = {
         .then(transactionRes => { // transactionRes should contain transactionId
             // create ticket record for each ticket and 
             //     also create a ticketTransactionPurchase record
-            dispatch({ type: 'TICKET_TRANSACTION_CREATED', toastId: toastId})
+            dispatch({ type: 'TICKET_TRANSACTION_CREATED', toastId: toastId});
             values.forEach(item => {
                 axios({
                     method: 'post',
@@ -103,19 +103,20 @@ export const actionCreators = {
                         headers: authHeader()
                     })
                     .then(response => {
-                        dispatch({ type: 'TICKET_CREATED', ticketId: ticketRes.data.ticket.ticketId, toastId: toastId})
+                        // remove ticket from ticketList
+                        dispatch({ type: 'TICKET_CREATED', ticketId: ticketRes.data.ticketId, toastId: toastId})
                     })
                     .catch(error => {
-                        dispatch({ type: 'TICKET_TRANSACTION_FAIL', toastId: toastId });
+                        // dispatch({ type: 'TICKET_TRANSACTION_FAIL', toastId: toastId });
                     })
                 })
                 .catch(error => {
-                    dispatch({ type: 'TICKET_TRANSACTION_FAIL', toastId: toastId });
+                    // dispatch({ type: 'TICKET_TRANSACTION_FAIL', toastId: toastId });
                 })
             })
         })
         .catch(error => {
-            dispatch({ type: 'TICKET_TRANSACTION_FAIL', toastId: toastId });
+            // dispatch({ type: 'TICKET_TRANSACTION_FAIL', toastId: toastId });
         })
     },
     // add or remove from transactionTotal and ticketList

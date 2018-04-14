@@ -30,7 +30,7 @@ class TicketTransaction extends React.Component<DataProps, {}> {
     componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
         // update unique toast 
-        displayToast(this.props.alert );
+        displayToast(this.props.alert);
     }
 
     render() {

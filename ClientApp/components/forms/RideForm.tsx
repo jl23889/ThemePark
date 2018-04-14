@@ -4,9 +4,9 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import * as moment from 'moment'
 
 // generate option element from rideStatus
-function rideStatusOption(rs) {
-    return <option key={rs.rideStatusId} value={rs.rideStatusId}>{rs.rideStatus}</option>
-}
+// function rideStatusOption(rs) {
+//     return <option key={rs.rideStatusId} value={rs.rideStatusId}>{rs.rideStatus}</option>
+// }
 
 // generate option element from rideType
 function rideTypeOption(rt) {
@@ -23,11 +23,11 @@ let RideForm = props => {
 
     const { handleSubmit, pristine, reset, submitting } = props;
 
-    // assigns rideStatusList and rideTypeList if they are loaded
-    const rsl =
-        (typeof props.props !== 'undefined' &&
-            typeof props.props.rideStatusList !== 'undefined' ?
-            props.props.rideStatusList : []);
+    // assigns rideTypeList if they are loaded
+    // const rsl =
+    //     (typeof props.props !== 'undefined' &&
+    //         typeof props.props.rideStatusList !== 'undefined' ?
+    //         props.props.rideStatusList : []);
     const rtl =
         (typeof props.props !== 'undefined' &&
             typeof props.props.rideTypeList !== 'undefined' ?
@@ -53,14 +53,6 @@ let RideForm = props => {
 			component="input" 
 			type="date" 
 		/>
-        <label>Ride Status</label>
-        <Field 
-            name="status" 
-            component="select" 
-        >
-            <option value='' disabled>Select Status</option>
-            {...rsl.map(rideStatusOption)}
-        </Field>
         <label>FastPass Possible</label>
         <Field 
             name="fastPassPossible" 

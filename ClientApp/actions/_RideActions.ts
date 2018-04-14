@@ -94,6 +94,9 @@ export const actionCreators = {
     },
 
     createNewRide: (values,toastId): AppThunkAction<RideActions> => (dispatch, getState) => {
+        // set default rideStatus to open
+        values.status = 1;
+
         axios({
             method: 'post',
             url: `api/Ride/CreateNewRide`,

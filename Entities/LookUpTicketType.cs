@@ -12,6 +12,7 @@ namespace ThemePark.Entities
 
         public short TicketTypeId { get; set; }
         public string TicketType { get; set; }
+        public decimal? TicketPrice { get; set; }
 
         public ICollection<Ticket> Ticket { get; set; }
     }

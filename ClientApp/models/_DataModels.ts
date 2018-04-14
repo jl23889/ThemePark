@@ -131,6 +131,7 @@ export interface Ticket {
 export interface TicketType {
     ticketTypeId: number;
     ticketType: string;
+    ticketPrice: number;
 }
 
 // TRANSACTION  

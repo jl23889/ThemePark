@@ -19,89 +19,79 @@ namespace ThemePark.Controllers
 {
     [Authorize]
 	[Route("api/[controller]")]
-    public class CustomerController : Controller
+    public class TransactionController : Controller
     {
 
         private readonly DataContext _context;
         private readonly ILogger _logger;
 
-        public CustomerController(DataContext context, ILogger<CustomerController> logger)
+        public TransactionController(DataContext context, ILogger<TransactionController> logger)
         {
             _context = context;
             _logger = logger;
         }
 
         [HttpGet("[action]")]
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<CustomerTransaction> GetTransactions()
         {
-            return _context.Customer.ToList();
+            return _context.CustomerTransaction.ToList();
         }
-
-        [AllowAnonymous]
-        [HttpGet("[action]")]
-        public Customer GetCustomer(string id)
-        {
-            return _context.Customer.Find(id);
-        }
-
+ 
         [HttpPost("[action]")]
-        public IActionResult CreateNewCustomer([FromBody] Customer customer)
-        {
+        public IActionResult CreateNewTicketTransaction(string customerId)
+        {   
+            // create a transaction record of type ticket
+
+            // build a CustomerTransaction record
+            CustomerTransaction ticketTransaction = new CustomerTransaction();
+            ticketTransaction.CustomerId= customerId;
+            ticketTransaction.TransactionType= 1;
+            ticketTransaction.Date= DateTime.Now;
             // check if id generated is unique
             // TODO: add some kind of timeout or max retries to while loop
             var uniqueIdFound = false;
-            string uid;
+            string transactionId="";
+            string uid="";
             while (!uniqueIdFound) {
                 uid = IdGenerator._generateUniqueId(); // id generator helper method
-                if (_context.Customer.Find(uid) == null) {
+                if (_context.CustomerTransaction.Find(uid) == null) {
                     uniqueIdFound = true;
-                    customer.CustomerId = uid;
+                    ticketTransaction.TransactionId = uid;
+                    transactionId = uid;
                 }
             }
-
-            if (ModelState.IsValid && customer != null) 
+                
+            if (ModelState.IsValid) 
             {
                 try {
-                    _context.Customer.Add(customer);
+                    _context.CustomerTransaction.Add(ticketTransaction);
                     _context.SaveChanges();
-                    return Ok(customer); 
+                    return Ok(new {
+                        transactionId= uid // return transactionId
+                    }); 
                 }  
                 catch
                 {
                     return BadRequest();
                 }  
             }
-            return BadRequest();   
-        }
 
-        [HttpPut("[action]")]
-        public IActionResult UpdateCustomer([FromBody]Customer customer)
-        {
-            if (ModelState.IsValid && customer != null) 
-            {
-                try {
-                    _context.Customer.Update(customer);
-                    _context.SaveChanges();
-                    return Ok(); 
-                }  
-                catch
-                {
-                    return BadRequest();
-                }  
-            }
             return BadRequest();
         }
 
         [HttpPost("[action]")]
-        public IActionResult DeleteCustomer([FromBody]Customer c)
-        {
-            var customer = _context.Customer.Find(c.CustomerId);
-            if (customer != null) 
+        public IActionResult CreateNewTransactionTicketPurchase([FromBody]TransactionTicketPurchases ttp)
+        {  
+            // find ticket and set purchase price from ticket price
+            Ticket ticket=_context.Ticket.Find(ttp.TicketId);
+            ttp.PurchaseAmount= Convert.ToInt32(ticket.TicketPrice);
+
+            if (ModelState.IsValid) 
             {
                 try {
-                    _context.Customer.Remove(customer);
+                    _context.TransactionTicketPurchases.Add(ttp);
                     _context.SaveChanges();
-                    return Ok(); 
+                    return Ok();
                 }  
                 catch
                 {

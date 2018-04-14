@@ -20,7 +20,7 @@
     },
     "@types/react-dom": {
       "version": "15.5.1",
-      "from": "@types/react-dom@15.5.1",
+      "from": "https://registry.npmjs.org/@types/react-dom/-/react-dom-15.5.1.tgz",
       "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-15.5.1.tgz",
       "dev": true
     },
@@ -3414,7 +3414,7 @@
     },
     "react": {
       "version": "15.6.1",
-      "from": "react@15.6.1",
+      "from": "https://registry.npmjs.org/react/-/react-15.6.1.tgz",
       "resolved": "https://registry.npmjs.org/react/-/react-15.6.1.tgz",
       "dev": true
     },
@@ -3455,7 +3455,7 @@
     },
     "react-dom": {
       "version": "15.6.1",
-      "from": "react-dom@15.6.1",
+      "from": "https://registry.npmjs.org/react-dom/-/react-dom-15.6.1.tgz",
       "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-15.6.1.tgz",
       "dev": true
     },
@@ -3518,7 +3518,7 @@
     },
     "react-redux": {
       "version": "5.0.5",
-      "from": "react-redux@5.0.5",
+      "from": "https://registry.npmjs.org/react-redux/-/react-redux-5.0.5.tgz",
       "resolved": "https://registry.npmjs.org/react-redux/-/react-redux-5.0.5.tgz",
       "dev": true
     },
@@ -3530,7 +3530,7 @@
     },
     "react-router-dom": {
       "version": "4.1.1",
-      "from": "react-router-dom@4.1.1",
+      "from": "https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.1.1.tgz",
       "resolved": "https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.1.1.tgz",
       "dev": true
     },

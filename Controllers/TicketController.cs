@@ -59,7 +59,9 @@ namespace ThemePark.Controllers
                 try {
                     _context.Ticket.Add(ticket);
                     _context.SaveChanges();
-                    return Ok(ticket); 
+                    return Ok(new {
+                        ticketId= uid // return transactionId
+                    }); 
                 }  
                 catch
                 {

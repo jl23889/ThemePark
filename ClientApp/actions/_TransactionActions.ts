@@ -97,7 +97,7 @@ export const actionCreators = {
                         method: 'post',
                         url: `api/Transaction/CreateNewTransactionTicketPurchase`,
                         data: {
-                            ticketId: ticketRes.data.ticket.ticketId,
+                            ticketId: ticketRes.data.ticketId,
                             transactionId: transactionRes.data.transactionId,
                         },
                         headers: authHeader()

@@ -38,8 +38,9 @@ namespace ThemePark.Controllers
             return _context.Ticket.ToList();
         }
 
+        // return ticket item in response
         [HttpPost("[action]")]
-        public IActionResult CreateNewTicket([FromBody] Ticket ticket)
+        public IActionResult CreateNewTicket([FromBody]Ticket ticket)
         {
             // check if id generated is unique
             // TODO: add some kind of timeout or max retries to while loop
@@ -58,7 +59,7 @@ namespace ThemePark.Controllers
                 try {
                     _context.Ticket.Add(ticket);
                     _context.SaveChanges();
-                    return Ok(); 
+                    return Ok(ticket); 
                 }  
                 catch
                 {

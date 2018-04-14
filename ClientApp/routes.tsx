@@ -8,6 +8,7 @@ import Employees from './components/Employees';
 import Lookup from './components/Lookup';
 import Login from './components/Login';
 import Register from './components/Register';
+import TicketTransaction from './components/TicketTransaction';
 
 import EmployeeProfile from './components/EmployeeProfile';
 import Maintenance from './components/Maintenance';
@@ -26,6 +27,7 @@ export const routes =
     <Route path='/register' component={ Register } />
     <Route path='/profile' component={ EmployeeProfile } />
     <Route path='/maintenance/:viewType?' component={ Maintenance } />
+    <Route path='/ticket/purchase' component={ TicketTransaction }/>
 
     <Route path='/lookup/:tableToLoad?' component={ Lookup } />
 </Layout>;

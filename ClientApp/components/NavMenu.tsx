@@ -38,6 +38,7 @@ class NavMenu extends React.Component<DataProps, {}> {
                 </div>
                 <div className='clearfix'></div>
                 { !this.props.loggedIn ? this.renderLogin() : '' }
+                { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerMenu() : '' }
                 { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeMenu() : '' }
                 { this.props.loggedIn && this.props.accessLevel == 1 ? this.renderAdminMenu() : '' }
             </div>
@@ -68,6 +69,18 @@ class NavMenu extends React.Component<DataProps, {}> {
                 <li>
                     <Link to={ '/lookup' }>
                         <span className='glyphicon glyphicon-th-list'></span> LookupTables
+                    </Link>
+                </li>
+            </ul>
+        </div>
+    }
+
+    private renderCustomerMenu() {
+        return <div className='navbar-collapse collapse'>
+            <ul className='nav navbar-nav'>
+                <li>
+                    <Link to={ '/ticket/purchase' }>
+                        <span className='glyphicon glyphicon-film'></span> Purchase Ticket
                     </Link>
                 </li>
             </ul>

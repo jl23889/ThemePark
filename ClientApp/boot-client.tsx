@@ -2,6 +2,7 @@ import './css/site.css';
 import 'react-table/react-table.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-select/dist/react-select.css'
+import 'react-datepicker/dist/react-datepicker.css';
 
 import 'bootstrap';
 import * as React from 'react';

@@ -94,9 +94,9 @@ namespace ThemePark.Controllers
             TimeSpan difference = endTime - startTime;
             int difference_in_days = difference.Days + 1;
 
-            var ride = (from ticket in _context.TicketRideEnters
-                        where ticket.DateTime <= endTime && ticket.DateTime >= startTime && ticket.RideId == rideID
-                        select new { ticket.TicketId, ticket.RideId, ticket.DateTime });
+            var ride = from ticket in _context.TicketRideEnters
+                       where ticket.DateTime <= endTime && ticket.DateTime >= startTime && ticket.RideId == rideID
+                       select new { ticket.TicketId, ticket.RideId, ticket.DateTime };
 
             var ride_max = ride.GroupBy(x => x.DateTime.Date)
                 .Select(g => new { Dateinfo = g.Key, Count = g.Count() }).OrderByDescending(y => y.Count).First();

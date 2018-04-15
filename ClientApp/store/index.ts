@@ -6,6 +6,7 @@ import * as Rides from './Rides'
 import * as Login from './Login'
 import * as Register from './Register'
 import * as Transaction from './Transaction'
+import * as Ticket from './Ticket'
 import * as TicketType from './TicketType'
 import * as WeatherType from './WeatherType'
 
@@ -28,6 +29,7 @@ export interface ApplicationState {
     rideType: RideType.RideTypeState;
     rides: Rides.RidesState;
 
+    ticket: Ticket.TicketState;
     ticketType: TicketType.TicketTypeState;
     transaction: Transaction.TransactionState;
 
@@ -57,6 +59,7 @@ export const reducers = {
     rideStatus: RideStatus.reducer,
     rideType: RideType.reducer,
 
+    ticket: Ticket.reducer,
     ticketType: TicketType.reducer,
     transaction: Transaction.reducer,
 

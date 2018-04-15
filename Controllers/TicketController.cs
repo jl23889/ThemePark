@@ -38,6 +38,15 @@ namespace ThemePark.Controllers
             return _context.Ticket.ToList();
         }
 
+        // returns ticket if effectiveDate < now < expirationDate
+        // TODO: IMPLEMENT FUNCTIONALITY
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public Ticket GetValidTicket()
+        {
+            return _context.Ticket.Find();
+        }
+
         // return ticket item in response
         [HttpPost("[action]")]
         public IActionResult CreateNewTicket([FromBody]Ticket ticket)
@@ -62,6 +71,25 @@ namespace ThemePark.Controllers
                     return Ok(new {
                         ticketId= ticket.TicketId // return transactionId
                     }); 
+                }  
+                catch
+                {
+                    return BadRequest();
+                }  
+            }
+            return BadRequest();   
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult CreateNewTicketRideEnters([FromBody]TicketRideEnters ticketRide)
+        {
+            ticketRide.DateTime = DateTime.UtcNow
+            if (ModelState.IsValid && ticketRide != null) 
+            {
+                try {
+                    _context.TicketRideEnters.Add(ticket);
+                    _context.SaveChanges();
+                    return Ok(); 
                 }  
                 catch
                 {

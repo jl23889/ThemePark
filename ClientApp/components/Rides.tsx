@@ -293,9 +293,9 @@ class Rides extends React.Component<DataProps, {}> {
                                 rideTypeList: this.props.rideTypeList
                             }}
                         />
-                        <button onClick={this.deleteRide.bind(this, original) } >
+                        <Button onClick={this.deleteRide.bind(this, original) } >
                             Delete
-                        </button>
+                        </Button>
                     </div>
                     );
                 }}

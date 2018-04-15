@@ -151,6 +151,11 @@ export function requestRide(id) {
         }})
 }
 
+// get all rides
+export function requestRides() {
+    return axios.get(`api/Ride/GetRides`)
+}
+
 // assign employee to ride
 export function assignRideEmployees(values, toastId) {
     return axios({

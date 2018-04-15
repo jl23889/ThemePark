@@ -111,7 +111,11 @@ class NavMenu extends React.Component<DataProps, {}> {
     private renderEmployeeMenu() {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
-                
+                <li>
+                    <Link to={ '/ticket/scan' }>
+                        <span className='glyphicon glyphicon-film'></span> Scan Ticket
+                    </Link>
+                </li>
             </ul>
         </div>
     }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using ThemePark.Entities;
 using ThemePark.Helpers;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 // jwt token auth
 using System.Security.Claims;
@@ -42,6 +43,19 @@ namespace ThemePark.Controllers
         public Customer GetCustomer(string id)
         {
             return _context.Customer.Find(id);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public IEnumerable<CustomerTransaction> GetCustomerTicketTransaction(string id)
+        {
+            //string id = "6cda9e94fe354a8d";
+
+            IEnumerable<CustomerTransaction> transactions_table = (from t in _context.CustomerTransaction
+                                                                   where t.CustomerId == id && t.TransactionType == 1
+                                                                   select t).Include(r => r.TransactionTicketPurchases);
+
+            return transactions_table.ToList();
         }
 
         [HttpPost("[action]")]

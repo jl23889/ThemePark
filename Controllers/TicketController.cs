@@ -87,7 +87,7 @@ namespace ThemePark.Controllers
             if (ModelState.IsValid && ticketRide != null) 
             {
                 try {
-                    _context.TicketRideEnters.Add(ticket);
+                    _context.TicketRideEnters.Add(ticketRide);
                     _context.SaveChanges();
                     return Ok(); 
                 }  

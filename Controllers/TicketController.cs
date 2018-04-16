@@ -83,7 +83,7 @@ namespace ThemePark.Controllers
         [HttpPost("[action]")]
         public IActionResult CreateNewTicketRideEnters([FromBody]TicketRideEnters ticketRide)
         {
-            ticketRide.DateTime = DateTime.UtcNow
+            ticketRide.DateTime = DateTime.UtcNow;
             if (ModelState.IsValid && ticketRide != null) 
             {
                 try {

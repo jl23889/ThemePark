@@ -47,13 +47,24 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IEnumerable<CustomerTransaction> GetCustomerTicketTransaction(string id)
+        public IEnumerable<TransactionTicketPurchases> GetCustomerTicketTransaction(string id)
         {
             //string id = "6cda9e94fe354a8d";
 
+            /*
             IEnumerable<CustomerTransaction> transactions_table = (from t in _context.CustomerTransaction
                                                                    where t.CustomerId == id && t.TransactionType == 1
                                                                    select t).Include(r => r.TransactionTicketPurchases);
+                                                                   */
+
+            IEnumerable<TransactionTicketPurchases> transactions_table = (from c in _context.CustomerTransaction 
+                                                                   join t in _context.TransactionTicketPurchases on c.TransactionId equals t.TransactionId
+                                                                   where c.CustomerId == id && c.TransactionType == 1
+                                                                   select t).Include(r => r.Ticket);
+
+            //IEnumerable<TransactionTicketPurchases> result = from t in _context.TransactionTicketPurchases
+
+
 
             return transactions_table.ToList();
         }

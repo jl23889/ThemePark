@@ -140,6 +140,15 @@ export interface Transaction {
     transactionId: string;
     customerId: string;
     transactionType: number;
+    date: Date;
+    transactionTotal: number;
+    transactionTicketPurchases: TicketTransaction[];
+}
+
+export interface TicketTransaction {
+    transactionId: string;
+    ticketId: string;
+    purchaseAmount: number;
 }
 
 // WEATHER TYPE 

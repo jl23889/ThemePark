@@ -6,6 +6,7 @@ import * as TransactionState from '../store/Transaction';
 import * as TransactionActions from '../actions/_TransactionActions'
 import TicketTransactionForm from './forms/TicketTransactionForm';
 import TicketTransactionListItem from './TicketTransactionListItem';
+import TransactionListItem from './TransactionListItem';
 
 import { Button, ListGroupItem, ListGroup } from 'react-bootstrap'
 import { toast } from 'react-toastify';
@@ -25,6 +26,10 @@ class TicketTransaction extends React.Component<DataProps, {}> {
     componentDidMount() {
         // This method runs when the component is first added to the page
         this.props.requestTicketTypes(); // get list of ticket types
+
+        // get user details from stored user
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        this.props.requestCustomerTicketTransactions(storedUser.customerId); // get list of customer ticket transactions
     }
 
     componentDidUpdate(prevProps: DataProps) {
@@ -37,6 +42,7 @@ class TicketTransaction extends React.Component<DataProps, {}> {
         return <div>
             { this.renderTicketPurchaseForm()}
             <h1>View My Tickets</h1>
+            { this.renderCustomerTicketTransactions()}
         </div>
     }
 
@@ -187,6 +193,20 @@ class TicketTransaction extends React.Component<DataProps, {}> {
                 </div>
             </div>
         </div>
+    }
+
+    private renderCustomerTicketTransactions() {
+
+        console.log(this.props.ticketTransactionList);
+        return <ListGroup>
+            {this.props.ticketTransactionList.map(transaction =>
+                <TransactionListItem
+                    key={'listItem'+transaction.transactionId}
+                    transaction={transaction}
+                    >                                      
+                </TransactionListItem>
+            )}
+        </ListGroup>
     }
 }
 

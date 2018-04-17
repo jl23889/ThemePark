@@ -31,7 +31,7 @@ export interface ScanTicketActionFail {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type TicketActions = FetchRidesAction | FetchTicketAction | 
+export type TicketActions = FetchRidesAction | FetchTicketAction |
     ScanTicketActionSuccess | ScanTicketActionFail ;
 
 // ----------------
@@ -59,6 +59,7 @@ export const actionCreators = {
             dispatch({ type: 'FETCH_TICKET', ticket: response.data });
         })
     },
+
     scanTicket: (values, toastId): AppThunkAction<TicketActions> => (dispatch, getState) => {
         axios({
             method: 'post',

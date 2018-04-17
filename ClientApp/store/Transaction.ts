@@ -1,6 +1,6 @@
 import { Action, Reducer } from 'redux';
 import { TransactionActions } from '../actions/_TransactionActions'
-import { Alert, Ticket, TicketType } from '../models/_DataModels'
+import { Alert, Ticket, TicketType, Transaction } from '../models/_DataModels'
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -10,6 +10,7 @@ export interface TransactionState {
     ticketTypeList: TicketType[];
     transactionTotal: number;
     effectiveDate: Date;
+    ticketTransactionList: Transaction[];
     alert: Alert;
 }
 
@@ -21,6 +22,7 @@ const unloadedState: TransactionState = {
     ticketTypeList: [],
     transactionTotal: 0,
     effectiveDate: new Date(),
+    ticketTransactionList: [],
     alert: null,
 };
 
@@ -35,6 +37,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: action.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
                 alert: state.alert,
             }
         case 'FETCH_TICKET_TYPES': 
@@ -43,6 +46,16 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: action.ticketTypes,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
+                alert: state.alert,
+            }
+        case 'FETCH_CUSTOMER_TRANS':
+            return {
+                ticketList: state.ticketList,
+                ticketTypeList: state.ticketTypeList,
+                transactionTotal: state.transactionTotal,
+                effectiveDate: state.effectiveDate,
+                ticketTransactionList: action.transactionList,
                 alert: state.alert,
             }
         case 'UPDATE_TRANSACTION_TOTAL': 
@@ -51,6 +64,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: action.transactionTotal,
                 effectiveDate: state.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
                 alert: state.alert,
             }
         case 'TICKET_TRANSACTION_IN_PROGRESS': 
@@ -59,6 +73,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
                 alert: state.alert, 
             }
         case 'TICKET_TRANSACTION_SUCCESS': 
@@ -67,6 +82,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'success',
@@ -79,6 +95,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'error',
@@ -91,6 +108,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'warning',
@@ -103,6 +121,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
+                ticketTransactionList: state.ticketTransactionList,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'warning',

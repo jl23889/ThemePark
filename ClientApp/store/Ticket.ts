@@ -1,6 +1,6 @@
 import { Action, Reducer } from 'redux';
 import { TicketActions } from '../actions/_TicketActions'
-import { Alert, Ride, Ticket } from '../models/_DataModels'
+import { Alert, Ride, Ticket, Transaction } from '../models/_DataModels'
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -29,13 +29,13 @@ export const reducer: Reducer<TicketState> = (state: TicketState, incomingAction
             return {
                 ticket: state.ticket,
                 alert: state.alert,
-                rideList: action.rideList
+                rideList: action.rideList,
             }
         case 'FETCH_TICKET':
             return {
                 ticket: action.ticket,
                 alert: state.alert,
-                rideList: state.rideList
+                rideList: state.rideList,
             }
         case 'SCAN_TICKET_SUCCESS':
             return {
@@ -45,7 +45,7 @@ export const reducer: Reducer<TicketState> = (state: TicketState, incomingAction
                     'alertType': 'success',
                     'alertMessage': 'Scanned Ticket Successfully!'
                 },
-                rideList: state.rideList
+                rideList: state.rideList,
             }
         case 'SCAN_TICKET_FAIL':
             return {
@@ -55,7 +55,7 @@ export const reducer: Reducer<TicketState> = (state: TicketState, incomingAction
                     'alertType': 'error',
                     'alertMessage': 'Invalid Ticket!'
                 },
-                rideList: state.rideList
+                rideList: state.rideList,
             }
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

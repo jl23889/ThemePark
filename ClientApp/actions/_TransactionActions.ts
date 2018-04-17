@@ -1,7 +1,7 @@
 import { ActionCreator } from 'redux';
 import { AppThunkAction } from '../store/';
 import { authHeader } from '../helpers/_authHeader'
-import { Ticket, TicketType } from '../models/_DataModels'
+import { Ticket, TicketType, Transaction } from '../models/_DataModels'
 
 import axios from 'axios';
 
@@ -16,6 +16,11 @@ export interface SetDateAction {
 export interface FetchTicketTypesAction {
     type: 'FETCH_TICKET_TYPES';
     ticketTypes: TicketType[];
+}
+
+export interface FetchCustomerTransAction {
+    type: 'FETCH_CUSTOMER_TRANS';
+    transactionList: Transaction[];
 }
 
 export interface CalculateTransactionTotalAction {
@@ -51,7 +56,7 @@ export interface TicketTransactionActionFail {
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-export type TransactionActions = SetDateAction |
+export type TransactionActions = SetDateAction | FetchCustomerTransAction |
     FetchTicketTypesAction | CalculateTransactionTotalAction |
     TicketTransactionActionInProgress | TicketTransactionCreatedAction | TicketCreatedAction |
     TicketTransactionActionSuccess | TicketTransactionActionFail;
@@ -66,6 +71,20 @@ export const actionCreators = {
         axios.get('api/TicketType/LookUpTicketType')
         .then(response => {
             dispatch({ type: 'FETCH_TICKET_TYPES', ticketTypes: response.data });
+        })
+    },
+    // returns all of customer's ticket trnasactions
+    requestCustomerTicketTransactions: (customerId): AppThunkAction<TransactionActions> => (dispatch, getState) => {
+        axios({
+            method: 'get',
+            url: `api/Customer/GetCustomerTicketTransaction`,
+            params: {
+                id: customerId,
+            },
+            headers: authHeader(),
+        })
+        .then(response => {
+            dispatch({ type: 'FETCH_CUSTOMER_TRANS', transactionList: response.data });
         })
     },
     // ticket transaction

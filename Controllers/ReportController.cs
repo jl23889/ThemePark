@@ -65,6 +65,19 @@ namespace ThemePark.Controllers
         public int ageGroup4_over50 { get; set; }
     }
 
+    public class TicketSalesOutput
+    {
+        public TicketSalesOutput(string type, int count, decimal totalSales)
+        {
+            this.type = type;
+            this.count = count;
+            this.totalSales = totalSales;
+        }
+        public string type { get; set; }
+        public int count { get; set; }
+        public decimal totalSales { get; set; }
+    }
+
     [Authorize]
     [Route("api/[controller]")]
     public class ReportController : Controller
@@ -266,7 +279,58 @@ namespace ThemePark.Controllers
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
             return SummaryVisit(mondayOfLastWeek, sundayOfLastWeek);
-        } 
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public IActionResult TicketSales(DateTime startTime, DateTime endTime)
+        {
+            //hardcode start
+            //DateTime startTime = new DateTime(2018, 4, 10);
+            //DateTime endTime = new DateTime(2018, 4, 17);
+            //hardcode end
+
+            List<TicketSalesOutput> ls = new List<TicketSalesOutput>();
+
+            var ticketSalesList = from ct in _context.CustomerTransaction
+                                  join ttp in _context.TransactionTicketPurchases on ct.TransactionId equals ttp.TransactionId
+                                  join t in _context.Ticket on ttp.TicketId equals t.TicketId
+                                  where ct.Date <= endTime && ct.Date >= startTime
+                                  select new { TicketID = t.TicketId, TicketPrice = t.TicketPrice, TicketType = t.TicketType };
+
+            decimal total_sum = ticketSalesList.Sum(s => s.TicketPrice);
+            int total_count = ticketSalesList.Count();
+
+            ls.Add(new TicketSalesOutput("AllType", total_count, total_sum));
+
+            var ticketgrp = ticketSalesList.GroupBy(x => x.TicketType).Select(g => new { TicketType = g.Key, Count = g.Count(), Sum = g.Sum(s => s.TicketPrice) });
+            var ticketgrpstring = from tg in ticketgrp
+                                  join lookup in _context.LookUpTicketType on tg.TicketType equals lookup.TicketTypeId
+                                  select new { TicketType = lookup.TicketType, Count = tg.Count, Sum = tg.Sum };
+
+            foreach (var t in ticketgrpstring)
+            {
+                ls.Add(new TicketSalesOutput(t.TicketType, t.Count, t.Sum));
+            }
+
+            return Ok(ls);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public IActionResult LastWeekTicketSales()
+        {
+            //hardcode date for testing, replace before deployment
+            //DateTime today = new DateTime(2018, 4, 18);
+            DateTime today = DateTime.Today;
+
+            DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
+            DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
+
+            return TicketSales(mondayOfLastWeek, sundayOfLastWeek);
+        }
+
+
     }
 }
 

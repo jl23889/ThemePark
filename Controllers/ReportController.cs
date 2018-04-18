@@ -41,13 +41,17 @@ namespace ThemePark.Controllers
 
     public class SummaryResult
     {
-        public SummaryResult(string name, double average, int total, DateTime maxDate, int maxCount)
+        public SummaryResult(string name, double average, int total, DateTime maxDate, int maxCount, int ageGroup1, int ageGroup2, int ageGroup3, int ageGroup4)
         {
             this.name = name;
             this.average = average;
             this.total = total;
             this.maxDate = maxDate;
             this.maxCount = maxCount;
+            this.ageGroup1_0_to_18 = ageGroup1;
+            this.ageGroup2_19_to_30 = ageGroup2;
+            this.ageGroup3_31_to_50 = ageGroup3;
+            this.ageGroup4_over50 = ageGroup4;
         }
 
         public string name { get; set; }
@@ -55,6 +59,10 @@ namespace ThemePark.Controllers
         public int total { get; set; }
         public DateTime maxDate { get; set; }
         public int maxCount { get; set; }
+        public int ageGroup1_0_to_18 { get; set; }
+        public int ageGroup2_19_to_30 { get; set; }
+        public int ageGroup3_31_to_50 { get; set; }
+        public int ageGroup4_over50 { get; set; }
     }
 
     [Authorize]
@@ -69,8 +77,8 @@ namespace ThemePark.Controllers
         {
             _context = context;
             _logger = logger;
-        }        
-                
+        }
+
         [AllowAnonymous]
         [HttpGet("[action]")]
         public IActionResult ParkVisit()//(DateTime startTime, DateTime endTime)
@@ -152,6 +160,12 @@ namespace ThemePark.Controllers
             //DateTime startTime = new DateTime(2010, 1, 1);
             //DateTime endTime = new DateTime(2011, 1, 1);
             //hardcode end
+            int ageGroup1 = 0;
+            int ageGroup2 = 0;
+            int ageGroup3 = 0;
+            int ageGroup4 = 0;
+
+            int thisYear = DateTime.Now.Year;
 
             var parklist = (from ticket in _context.TicketRideEnters
                         where ticket.DateTime <= endTime && ticket.DateTime >= startTime
@@ -165,14 +179,38 @@ namespace ThemePark.Controllers
                 var park_max = park_grp.OrderByDescending(y => y.Count).First();
                 DateTime park_max_dateinfo = park_max.Dateinfo;
                 int park_max_count = park_max.Count;
+                
+                //age distribution for park
 
-                ls.Add(new SummaryResult("Park", park_average, park_total, park_max_dateinfo, park_max_count));
+                var customerAgeList = from p in parklist
+                           join ttp in _context.TransactionTicketPurchases on p.TicketId equals ttp.TicketId
+                           join ct in _context.CustomerTransaction on ttp.TransactionId equals ct.TransactionId
+                           join c in _context.Customer on ct.CustomerId equals c.CustomerId
+                           select new { Age = thisYear - c.DateOfBirth.Value.Year };
+
+                foreach (var customer in customerAgeList)
+                {
+                    if (customer.Age < 18)
+                        ageGroup1++;
+                    else if (customer.Age < 30)
+                        ageGroup2++;
+                    else if (customer.Age < 50)
+                        ageGroup3++;
+                    else
+                        ageGroup4++;
+                }
+
+                ls.Add(new SummaryResult("ParkInTotal", park_average, park_total, park_max_dateinfo, park_max_count, ageGroup1, ageGroup2, ageGroup3, ageGroup4));
             }
 
             foreach (var ride in _context.Ride)
             {
                 string rideID = ride.RideId;
                 string rideName = ride.RideName;
+                ageGroup1 = 0;
+                ageGroup2 = 0;
+                ageGroup3 = 0;
+                ageGroup4 = 0;
 
                 var ridelist = from ticket in _context.TicketRideEnters
                            where ticket.DateTime <= endTime && ticket.DateTime >= startTime && ticket.RideId == rideID
@@ -190,7 +228,26 @@ namespace ThemePark.Controllers
                     DateTime ride_max_dateinfo = ride_max.Dateinfo;
                     int ride_max_count = ride_max.Count;
 
-                    ls.Add(new SummaryResult(rideName, ride_average, ride_total, ride_max_dateinfo, ride_max_count));
+                    //
+                    var customerAgeList = from p in ridelist
+                                          join ttp in _context.TransactionTicketPurchases on p.TicketId equals ttp.TicketId
+                                          join ct in _context.CustomerTransaction on ttp.TransactionId equals ct.TransactionId
+                                          join c in _context.Customer on ct.CustomerId equals c.CustomerId
+                                          select new { Age = thisYear - c.DateOfBirth.Value.Year };
+
+                    foreach (var customer in customerAgeList)
+                    {
+                        if (customer.Age < 18)
+                            ageGroup1++;
+                        else if (customer.Age < 30)
+                            ageGroup2++;
+                        else if (customer.Age < 50)
+                            ageGroup3++;
+                        else
+                            ageGroup4++;
+                    }
+
+                    ls.Add(new SummaryResult(rideName, ride_average, ride_total, ride_max_dateinfo, ride_max_count, ageGroup1, ageGroup2, ageGroup3, ageGroup4));
                 }
             }
 
@@ -209,7 +266,7 @@ namespace ThemePark.Controllers
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
             return SummaryVisit(mondayOfLastWeek, sundayOfLastWeek);
-        }
+        } 
     }
 }
 

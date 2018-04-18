@@ -34,7 +34,7 @@ class NavMenu extends React.Component<DataProps, {}> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    { this.props.loggedIn ? this.renderUsername() : ''}
+                   
                 </div>
                 <div className='clearfix'></div>
                 { !this.props.loggedIn ? this.renderLogin() : '' }
@@ -47,9 +47,11 @@ class NavMenu extends React.Component<DataProps, {}> {
 
     private renderUsername() {
         return <div className="navbar-brand">
-            <Link to={'/profile'}>MyProfile</Link>
+            <Link to={'/customerProfile'}>MyProfile</Link>
         </div>
     }
+
+
 
     private renderLogin() {
         return <div className='navbar-collapse collapse'>
@@ -66,6 +68,11 @@ class NavMenu extends React.Component<DataProps, {}> {
     private renderAdminMenu() {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
+                <li>
+                    <Link to={'/profile'}>
+                        <span className='glyphicon glyphicon-th-list'></span> My Profile </Link>
+                </li>
+
                 <li>
                     <Link to={ '/rides/table' }>
                         <span className='glyphicon glyphicon-th-list'></span> Manage Ride Information
@@ -99,6 +106,12 @@ class NavMenu extends React.Component<DataProps, {}> {
     private renderCustomerMenu() {
         return <div className='navbar-collapse collapse'>
             <ul className='nav navbar-nav'>
+                <li>
+                    <Link to={'/customerProfile'}>
+                        <span className='glyphicon glyphicon-th-list'></span> My Profile
+                    </Link>
+                </li>
+
                 <li>
                     <Link to={ '/ticket/purchase' }>
                         <span className='glyphicon glyphicon-film'></span> Purchase Ticket

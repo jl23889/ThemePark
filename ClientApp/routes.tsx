@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import Home from './components/Home';
 import Rides from './components/Rides';
 import Employees from './components/Employees';
+import Customers from './components/Customers';
 
 import Lookup from './components/Lookup';
 import Login from './components/Login';
@@ -11,6 +12,7 @@ import Register from './components/Register';
 import TicketScan from './components/TicketScan'
 import TicketTransaction from './components/TicketTransaction';
 
+import CustomerProfile from './components/CustomerProfile';
 import EmployeeProfile from './components/EmployeeProfile';
 import Maintenance from './components/Maintenance';
 
@@ -30,7 +32,6 @@ export const routes =
     <Route path='/maintenance/:viewType?' component={ Maintenance } />
     <Route path='/ticket/purchase' component={ TicketTransaction }/>
     <Route path='/ticket/scan' component={ TicketScan }/>
-
-
+    <Route path='/customerProfile' component={CustomerProfile} />
     <Route path='/lookup/:tableToLoad?' component={ Lookup } />
 </Layout>;

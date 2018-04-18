@@ -116,24 +116,5 @@ namespace ThemePark.Controllers
             }
             return BadRequest();
         }
-
-        [HttpPost("[action]")]
-        public IActionResult DeleteCustomer([FromBody]Customer c)
-        {
-            var customer = _context.Customer.Find(c.CustomerId);
-            if (customer != null) 
-            {
-                try {
-                    _context.Customer.Remove(customer);
-                    _context.SaveChanges();
-                    return Ok(); 
-                }  
-                catch
-                {
-                    return BadRequest();
-                }  
-            }
-            return BadRequest();
-        }
     }
 }

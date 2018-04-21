@@ -100,9 +100,22 @@ namespace ThemePark.Controllers
 
     // data type for start date and end date 
     public class StartEndDate {
+        public StartEndDate(DateTime startDate, DateTime endDate)
+        {
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+        }
+
+        public StartEndDate(string rideId, DateTime startDate, DateTime endDate)
+        {
+            this.RideId = rideId;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+        }
+
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string? RideId { get; set; }
+        public string RideId { get; set; }
     }
 
     [Authorize]
@@ -119,8 +132,6 @@ namespace ThemePark.Controllers
             _logger = logger;
         }        
                 
-        }
-
         /*
         [AllowAnonymous]
         [HttpGet("[action]")]
@@ -315,7 +326,7 @@ namespace ThemePark.Controllers
             DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
-            return SummaryVisit(mondayOfLastWeek, sundayOfLastWeek);
+            return SummaryVisit(new StartEndDate(mondayOfLastWeek, sundayOfLastWeek));
         }
 
         [AllowAnonymous]
@@ -368,7 +379,7 @@ namespace ThemePark.Controllers
             DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
-            return TicketSales(mondayOfLastWeek, sundayOfLastWeek);
+            return TicketSales(new StartEndDate(mondayOfLastWeek, sundayOfLastWeek));
         }
 
         [AllowAnonymous]
@@ -444,7 +455,7 @@ namespace ThemePark.Controllers
             DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
-            return DetailedVisitPark(mondayOfLastWeek, sundayOfLastWeek);
+            return DetailedVisitPark(new StartEndDate(mondayOfLastWeek, sundayOfLastWeek));
         }
 
         [AllowAnonymous]
@@ -516,7 +527,7 @@ namespace ThemePark.Controllers
             DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
-            return DetailedVisitRide(rideID, mondayOfLastWeek, sundayOfLastWeek);
+            return DetailedVisitRide(new StartEndDate(rideID, mondayOfLastWeek, sundayOfLastWeek));
         }
     }
 }

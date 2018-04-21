@@ -19,33 +19,33 @@ namespace ThemePark.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class WeatherTypeController : Controller
+    public class WeatherController : Controller
     {
 
         private readonly DataContext _context;
         private readonly ILogger _logger;
 
-public WeatherController(DataContext context, ILogger<WeatherController> logger)
+        public WeatherController(DataContext context, ILogger<WeatherController> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-    [AllowAnonymous]
-    [HttpGet("[action]")]
-    public IEnumerable<Weather> GetWeather()
-    {
-        return _context.Weather.ToList();
-    }
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public IEnumerable<Weather> GetWeather()
+        {
+            return _context.Weather.ToList();
+        }
 
-    [AllowAnonymous]
+        [AllowAnonymous]
         // return a single employee by employeeId passed in as param
         [HttpGet("[action]")]
         public Weather GetWeather(DateTime date)
         {
             return _context.Weather.Find(date);
         }
-[AllowAnonymous]
+        [AllowAnonymous]
         // return weather by array of dates passed in as param
         // sample query: 
         [HttpGet("[action]")]
@@ -58,10 +58,10 @@ public WeatherController(DataContext context, ILogger<WeatherController> logger)
             return weatherList;
         }
 
-	[HttpPost("[action]")]
+	   [HttpPost("[action]")]
         public IActionResult CreateNewWeather([FromBody] Weather weather)
         {
-        	if(ModelState.isValid && weather != null)
+        	if(ModelState.IsValid && weather != null)
         		{
                 try {
                     _context.Weather.Add(weather);
@@ -75,7 +75,7 @@ public WeatherController(DataContext context, ILogger<WeatherController> logger)
             }
             return BadRequest(); 
         }
-	[HttpPut("[action]")]
+	   [HttpPut("[action]")]
         public IActionResult UpdateWeather([FromBody]Weather weather)
         {
             if (ModelState.IsValid && weather != null) 
@@ -92,10 +92,10 @@ public WeatherController(DataContext context, ILogger<WeatherController> logger)
             }
             return BadRequest();
         }
-	[HttpPost("[action]")]
+	   [HttpPost("[action]")]
         public IActionResult DeleteWeather([FromBody]Weather w)
         {
-            var weather = _context.Weather.Find(w.date);
+            var weather = _context.Weather.Find(w.Date);
             if (weather != null) 
             {
                 try {
@@ -111,6 +111,6 @@ public WeatherController(DataContext context, ILogger<WeatherController> logger)
             return BadRequest();
         }
     }
-
+}
 
 

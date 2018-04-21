@@ -16,7 +16,7 @@ let LoginCustomerForm = props => {
     		<Field 
     			name="password" 
     			component="input" 
-    			type="password" 
+    			type="text" 
     		/>
     		<button type="submit" disabled={submitting}>
     			Submit

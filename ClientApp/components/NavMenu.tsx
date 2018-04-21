@@ -84,6 +84,11 @@ class NavMenu extends React.Component<DataProps, {}> {
                     </Link>
                 </li>
                 <li>
+                    <Link to={ '/rides/report' }>
+                        <span className='glyphicon glyphicon-th-list'></span> View Ride Report
+                    </Link>
+                </li>
+                <li>
                     <Link to={ '/employees' }>
                         <span className='glyphicon glyphicon-th-list'></span> Manage Employee Information
                     </Link>

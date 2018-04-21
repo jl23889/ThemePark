@@ -10,9 +10,6 @@ import * as Ticket from './Ticket'
 import * as TicketType from './TicketType'
 import * as WeatherType from './WeatherType'
 
-import * as Customers from './Customers'
-import * as CustomerProfile from './CustomerProfile'
-
 import * as Employees from './Employees'
 import * as EmployeeType from './EmployeeType'
 import * as EmployeeProfile from './EmployeeProfile'
@@ -40,9 +37,6 @@ export interface ApplicationState {
 
     login: Login.LoginState;
     register: Register.RegisterState;
-
-    customers: Customers.CustomersState;
-    customerProfile: CustomerProfile.CustomerProfileState;
 
     employees: Employees.EmployeesState;
     employeeType: EmployeeType.EmployeeTypeState;
@@ -73,9 +67,6 @@ export const reducers = {
 
     login: Login.reducer,
     register: Register.reducer,
-
-    customers: Customers.reducer,
-    customerProfile: CustomerProfile.reducer,
 
     employees: Employees.reducer,
     employeeType: EmployeeType.reducer,

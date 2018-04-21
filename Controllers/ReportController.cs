@@ -137,6 +137,8 @@ namespace ThemePark.Controllers
             //int difference_in_days = difference.Days + 1;
             
         var park = (from ticket in _context.TicketRideEnters
+
+            var park = (from ticket in _context.TicketRideEnters
                         where ticket.DateTime <= endTime && ticket.DateTime >= startTime
                         select new { TicketId = ticket.TicketId, DateTime = ticket.DateTime.Date }).Distinct();
 

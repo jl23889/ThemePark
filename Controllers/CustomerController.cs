@@ -58,6 +58,7 @@ namespace ThemePark.Controllers
             return transactions_table.ToList();
         }
 
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult CreateNewCustomer([FromBody] Customer customer)
         {

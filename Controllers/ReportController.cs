@@ -98,6 +98,13 @@ namespace ThemePark.Controllers
         public decimal totalSales { get; set; }
     }
 
+    // data type for start date and end date 
+    public class StartEndDate {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string? RideId { get; set; }
+    }
+
     [Authorize]
     [Route("api/[controller]")]
     public class ReportController : Controller
@@ -183,10 +190,12 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IActionResult SummaryVisit(DateTime startTime, DateTime endTime)
+        public IActionResult SummaryVisit([FromBody] StartEndDate startEndDate)
         {
             List<SummaryResult> ls = new List<SummaryResult>();
 
+            DateTime startTime = startEndDate.StartDate;
+            DateTime endTime = startEndDate.EndDate;
             //hardcode start
             //DateTime startTime = new DateTime(2010, 1, 1);
             //DateTime endTime = new DateTime(2011, 1, 1);
@@ -301,12 +310,16 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IActionResult TicketSales(DateTime startTime, DateTime endTime)
+        public IActionResult TicketSales([FromBody] StartEndDate startEndDate)
         {
+
             //hardcode start
             //DateTime startTime = new DateTime(2018, 4, 10);
             //DateTime endTime = new DateTime(2018, 4, 17);
             //hardcode end
+
+            DateTime startTime = startEndDate.StartDate;
+            DateTime endTime = startEndDate.EndDate;
 
             List<TicketSalesOutput> ls = new List<TicketSalesOutput>();
 
@@ -350,12 +363,15 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IActionResult DetailedVisitPark(DateTime startTime, DateTime endTime)
+        public IActionResult DetailedVisitPark([FromBody] StartEndDate startEndDate)
         {
             //hardcode start
             //DateTime startTime = new DateTime(2010, 1, 1);
             //DateTime endTime = new DateTime(2010, 1, 7);
             //hardcode end
+
+            DateTime startTime = startEndDate.StartDate;
+            DateTime endTime = startEndDate.EndDate;
 
             int ageGroup1 = 0;
             int ageGroup2 = 0;
@@ -423,8 +439,12 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IActionResult DetailedVisitRide(string rideID, DateTime startTime, DateTime endTime)
+        public IActionResult DetailedVisitRide([FromBody] StartEndDate startEndDate)
         {
+            DateTime startTime = startEndDate.StartDate;
+            DateTime endTime = startEndDate.EndDate;
+            string rideID = startEndDate.RideId;
+
             int ageGroup1 = 0;
             int ageGroup2 = 0;
             int ageGroup3 = 0;

@@ -102,8 +102,6 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                 employeesToUpdate: response.data,
             })
         }) 
-
-
     }
 
     componentDidUpdate() {

@@ -32,7 +32,7 @@ let EmployeeForm = props => {
             props.initialValues.empProfileImage != null ?
             props.initialValues.empProfileImage : '')  
 
-    return <div>
+    return <div  className = "solid">
         <form onSubmit={handleSubmit}>
         <label>First Name</label>
         <Field 

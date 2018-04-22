@@ -10,6 +10,20 @@
     color: white;
 }
 
+.solidGreen {
+    border-radius: 25px;
+    background-color: lightgreen;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+
+.solid {
+    border-radius: 25px;
+    background-color: lightskyblue;
+    background-repeat: repeat;
+    padding: 20px;
+}
+
 /* Keep the nav menu independent of scrolling and on top of other items */
 .main-nav {
     position: fixed;

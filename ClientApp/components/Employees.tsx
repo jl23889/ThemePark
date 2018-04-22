@@ -43,10 +43,10 @@ class Employees extends React.Component<DataProps, {}> {
     render() {
         return <div>
             { this.props.updateEmployee }
-            <h3>Add Employee</h3>
+            <h3 className = "solid" >Add Employee</h3>
             { this.renderCreateNewForm() }
 
-            <h1>Employee Table</h1>
+            <h1 className = "solid">Employee Table</h1>
             { (!this.props.loadingEmployeeList) ? this.renderEmployeesTable() :
                 <h3>LOADING TABLE...</h3>}
         </div>
@@ -113,7 +113,7 @@ class Employees extends React.Component<DataProps, {}> {
     }
 
     private renderCreateNewForm() {        
-        return <EmployeeForm 
+        return <EmployeeForm className = 'solid'
             onSubmit={this.createNewEmployee}
             form="newEmployeeForm"
             props={{
@@ -123,7 +123,7 @@ class Employees extends React.Component<DataProps, {}> {
     }
 
     private renderEmployeesTable() {
-        return <div>
+        return <div className='solid'>
             <ReactTable 
                 data={this.props.employeeList}
                 columns={[

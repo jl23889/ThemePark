@@ -52,7 +52,7 @@ class Rides extends React.Component<DataProps, {}> {
     render() {
         switch (this.props.match.params.viewType) {
             case 'table':
-                return <div>
+                return <div className = "solid">
                     <h3>Add Ride</h3>
                     { this.renderCreateNewForm() }
                     <h1>Ride Table
@@ -64,7 +64,7 @@ class Rides extends React.Component<DataProps, {}> {
                         <h3>LOADING TABLE...</h3>}
                 </div>
             case 'employees':
-                return <div> 
+                return <div className = "solid"> 
                     <h1>Assign Employee To Ride
                         <Button>
                             <Link to='/rides/table'>Go To Rides Table</Link>

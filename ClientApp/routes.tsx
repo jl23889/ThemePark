@@ -17,6 +17,9 @@ import Maintenance from './components/Maintenance';
 import Counter from './components/Counter';
 import { ToastContainer } from 'react-toastify';
 
+import Customers from './components/Customers';
+import CustomerProfile from './components/CustomerProfile';
+
 export const routes =
 <Layout>
 	<ToastContainer/>
@@ -29,7 +32,8 @@ export const routes =
     <Route path='/profile' component={ EmployeeProfile } />
     <Route path='/maintenance/:viewType?' component={ Maintenance } />
     <Route path='/ticket/purchase' component={ TicketTransaction }/>
-    <Route path='/ticket/scan' component={ TicketScan }/>
+    <Route path='/ticket/scan' component={TicketScan} />
+    <Route path='/customerProfile' component={CustomerProfile} />
 
 
     <Route path='/lookup/:tableToLoad?' component={ Lookup } />

@@ -49,8 +49,8 @@ class Maintenance extends React.Component<DataProps, {}> {
     }
 
     render() {
-        return <div>
-            <h3>Add Maintenance Form</h3>
+        return <div className = "solid">
+            <h3> Add Maintenance Form</h3>
             { this.renderCreateNewForm() }
             { this.renderMaintenanceView() }
         </div>
@@ -68,7 +68,7 @@ class Maintenance extends React.Component<DataProps, {}> {
                         start: new Date(item.startDate),
                         end: new Date(item.endDate),
                     }))
-                return <div>
+                return <div className = "solidGreen">
                     <h3>Calendar View</h3>
                     <Link to='/maintenance/list'>List View</Link>
                     <div className='calendar-container'><BigCalendar
@@ -78,12 +78,14 @@ class Maintenance extends React.Component<DataProps, {}> {
                         popup={true}
                         showMultiDayTimes
                     />
-                </div></div>
+                    </div></div>
+
             default:
-                return <div>
+                return <div className='solid'>
+                    <ListGroup>
                     <h3>List View</h3>
                     <Link to='/maintenance/calendar'>Calendar View</Link>
-                    <ListGroup>
+                   
                         {this.props.maintenanceList.map(item => 
                             <MaintenanceListItem
                                 key={'listItem'+item.maintenanceId}
@@ -130,7 +132,7 @@ class Maintenance extends React.Component<DataProps, {}> {
     }
 
     private renderCreateNewForm() {   
-        return <MaintenanceForm 
+        return <MaintenanceForm
             onSubmit={this.createNewMaintenance}
             form="newMaintenanceForm"
             props={{

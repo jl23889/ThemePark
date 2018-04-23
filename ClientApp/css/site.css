@@ -10,6 +10,20 @@
     color: white;
 }
 
+.solidGreen {
+    border-radius: 25px;
+    background-color: lightgreen;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+
+.solid {
+    border-radius: 25px;
+    background-color: lightskyblue;
+    background-repeat: repeat;
+    padding: 20px;
+}
+
 /* Keep the nav menu independent of scrolling and on top of other items */
 .main-nav {
     position: fixed;
@@ -21,6 +35,19 @@
 
 .calendar-container {
     height: 800px;
+}
+
+img.bg {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 @media (max-width: 767px) {

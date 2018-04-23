@@ -7,7 +7,7 @@ namespace ThemePark.Entities
     {
         public string TransactionId { get; set; }
         public string TicketId { get; set; }
-        public int PurchaseAmount { get; set; }
+        public int? PurchaseAmount { get; set; }
 
         public Ticket Ticket { get; set; }
         public CustomerTransaction Transaction { get; set; }

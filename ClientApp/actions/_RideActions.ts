@@ -151,6 +151,17 @@ export function requestRide(id) {
         }})
 }
 
+// get multiple employees by array of ids
+export function requestRidesById(ids) {
+    var params = new URLSearchParams();
+    ids.forEach(element => {
+        params.append('id', element)
+    })
+
+    return axios.get(`api/Ride/GetRidesById`, 
+        { params: params })
+}
+
 // get all rides
 export function requestRides() {
     return axios.get(`api/Ride/GetRides`)
@@ -195,3 +206,39 @@ export function removeAllRideManagers(values) {
         headers: authHeader(),
     })
 }
+
+// get info about ride by ride id and date range
+// values should be {rideId, startDate, endDate}
+export function requestDetailedVisitRide(values) {
+    return axios.get(`api/Report/DetailedVisitRide`, 
+        { params: values })
+}
+
+// get info about ride by ride id and date range
+// values should be {startDate, endDate}
+export function requestSummaryVisit(values) {
+    return axios.get(`api/Report/SummaryVisit`, 
+        { params: values })
+}
+
+// get info about ticket by date range
+// values should be {startDate, endDate}
+export function requestTicketSales(values) {
+    return axios.get(`api/Report/TicketSales`, 
+        { params: values })
+}
+
+
+// get info about by ride id and date range
+// values should be {rideId, startDate, endDate}
+// export function requestDetailedVisitRide(values) {
+//     return axios({
+//         method: 'get',
+//         url: `api/Report/DetailedVisitRide`,
+//         data: values,
+//         headers: authHeader(),
+//     })
+// }
+
+
+

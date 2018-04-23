@@ -59,6 +59,20 @@ namespace ThemePark.Controllers
             return _context.Ride.Find(id);
         }
 
+        [AllowAnonymous]
+        // return rides by array of ids passed in as param
+        // sample query: 
+        // /getridesbyid?id=0000000000000000&id=0000000000001000
+        [HttpGet("[action]")]
+        public List<Ride> GetRidesById([FromQuery] string[] id)
+        {
+            List<Ride> rideList = new List<Ride>();
+            foreach(string i in id) {
+                rideList.Add(_context.Ride.Find(i));
+            }
+            return rideList;
+        }
+
         [HttpPost("[action]")]
         public IActionResult CreateNewRide([FromBody] Ride ride)
         {

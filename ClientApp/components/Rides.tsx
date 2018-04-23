@@ -11,11 +11,14 @@ import * as moment from 'moment'
 
 import RideForm from './forms/RideForm';
 import { RideEmployeeListItem } from './RideEmployeeListItem';
+import { RidesReport } from './RidesReport';
 
 import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import ReactTable from 'react-table';
+import { Jumbotron } from 'reactstrap'
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
+import Select from 'react-select';
 
 // combines action creators from ride, ridestatus, and ridetype
 const actionCreators = Object.assign(
@@ -59,6 +62,9 @@ class Rides extends React.Component<DataProps, {}> {
                         <Button>
                             <Link to='/rides/employees'>Go To Assign Employees</Link>
                         </Button>
+                        <Button>
+                            <Link to='/rides/report'>View Report</Link>
+                        </Button>
                     </h1>
                     { (!this.props.loadingRideList) ? this.renderRidesTable() : 
                         <h3>LOADING TABLE...</h3>}
@@ -69,10 +75,19 @@ class Rides extends React.Component<DataProps, {}> {
                         <Button>
                             <Link to='/rides/table'>Go To Rides Table</Link>
                         </Button>
+                        <Button>
+                            <Link to='/rides/report'>View Report</Link>
+                        </Button>
                     </h1>
                     
                     { (!this.props.loadingRideList) ? this.renderRideEmployees() : 
                         <h3>LOADING RIDES...</h3>}
+                </div>
+            case 'report':
+                return <div>
+                    <RidesReport
+                        rideList={this.props.rideList}
+                    />
                 </div>
         }
     }

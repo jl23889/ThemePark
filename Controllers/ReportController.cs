@@ -211,12 +211,10 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IActionResult SummaryVisit([FromBody] StartEndDate startEndDate)
+        public IActionResult SummaryVisit(DateTime startTime, DateTime endTime)
         {
             List<SummaryResult> ls = new List<SummaryResult>();
 
-            DateTime startTime = startEndDate.StartDate;
-            DateTime endTime = startEndDate.EndDate;
             //hardcode start
             //DateTime startTime = new DateTime(2010, 1, 1);
             //DateTime endTime = new DateTime(2011, 1, 1);
@@ -326,21 +324,18 @@ namespace ThemePark.Controllers
             DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
-            return SummaryVisit(new StartEndDate(mondayOfLastWeek, sundayOfLastWeek));
+            return SummaryVisit(mondayOfLastWeek, sundayOfLastWeek);
         }
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IActionResult TicketSales([FromBody] StartEndDate startEndDate)
+        public IActionResult TicketSales(DateTime startTime, DateTime endTime)
         {
 
             //hardcode start
             //DateTime startTime = new DateTime(2018, 4, 10);
             //DateTime endTime = new DateTime(2018, 4, 17);
             //hardcode end
-
-            DateTime startTime = startEndDate.StartDate;
-            DateTime endTime = startEndDate.EndDate;
 
             List<TicketSalesOutput> ls = new List<TicketSalesOutput>();
 
@@ -379,7 +374,7 @@ namespace ThemePark.Controllers
             DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
-            return TicketSales(new StartEndDate(mondayOfLastWeek, sundayOfLastWeek));
+            return TicketSales(mondayOfLastWeek, sundayOfLastWeek);
         }
 
         [AllowAnonymous]
@@ -460,11 +455,11 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IActionResult DetailedVisitRide([FromBody] StartEndDate startEndDate)
+        public IActionResult DetailedVisitRide(string rideID, DateTime startTime, DateTime endTime)
         {
-            DateTime startTime = startEndDate.StartDate;
-            DateTime endTime = startEndDate.EndDate;
-            string rideID = startEndDate.RideId;
+            // DateTime startTime = startEndDate.StartDate;
+            // DateTime endTime = startEndDate.EndDate;
+            // string rideID = startEndDate.RideId;
 
             int ageGroup1 = 0;
             int ageGroup2 = 0;
@@ -527,7 +522,7 @@ namespace ThemePark.Controllers
             DateTime mondayOfLastWeek = today.AddDays(-(int)today.DayOfWeek - 6);
             DateTime sundayOfLastWeek = today.AddDays(-(int)today.DayOfWeek);
 
-            return DetailedVisitRide(new StartEndDate(rideID, mondayOfLastWeek, sundayOfLastWeek));
+            return DetailedVisitRide(rideID, mondayOfLastWeek, sundayOfLastWeek);
         }
     }
 }

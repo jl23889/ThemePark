@@ -201,7 +201,7 @@ class TicketTransaction extends React.Component<DataProps, {}> {
         return <ListGroup>
             {this.props.ticketTransactionList.map(transaction =>
                 <TransactionListItem
-                    key={'listItem'+transaction.transactionId}
+                    key={'listItem'+transaction.ticket.ticketId}
                     transaction={transaction}
                     >                                      
                 </TransactionListItem>

@@ -17,6 +17,9 @@ import * as EmployeeProfile from './EmployeeProfile'
 import * as Maintenance from './Maintenance'
 import * as Lookup from './Lookup'
 
+import * as Customers from './Customers'
+import * as CustomerProfile from './CustomerProfile'
+
 import { reducer as formReducer } from 'redux-form'
 import { state as formState } from 'redux-form'
 
@@ -41,6 +44,9 @@ export interface ApplicationState {
     employees: Employees.EmployeesState;
     employeeType: EmployeeType.EmployeeTypeState;
     employeeProfile: EmployeeProfile.EmployeeProfileState;
+
+    customers: Customers.CustomersState;
+    customerProfile: CustomerProfile.CustomerProfileState;
 
     maintenance: Maintenance.MaintenanceState;
 
@@ -71,6 +77,9 @@ export const reducers = {
     employees: Employees.reducer,
     employeeType: EmployeeType.reducer,
     employeeProfile: EmployeeProfile.reducer,
+
+    customers: Customers.reducer,
+    customerProfile: CustomerProfile.reducer,
 
     maintenance: Maintenance.reducer,
 

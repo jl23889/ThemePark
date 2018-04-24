@@ -12,7 +12,8 @@ import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
 import { Alert } from '../models/_DataModels'
 
-import { Button } from 'react-bootstrap'
+import { Button } from 'reactstrap'
+import { Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 
 // At runtime, Redux will merge together...
 type DataProps =
@@ -34,32 +35,32 @@ class Login extends React.Component<DataProps, {}> {
 
     render() {
         return <div>
-            <h1>Login Form</h1>
-            { !this.props.loggedIn ? <div>
-                <Button bsStyle="primary" 
+            { !this.props.loggedIn ? <div className="row justify-content-center">
+                <Button color="primary" className="col-2"
                     disabled={!this.props.disableCustomerForm} 
                     onClick={this.props.showCustomerForm}>Customer</Button>
-                <Button bsStyle="warning"
+                <Button color="warning" className="col-2"
                     disabled={!this.props.disableEmployeeForm} 
-                    onClick={this.props.showEmployeeForm}>Employee</Button>
-                </div>
+                    onClick={this.props.showEmployeeForm}>Employee</Button> 
+                </div>               
             : ''}
 
-            { this.props.loggedIn ?
-                <Button bsStyle="warning"
-                onClick={this.props.logout}>Logout</Button> : '' }
-
-            { !this.props.loggedIn && !this.props.disableCustomerForm ? this.renderLoginCustomerForm() : ''}
-            { !this.props.loggedIn && !this.props.disableEmployeeForm ? this.renderLoginEmployeeForm() : ''}
-            { this.props.loggedIn ? this.renderWelcome() : ''}
-        </div>
+            <div className="row justify-content-center">
+                { !this.props.loggedIn && !this.props.disableCustomerForm ? this.renderLoginCustomerForm() : ''}
+                { !this.props.loggedIn && !this.props.disableEmployeeForm ? this.renderLoginEmployeeForm() : ''}
+                { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerWelcome() : '' }
+                { this.props.loggedIn && this.props.accessLevel >= 2 ? this.renderEmployeeWelcome() : '' }
+                { this.props.loggedIn && this.props.accessLevel == 1 ? this.renderAdminWelcome() : '' }
+            </div>
+        </div>;
     }
 
     loginCustomer = values => {
         // generate unique toast
         const toastId = 
             toast('Attempting Customer Login...', {
-                type: 'info'
+                type: 'info',
+                autoClose: 30000,
             });
 
         this.props.loginCustomer(values.username, values.password, toastId);
@@ -69,34 +70,155 @@ class Login extends React.Component<DataProps, {}> {
         // generate unique toast
         const toastId = 
             toast('Attempting Employee Login...', {
-                type: 'info'
+                type: 'info',
+                autoClose: 30000,
             });
         this.props.loginEmployee(values.username, values.password, toastId);
     }
 
+    logoutUser = () => {
+        this.props.logout();
+        this.props.history.push('/login'); //redirect to login
+    }
+
     private renderLoginCustomerForm() {
-    	return <div>
-            <h1> CUSTOMER LOGIN FORM </h1>
+    	return <div className='col-4'>
             <LoginCustomerForm onSubmit={this.loginCustomer} form="loginCustomerForm"/>
-            <h1> NO ACCOUNT? REGISTER HERE: </h1>
-            <Link to="/register">Register</Link>
         </div>
     }
 
     private renderLoginEmployeeForm() {
-        return <div>
-            <h1> EMPLOYEE LOGIN FORM </h1>
+        return <div className='col-4'>
             <LoginEmployeeForm onSubmit={this.loginEmployee} form="loginEmployeeForm"/>
-            <h1> NO ACCOUNT? REGISTER HERE: </h1>
-            <Link to="/register">Register</Link>
         </div>
     }
 
-    private renderWelcome() {
-        return <div>
-            <h3> Welcome! You can go to your profile here: 
-                <Link to="/profile">My Profile</Link>
-            </h3>
+    private renderCustomerWelcome() {
+        return <div className='row justify-content-center'>
+            <div className='col-4'>
+                <Card>
+                    <CardBody className="text-center">
+                        <CardTitle className="h3 text-center mb-1">My Profile</CardTitle>
+                        <hr/>
+                        <Button outline color="success">
+                            <Link to={ '/customerProfile' }>
+                                Edit Profile
+                            </Link>
+                        </Button>
+                        <Button color="warning">Logout</Button>
+                    </CardBody>
+                </Card>
+            </div>
+            <div className='col-4'>
+                <Card>
+                    <CardBody className="text-center">
+                        <CardTitle className="h3 text-center mb-1">Tickets</CardTitle>
+                        <hr/>
+                        <Button outline color="primary">
+                            <Link to={ '/ticket/Purchase' }>
+                                Purchase Ticket
+                            </Link>
+                        </Button>
+                    </CardBody>
+                </Card>
+            </div>
+        </div>
+    }
+
+    private renderEmployeeWelcome() {
+        return <div className='row justify-content-center'>
+            <div className='col-3'>
+                <Card>
+                    <CardBody className="text-center">
+                        <CardTitle className="h3 text-center mb-1">My Profile</CardTitle>
+                        <hr/>
+                        <Button outline color="success">
+                            <Link to={ '/customerProfile' }>
+                                Edit Profile
+                            </Link>
+                        </Button>
+                        <Button color="warning">Logout</Button>
+                    </CardBody>
+                </Card>
+            </div>
+            <div className='col-3'>
+                <Card>
+                    <CardBody className="text-center">
+                        <CardTitle className="h3 text-center mb-1">Tickets</CardTitle>
+                        <hr/>
+                        <Button outline color="primary">
+                            <Link to={ '/ticket/scan' }>
+                                Scan Ticket
+                            </Link>
+                        </Button>
+                    </CardBody>
+                </Card>
+            </div>
+        </div>
+    }
+
+    private renderAdminWelcome() {
+        return <div className='row justify-content-center'>
+            <div className='col-3'>
+                <Card>
+                    <CardBody className="text-center">
+                        <CardTitle className="h3 text-center mb-1">My Profile</CardTitle>
+                        <hr/>
+                        <Button outline color="success">
+                            <Link to={ '/profile' }>
+                                Edit Profile
+                            </Link>
+                        </Button>
+                        <Button color="warning">Logout</Button>
+                    </CardBody>
+                </Card>
+            </div>
+            <div className='col-3'>
+                <Card>
+                    <CardBody className="text-center">
+                        <CardTitle className="h3 text-center mb-1">Rides</CardTitle>
+                        <hr/>
+                        <Button outline color="primary">
+                            <Link to={ '/ticket/scan' }>
+                                Scan Ticket
+                            </Link>
+                        </Button>
+                        <Button outline color="primary">
+                            <Link to={ '/rides/table' }>
+                                Manage Rides
+                            </Link>
+                        </Button>
+                        <Button outline color="primary">
+                            <Link to={ '/maintenance' }>
+                                Schedule Maintenance
+                            </Link>
+                        </Button>
+                        <Button outline color="primary">
+                            <Link to={ '/rides/report' }>
+                                View Report
+                            </Link>
+                        </Button>
+                    </CardBody>
+                </Card>
+            </div>
+            <div className='col-3'>
+                <Card>
+                    <CardBody className="text-center">
+                        <CardTitle className="h3 text-center mb-1">Employees</CardTitle>
+                        <hr/>
+                        <Button outline color="primary">
+                            <Link to={ '/employees' }>
+                                Manage Employees
+                            </Link>
+                        </Button>
+                        <Button outline color="primary">
+                            <Link to={ '/rides/employees' }>
+                                Assign Employees To Rides
+                            </Link>
+                        </Button>
+                    </CardBody>
+                </Card>
+            </div>
         </div>
     }
 }

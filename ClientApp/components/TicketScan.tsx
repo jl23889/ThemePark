@@ -11,6 +11,8 @@ import * as TicketState from '../store/Ticket';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
 
+import { Button, Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
+
 
 type TicketProps =
     TicketState.TicketState
@@ -34,26 +36,37 @@ let TicketForm = props => {
             typeof props.props.rideList !== 'undefined' ?
             props.props.rideList : []);
 
-    return <div><form onSubmit={handleSubmit}>
-        <label>TicketId</label>
-        <Field 
-            name="ticketId" 
-            component="input" 
-            type="text" 
-        />
-        <label>Ride</label>
-        <Field 
-            name="rideId" 
-            component="select"
-        >
-            <option value='' disabled>Select Ride</option>
-            {...rl.map(rideOption)}
-        </Field>
+    return <Card>
+        <CardBody>
+            <CardTitle className="h5 text-center mb-5">Scan Ticket</CardTitle>
+            <form onSubmit={handleSubmit} className="text-center mb-4">
+                <div>
+                    <label>TicketId</label>
+                    <Field 
+                        name="ticketId" 
+                        component="input" 
+                        type="text" 
+                    />
+                </div>
+                <div>
+                    <label>Ride</label>
+                    <Field 
+                        name="rideId" 
+                        component="select"
+                    >
+                        <option value='' disabled>Select Ride</option>
+                        {...rl.map(rideOption)}
+                    </Field>
 
-        <button type="submit" disabled={pristine || submitting}>
-            Submit
-        </button>
-    </form></div>;
+                </div>
+                <div>
+                    <Button color="success" type="submit" disabled={pristine || submitting}>
+                        Submit
+                    </Button>
+                </div>
+            </form>
+        </CardBody>
+    </Card>;
 }
 
 TicketForm = reduxForm({
@@ -74,16 +87,15 @@ class TicketScan extends React.Component<TicketProps, {}> {
         // generate unique toast
         const toastId = 
             toast('Scanning Ticket...', {
-                type: 'info'
+                type: 'info',
+                autoClose: 30000,
             });
 
         this.props.scanTicket(values, toastId)
     }
 
     render() {
-        return <div>
-            <h1>Scan Ticket</h1>
-
+        return <div className="row justify-content-center">
             <TicketForm
                 onSubmit={this.scanTicket}
                 form="newEmployeeForm"

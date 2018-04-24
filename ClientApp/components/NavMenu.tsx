@@ -1,5 +1,18 @@
 import * as React from 'react';
-import { NavLink, Link, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import {
+  Button,
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import { ApplicationState }  from '../store';
 import * as LoginState from '../store/Login';
@@ -24,114 +37,115 @@ class NavMenu extends React.Component<DataProps, {}> {
         this.props.checkLoggedIn();
     }
 
+    logoutUser = () => {
+        this.props.logout();
+    }
+
     render() {
-        return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
-                <div className='navbar-header'>
-                    <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                        <span className='sr-only'>Toggle navigation</span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                    </button>
-                    { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerProfile() : '' }
-                    { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeProfile() : '' }
-                </div>
-                <div className='clearfix'></div>
-                { !this.props.loggedIn ? this.renderLogin() : '' }
+        return (
+          <div>
+            <Navbar color="light" light expand="md">
+              <Collapse navbar>
+                <Nav navbar>
+                <NavItem><Link to="/">
+                  ThemePark</Link></NavItem>
+                </Nav>
                 { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerMenu() : '' }
                 { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeMenu() : '' }
                 { this.props.loggedIn && this.props.accessLevel == 1 ? this.renderAdminMenu() : '' }
-            </div>
-        </div>;
+
+                
+                { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerProfile() : '' }
+                { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeProfile() : '' }
+                { !this.props.loggedIn ? this.renderLogin() : '' }
+             
+              </Collapse>
+            </Navbar>
+          </div>
+        );
     }
 
     private renderCustomerProfile() {
-        return <div className="navbar-brand">
-            <Link to={'/customerProfile'}>
-            Customer Profile</Link>
-        </div>
+        return <Nav className="ml-auto" navbar>
+          <NavItem>
+            <Button outline color='success'>
+              <Link to={'/customerProfile'}>
+                Profile
+              </Link>
+            </Button>
+          </NavItem> 
+          <NavItem><Button color="warning" onClick={this.logoutUser}>
+            <Link to={'/'}>Logout</Link></Button>
+          </NavItem> 
+        </Nav>
     }
 
     private renderEmployeeProfile() {
-        return <div className="navbar-brand">
-            <Link to={'/profile'}>
-            Employee Profile</Link>
-        </div>
+        return <Nav className="ml-auto" navbar>
+          <NavItem>
+            <Button outline color='success'>
+              <Link to={'/profile'}>
+                Profile
+              </Link>
+            </Button>
+          </NavItem> 
+          <NavItem><Button color="warning" onClick={this.logoutUser}>
+            <Link to={'/'}>Logout</Link></Button>
+          </NavItem> 
+        </Nav>
     }
 
     private renderLogin() {
-        return <div className='navbar-collapse collapse'>
-            <ul className='nav navbar-nav'>
-                <li>
-                    <Link to={ '/login' }>
-                        <span className='glyphicon glyphicon-home'></span> Login
-                    </Link>
-                </li>
-            </ul>
-        </div>
+        return <Nav className="ml-auto" navbar>
+          <NavItem><Link to={'/login'}>
+            Login</Link>
+          </NavItem> 
+        </Nav>
     }
 
     private renderAdminMenu() {
-        return <div className='navbar-collapse collapse'>
-            <ul className='nav navbar-nav'>
-                <li>
-                    <Link to={ '/rides/table' }>
-                        <span className='glyphicon glyphicon-th-list'></span> Manage Ride Information
-                    </Link>
-                </li>
-                <li>
-                    <Link to={ '/rides/employees' }>
-                        <span className='glyphicon glyphicon-th-list'></span> Assign Ride Employees
-                    </Link>
-                </li>
-                <li>
-                    <Link to={ '/rides/report' }>
-                        <span className='glyphicon glyphicon-th-list'></span> View Ride Report
-                    </Link>
-                </li>
-                <li>
-                    <Link to={ '/employees' }>
-                        <span className='glyphicon glyphicon-th-list'></span> Manage Employee Information
-                    </Link>
-                </li>
-                <li>
-                    <Link to={ '/maintenance' }>
-                        <span className='glyphicon glyphicon-calendar'></span> 
-                            Assign Maintenance Employees
-                    </Link>
-                </li>
-                <li>
-                    <Link to={ '/lookup' }>
-                        <span className='glyphicon glyphicon-th-list'></span> LookupTables
-                    </Link>
-                </li>
-            </ul>
-        </div>
+        return <Nav navbar>
+            <NavItem>
+                <Link to={ '/rides/table' }>
+                    Rides
+                </Link>
+            </NavItem>
+            <NavItem>
+                <Link to={ '/employees' }>
+                    Employees
+                </Link>
+            </NavItem>
+            <NavItem>
+                <Link to={ '/maintenance' }>
+                    Maintenance
+                </Link>
+            </NavItem>
+            <NavItem>
+                <Link to={ '/rides/report' }>
+                    Report
+                </Link>
+            </NavItem>
+        </Nav>
     }
 
     private renderCustomerMenu() {
-        return <div className='navbar-collapse collapse'>
-            <ul className='nav navbar-nav'>
-                <li>
-                    <Link to={ '/ticket/purchase' }>
-                        <span className='glyphicon glyphicon-film'></span> Purchase Ticket
-                    </Link>
-                </li>
-            </ul>
-        </div>
+        return <Nav navbar>
+            <NavItem>
+                <Link to={ '/ticket/purchase' }>
+                    Purchase Ticket
+                </Link>
+            </NavItem>
+        </Nav>
     }
 
     private renderEmployeeMenu() {
-        return <div className='navbar-collapse collapse'>
-            <ul className='nav navbar-nav'>
-                <li>
-                    <Link to={ '/ticket/scan' }>
-                        <span className='glyphicon glyphicon-film'></span> Scan Ticket
-                    </Link>
-                </li>
-            </ul>
-        </div>
+        return <Nav navbar>
+            <NavItem>
+                <Link to={ '/ticket/scan' }>
+                    Scan Ticket
+                </Link>
+            </NavItem>
+        </Nav>
     }
 }
 

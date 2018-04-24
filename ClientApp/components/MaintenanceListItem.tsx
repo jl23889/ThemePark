@@ -358,7 +358,6 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                         ? 'Managing Employee: ' + this.state.employee.empFirstName + ' '
                             + this.state.employee.empLastName
                         : ''}
-                    <Image src={this.state.employee!=null ? this.state.employee.empProfileImage : ''} responsive/>
                 </div>
                 <div className="col-md-4">
                     Start Date: {moment(this.state.maintenance.startDate).format('MM-DD-YYYY')}
@@ -380,9 +379,6 @@ export class MaintenanceListItem extends React.Component<ListItemProps,ListItemS
                         color='primary'
                         onClick={this.saveEmployees}
                     >Save Employees</Button>
-                     <Button key={'listItemResetEmployeesButton'+this.props.maintenance.maintenanceId}
-                        onClick={this.resetEmployees}
-                    >Reset</Button>
 
                 </div>
                 <div className="col-md-4">

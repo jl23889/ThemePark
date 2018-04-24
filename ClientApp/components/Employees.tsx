@@ -8,6 +8,8 @@ import * as EmployeeTypeActions from '../actions/_EmployeeTypeActions';
 
 import EmployeeForm from './forms/EmployeeForm';
 
+import { Button, Breadcrumb, BreadcrumbItem,  
+    Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 import ReactTable from 'react-table';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
@@ -41,14 +43,16 @@ class Employees extends React.Component<DataProps, {}> {
     }
 
     render() {
-        return <div>
-            { this.props.updateEmployee }
-            <h3 className = "solid" >Add Employee</h3>
-            { this.renderCreateNewForm() }
-
-            <h1 className = "solid">Employee Table</h1>
-            { (!this.props.loadingEmployeeList) ? this.renderEmployeesTable() :
-                <h3>LOADING TABLE...</h3>}
+        return <div className="row justify-content-center">
+            <div className="col-3">
+                { this.renderCreateNewForm() }
+            </div>
+            <div className="col-9">
+                <Card><CardBody>
+                    <CardTitle className="h5 text-center mb-5">Employee Table</CardTitle>
+                { (!this.props.loadingEmployeeList) ? this.renderEmployeesTable() :
+                    <h3>LOADING TABLE...</h3>}</CardBody></Card>
+            </div>
         </div>
     }
 
@@ -113,7 +117,7 @@ class Employees extends React.Component<DataProps, {}> {
     }
 
     private renderCreateNewForm() {        
-        return <EmployeeForm className = 'solid'
+        return <EmployeeForm
             onSubmit={this.createNewEmployee}
             form="newEmployeeForm"
             props={{
@@ -123,7 +127,7 @@ class Employees extends React.Component<DataProps, {}> {
     }
 
     private renderEmployeesTable() {
-        return <div className='solid'>
+        return <div>
             <ReactTable 
                 data={this.props.employeeList}
                 columns={[
@@ -174,6 +178,7 @@ class Employees extends React.Component<DataProps, {}> {
                 ]}
                 className="-striped -highlight"
                 filterable
+                defaultPageSize={15}
                 SubComponent={row => {
                     const { original } = row;
                     // contains update form
@@ -187,9 +192,9 @@ class Employees extends React.Component<DataProps, {}> {
                                 employeeTypeList: this.props.employeeTypeList
                             }}
                         />
-                        <button onClick={this.deleteEmployee.bind(this, original) } >
+                        <Button color="danger" onClick={this.deleteEmployee.bind(this, original) } >
                             Delete
-                        </button>
+                        </Button>
                     </div>
                     );
                 }}

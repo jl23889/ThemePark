@@ -7,7 +7,7 @@ import * as RegisterActions from '../actions/_RegisterActions'
 import RegisterCustomerForm from './forms/RegisterCustomerForm';
 import RegisterEmployeeForm from './forms/RegisterEmployeeForm';
 
-import { Button } from 'react-bootstrap'
+import { Button } from 'reactstrap'
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
 
@@ -31,16 +31,19 @@ class Register extends React.Component<DataProps, {}> {
 
     render() {
         return <div>
-        	<h1>Registration Form</h1>
-            <Button bsStyle="primary" 
+            <div className="row justify-content-center">
+            <Button color="primary" className="col-2"
                 disabled={!this.props.disableCustomerForm} 
                 onClick={this.props.showCustomerForm}>Customer</Button>
-            <Button bsStyle="warning"
+            <Button color="warning" className="col-2"
                 disabled={!this.props.disableEmployeeForm} 
                 onClick={this.props.showEmployeeForm}>Employee</Button>
+            </div>
 
-            { !this.props.disableCustomerForm ? this.renderRegisterCustomerForm() : ''}
-            { !this.props.disableEmployeeForm ? this.renderRegisterEmployeeForm() : ''}
+            <div className="row justify-content-center">
+                { !this.props.disableCustomerForm ? this.renderRegisterCustomerForm() : ''}
+                { !this.props.disableEmployeeForm ? this.renderRegisterEmployeeForm() : ''}
+            </div>
         </div>
     }
 
@@ -67,15 +70,13 @@ class Register extends React.Component<DataProps, {}> {
     }
 
     private renderRegisterCustomerForm() {
-    	return <div>
-            <h1>CUSTOMER REGISTRATION FORM</h1>
+    	return <div className='col-6'>
             <RegisterCustomerForm onSubmit={this.registerCustomer} form="registerCustomerForm"/>
         </div>
     }
 
     private renderRegisterEmployeeForm() {
-        return <div>
-            <h1>EMPLOYEE REGISTRATION FORM</h1>
+        return <div className='col-4'>
             <RegisterEmployeeForm onSubmit={this.registerEmployee} form="registerEmployeeForm"/>
         </div>
     }

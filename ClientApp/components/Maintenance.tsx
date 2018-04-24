@@ -11,6 +11,8 @@ import * as RideActions from '../actions/_RideActions';
 import MaintenanceForm from './forms/MaintenanceForm';
 import { MaintenanceListItem } from './MaintenanceListItem';
 
+import { Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
+
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { toast } from 'react-toastify';
@@ -49,10 +51,13 @@ class Maintenance extends React.Component<DataProps, {}> {
     }
 
     render() {
-        return <div className = "solid">
-            <h3> Add Maintenance Form</h3>
-            { this.renderCreateNewForm() }
-            { this.renderMaintenanceView() }
+        return <div className="row justify-content-center">
+            <div className="col-3">
+                { this.renderCreateNewForm() }
+            </div>
+            <div className="col-8">
+                { this.renderMaintenanceView() }
+            </div>
         </div>
     }
 
@@ -68,20 +73,23 @@ class Maintenance extends React.Component<DataProps, {}> {
                         start: new Date(item.startDate),
                         end: new Date(item.endDate),
                     }))
-                return <div className = "solidGreen">
-                    <h3>Calendar View</h3>
-                    <Link to='/maintenance/list'>List View</Link>
-                    <div className='calendar-container'><BigCalendar
-                        events={calendarEvents}
-                        defaultDate={new Date()}
-                        views={['month']}
-                        popup={true}
-                        showMultiDayTimes
-                    />
-                    </div></div>
+                return <Card>
+                        <CardBody>
+                        <CardTitle className="h5 text-center mb-5">Calendar</CardTitle>      
+                        <Link to='/maintenance/list'>List View</Link>
+                        <div className='calendar-container'><BigCalendar
+                            events={calendarEvents}
+                            defaultDate={new Date()}
+                            views={['month']}
+                            popup={true}
+                            showMultiDayTimes
+                        />
+                        </div>
+                    </CardBody>
+                    </Card>
 
             default:
-                return <div className='solid'>
+                return <div>
                     <ListGroup>
                     <h3>List View</h3>
                     <Link to='/maintenance/calendar'>Calendar View</Link>

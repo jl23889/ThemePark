@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import * as moment from 'moment'
 
+import { Button, Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
+
 // generate option element from rideStatus
 // function rideStatusOption(rs) {
 //     return <option key={rs.rideStatusId} value={rs.rideStatusId}>{rs.rideStatus}</option>
@@ -34,47 +36,57 @@ let RideForm = props => {
             props.props.rideTypeList : []);
 
     return (
-        <form onSubmit={handleSubmit}>
-        <label>Name</label>
-        <Field 
-            name="rideName" 
-            component="input" 
-            type="text" 
-        />
-        <label>Total Capacity</label>
-        <Field 
-            name="totalCapacity" 
-            component="input" 
-            type="number" 
-        />
-		<label>Installation Date</label>
-		<Field 
-			name="installationDate" 
-			component="input" 
-			type="date" 
-		/>
-        <label>FastPass Possible</label>
-        <Field 
-            name="fastPassPossible" 
-            component="input" 
-            type="checkbox" 
-        />
-        <label>Ride Type</label>
-        <Field 
-            name="rideType" 
-            component="select"
-        >
-            <option value='' disabled>Select Type</option>
-            {...rtl.map(rideTypeOption)}
-        </Field>
-
-		<button type="submit" disabled={pristine || submitting}>
-			Submit
-		</button>
-		<button type="button" disabled={pristine || submitting} onClick={reset}>
-			Reset
-		</button>
-	</form>);
+        <Card>
+            <CardBody>
+            <CardTitle className="h5 text-center mb-5">Ride Information</CardTitle>
+                <form onSubmit={handleSubmit} className="text-center mb-4">
+                    <div>
+                        <label>Name</label>
+                        <Field 
+                            name="rideName" 
+                            component="input" 
+                            type="text" 
+                        />
+                        <label>Total Capacity</label>
+                        <Field 
+                            name="totalCapacity" 
+                            component="input" 
+                            type="number" 
+                        />
+                    </div>
+                    <div>
+                		<label>Installation Date</label>
+                		<Field 
+                			name="installationDate" 
+                			component="input" 
+                			type="date" 
+                		/>
+                        <label>FastPass Possible</label>
+                        <Field 
+                            name="fastPassPossible" 
+                            component="input" 
+                            type="checkbox" 
+                        />
+                        <label>Ride Type</label>
+                        <Field 
+                            name="rideType" 
+                            component="select"
+                        >
+                            <option value='' disabled>Select Type</option>
+                            {...rtl.map(rideTypeOption)}
+                        </Field>
+                    </div>
+                    <div>
+                		<Button color="success" type="submit" disabled={pristine || submitting}>
+                			Submit
+                		</Button>
+                		<Button type="button" disabled={pristine || submitting} onClick={reset}>
+                			Reset
+                		</Button>
+                    </div>
+	            </form>
+            </CardBody>
+        </Card>);
 }
 
 RideForm = reduxForm({

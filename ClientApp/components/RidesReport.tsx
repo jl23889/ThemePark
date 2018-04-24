@@ -8,8 +8,10 @@ import { requestRide, requestRidesById, requestDetailedVisitRide,
 
 import { Alert, Ride, RideLineData, RideBarData } from '../models/_DataModels'
 
+import { Breadcrumb, BreadcrumbItem,  
+    Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 import { Image, Table } from 'react-bootstrap';
-import { Button, Jumbotron } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
 import {Bar,Doughnut,Line} from 'react-chartjs-2';
@@ -129,7 +131,8 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 
     	const toastId = 
             toast('Generating Data...', {
-                type: 'info'
+                type: 'info',
+                autoClose: 30000,
             });
 
         requestDetailedVisitRide(values)
@@ -245,8 +248,9 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
     	}
 
     	const toastId = 
-            toast('Creating Employee...', {
-                type: 'info'
+            toast('Generating Report...', {
+                type: 'info',
+                autoClose: 30000,
             });
 
         requestSummaryVisit(values)
@@ -351,9 +355,10 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 			)
     	)
     	return <div>
-    		<h3>Weekly Ride Attendance (By Age Group)</h3>
-	        <div className="row">
-	        	<div className="col-md-3">
+            <Card>
+            <CardBody>
+	        <div className="row justify-content-center">
+	        	<div className="col-md-4">
 		        <p>Select Start Date</p>
 	            <DatePicker
 	                inline
@@ -363,7 +368,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 	                maxDate={moment()}
 	            />
 	            </div>
-	            <div className="col-md-3">
+	            <div className="col-md-4">
 		        <p>Select End Date</p>
 	            <DatePicker
 	                inline
@@ -373,7 +378,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 	                maxDate={moment()}
 	            />
 	            </div>
-	            <div className="col-md-3">
+	            <div className="col-md-4">
 	            <p>Select Ride</p>
 	            <Select
 	                name='form-field-name'
@@ -381,11 +386,9 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 	                onChange={this.handleChange}
 	                options={this.formatRidesSelect(this.props.rideList)}
 	            />
-	            </div>
-	            <div className="col-md-3">
-	            <Button color="success"
-	                onClick={this.generateWeeklyData}>
-	                Generate Report
+                <Button color="success"
+                    onClick={this.generateWeeklyData}>
+                    Generate Report
                 </Button>
 	            </div>
             </div>
@@ -408,7 +411,9 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 		        	{rows}
 	        	</tbody>
 		      </Table>
-    	</div>
+          </CardBody>
+          </Card>
+      </div>
 	}
 
     private renderBar() {
@@ -429,9 +434,10 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
             )
         )
     	return <div>
-    		<h3>Ride Attendance (All Rides)</h3>
-	        <div className="row">
-	        	<div className="col-md-3">
+            <Card>
+            <CardBody>
+	        <div className="row justify-content-center">
+	        	<div className="col-md-4">
 		        <p>Select Start Date</p>
 	            <DatePicker
 	                inline
@@ -441,7 +447,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 	                maxDate={moment()}
 	            />
 	            </div>
-	        	<div className="col-md-3">
+	        	<div className="col-md-4">
 		        <p>Select End Date</p>
 	            <DatePicker
 	                inline
@@ -451,7 +457,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 	                maxDate={moment()}
 	            />
 	            </div>
-	            <div className="col-md-3">
+	            <div className="col-md-4">
 	            <Button color="success"
 	                onClick={this.generateRideData}>
 	                Generate Report
@@ -480,31 +486,24 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
                     {rows}
                 </tbody>
             </Table>
-    	</div>
+            </CardBody>
+          </Card>
+        </div>
 	}
 	       
 
     private renderView() {
-        return <div><Jumbotron>
-	        <h1 className="display-3">View Report
-	        	<Button>
-                    <Link to='/rides/employees'>Go To Assign Employees</Link>
+        return <div>
+            <div className="row justify-content-center">
+                <Button color="info"
+                    onClick={this.showLine}>                
+                    Show Ride By Age Group
                 </Button>
-                <Button>
-                    <Link to='/rides/table'>Go To Rides Table</Link>
+                <Button color="info"
+                    onClick={this.showBar}>    
+                    Show All Rides
                 </Button>
-	        </h1>
-
-	        <Button color="info"
-	        	onClick={this.showLine}>                
-	        	Show Ride By Age Group
-            </Button>
-            <Button color="info"
-            	onClick={this.showBar}>    
-                Show All Rides
-            </Button>
-	        
-	        </Jumbotron>
+            </div>
 	        {this.state.showLine ? this.renderLine() : ''}
 	        {this.state.showBar ? this.renderBar() : ''}
 	        

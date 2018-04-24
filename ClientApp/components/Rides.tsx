@@ -13,9 +13,10 @@ import RideForm from './forms/RideForm';
 import { RideEmployeeListItem } from './RideEmployeeListItem';
 import { RidesReport } from './RidesReport';
 
-import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button, Breadcrumb, BreadcrumbItem,  
+    Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 import ReactTable from 'react-table';
-import { Jumbotron } from 'reactstrap'
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
 import Select from 'react-select';
@@ -55,39 +56,65 @@ class Rides extends React.Component<DataProps, {}> {
     render() {
         switch (this.props.match.params.viewType) {
             case 'table':
-                return <div className = "solid">
-                    <h3>Add Ride</h3>
-                    { this.renderCreateNewForm() }
-                    <h1>Ride Table
-                        <Button>
-                            <Link to='/rides/employees'>Go To Assign Employees</Link>
-                        </Button>
-                        <Button>
-                            <Link to='/rides/report'>View Report</Link>
-                        </Button>
-                    </h1>
-                    { (!this.props.loadingRideList) ? this.renderRidesTable() : 
-                        <h3>LOADING TABLE...</h3>}
+                return <div>
+                    <div className="row justify-content-center">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/rides/employees'>Go To Assign Employees</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link to='/rides/report'>View Report</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    <div className="row justify-content-center">
+                        <div className="col-3">
+                            { this.renderCreateNewForm() }
+                        </div>
+                        <div className="col-8">
+                            <Card><CardBody>
+                                <CardTitle className="h5 text-center mb-5">Ride Table</CardTitle>
+                            { (!this.props.loadingRideList) ? this.renderRidesTable() : 
+                                <h3>LOADING TABLE...</h3>}</CardBody></Card>
+                        </div>
+                    </div>
                 </div>
             case 'employees':
-                return <div className = "solid"> 
-                    <h1>Assign Employee To Ride
-                        <Button>
-                            <Link to='/rides/table'>Go To Rides Table</Link>
-                        </Button>
-                        <Button>
-                            <Link to='/rides/report'>View Report</Link>
-                        </Button>
-                    </h1>
+                return <div>
+                    <div className="row justify-content-center">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/rides/table'>Go To Rides Table</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link to='/rides/report'>View Report</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
                     
-                    { (!this.props.loadingRideList) ? this.renderRideEmployees() : 
-                        <h3>LOADING RIDES...</h3>}
+                    <div className="row justify-content-center">
+                        { (!this.props.loadingRideList) ? this.renderRideEmployees() : 
+                            <h3>LOADING RIDES...</h3>}
+                    </div>
                 </div>
             case 'report':
-                return <div>
-                    <RidesReport
-                        rideList={this.props.rideList}
-                    />
+                return <div> 
+                    <div className="row justify-content-center">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/rides/table'>Go To Rides Table</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link to='/rides/employees'>Go To Assign Employees</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+
+                    <div className="row justify-content-center">
+                        <RidesReport
+                            rideList={this.props.rideList}
+                        />
+                    </div>
                 </div>
         }
     }
@@ -95,7 +122,8 @@ class Rides extends React.Component<DataProps, {}> {
     createNewRide = values => {
         const toastId =
             toast('Creating Ride...', {
-                type: 'info'
+                type: 'info',
+                autoClose: 30000,
             });
         this.props.createNewRide(values,toastId);
     }
@@ -103,7 +131,8 @@ class Rides extends React.Component<DataProps, {}> {
     updateRide = values => {
         const toastId =
             toast('Updating Ride...', {
-            type: 'info'
+            type: 'info',
+            autoClose: 30000,
         });
         this.props.updateRide(values, toastId);
     }
@@ -111,7 +140,8 @@ class Rides extends React.Component<DataProps, {}> {
     deleteRide(id) {
         const toastId =
             toast('Deleting Ride...', {
-            type: 'info'
+            type: 'info',
+            autoClose: 30000,
         });
         this.props.deleteRide(id, toastId);
     }
@@ -199,7 +229,7 @@ class Rides extends React.Component<DataProps, {}> {
 
     // render a list of statless RideEmployeeListItem components
     private renderRideEmployees() {
-        return <div>
+        return <div className="col-8">
             <ListGroup>
                 {this.props.rideList.map(item =>
                     <RideEmployeeListItem
@@ -294,6 +324,7 @@ class Rides extends React.Component<DataProps, {}> {
                 ]}
                 className="-striped -highlight"
                 filterable
+                defaultPageSize={10}
                 SubComponent={row => {
                     const { original } = row;
                     // contains update form
@@ -308,7 +339,7 @@ class Rides extends React.Component<DataProps, {}> {
                                 rideTypeList: this.props.rideTypeList
                             }}
                         />
-                        <Button onClick={this.deleteRide.bind(this, original) } >
+                        <Button color="danger" onClick={this.deleteRide.bind(this, original) } >
                             Delete
                         </Button>
                     </div>

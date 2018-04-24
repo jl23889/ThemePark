@@ -8,7 +8,9 @@ import TicketTransactionForm from './forms/TicketTransactionForm';
 import TicketTransactionListItem from './TicketTransactionListItem';
 import TransactionListItem from './TransactionListItem';
 
-import { Button, ListGroupItem, ListGroup } from 'react-bootstrap'
+import { ListGroupItem, ListGroup } from 'react-bootstrap'
+import { Button, Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
+
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
 
@@ -41,7 +43,7 @@ class TicketTransaction extends React.Component<DataProps, {}> {
     render() {
         return <div>
             { this.renderTicketPurchaseForm()}
-            <h1>View My Tickets</h1>
+            <h1 className="text-center">View My Tickets</h1>
             { this.renderCustomerTicketTransactions()}
         </div>
     }
@@ -126,6 +128,11 @@ class TicketTransaction extends React.Component<DataProps, {}> {
                 if (response.data !== 'undefined') {
                     this.props.createTicketTransaction(this.props.ticketList, storedUser.customerId, toastId);
                 }
+                displayToast({
+                    'toastId': toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Purchase Successful'
+                })
             })
             .catch(error => {
                 toast('You must be a registered customer to buy tickets. Please register and try again.', {
@@ -143,61 +150,64 @@ class TicketTransaction extends React.Component<DataProps, {}> {
     
     private renderTicketPurchaseForm() {
         var transactionTotal = 0;
-        return <div>
-            <h1>Select Date</h1>
-            <DatePicker
-                inline
-                selected={moment(this.props.effectiveDate)}
-                onChange={this.setDate}
-                minDate={moment()}
-                maxDate={moment().add(90, "days")}
-            />
-            <TicketTransactionForm 
-                onSubmit={this.addTicket} 
-                form="purchaseTicketForm"
-                initialValues={{
-                    ticketAmount: 1,
-                    fastPass: false,
-                    ticketType: 1,
-                }}
-                props={{
-                    ticketTypeList: this.props.ticketTypeList,
-                }}/>
-            <ListGroup>
-                {this.props.ticketList.map(ticket =>
-                    <TicketTransactionListItem
-                        key={'listItem'+ticket.ticketId+Math.random()}
-                        ticket={ticket}
-                        ticketList={this.props.ticketList}
-                        transactionTotal={this.props.transactionTotal}
-                        updateTransaction={this.props.updateTransaction}
-                        ticketTypeList={this.props.ticketTypeList}
-                        >                                      
-                    </TicketTransactionListItem>
-                )}
-            </ListGroup>
-            <div className="row">
-                <div className="col-md-9">
-                    <h3 className="pull-right">Total Amount: ${this.props.transactionTotal}</h3>
-                </div>
+        return <div className='row justify-content-center'>
+            <div className='col-6'>
+                <Card>
+                    <CardBody>
+                        <CardTitle className="h5 text-center mb-5">Order Tickets</CardTitle>
+                        <DatePicker
+                            inline
+                            selected={moment(this.props.effectiveDate)}
+                            onChange={this.setDate}
+                            minDate={moment()}
+                            maxDate={moment().add(90, "days")}
+                        />
+                        <TicketTransactionForm 
+                            onSubmit={this.addTicket} 
+                            form="purchaseTicketForm"
+                            initialValues={{
+                                ticketAmount: 1,
+                                fastPass: false,
+                                ticketType: 1,
+                            }}
+                            props={{
+                                ticketTypeList: this.props.ticketTypeList,
+                            }}/>
+                    </CardBody>
+                </Card>
             </div>
-            <div className="row">
-                <div className="col-md-9">
-                    <div className="pull-right">
-                        <Button color='success'
-                            onClick={this.startTransaction}
-                            >Complete Transaction</Button>
-                        <Button
-                            onClick={this.removeAllTickets}>Reset</Button>
-                    </div>
-                </div>
+            <div className='col-6'>
+                <Card>
+                    <CardBody>
+                        <CardTitle className="h5 text-center mb-5">Purchase Ticket List</CardTitle>
+                        <ListGroup>
+                            {this.props.ticketList.map(ticket =>
+                                <TicketTransactionListItem
+                                    key={'listItem'+ticket.ticketId+Math.random()}
+                                    ticket={ticket}
+                                    ticketList={this.props.ticketList}
+                                    transactionTotal={this.props.transactionTotal}
+                                    updateTransaction={this.props.updateTransaction}
+                                    ticketTypeList={this.props.ticketTypeList}
+                                    >                                      
+                                </TicketTransactionListItem>
+                            )}
+                        </ListGroup>
+                        <h3 className="pull-left">Total Amount: ${this.props.transactionTotal}</h3>
+                        <div className="pull-right">
+                            <Button color='success'
+                                onClick={this.startTransaction}
+                                >Complete Transaction</Button>
+                            <Button 
+                                onClick={this.removeAllTickets}>Reset</Button>
+                        </div>
+                    </CardBody>
+                </Card>
             </div>
         </div>
     }
 
     private renderCustomerTicketTransactions() {
-
-        console.log(this.props.ticketTransactionList);
         return <ListGroup>
             {this.props.ticketTransactionList.map(transaction =>
                 <TransactionListItem

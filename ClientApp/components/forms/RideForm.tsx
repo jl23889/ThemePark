@@ -47,6 +47,8 @@ let RideForm = props => {
                             component="input" 
                             type="text" 
                         />
+                    </div>
+                    <div>
                         <label>Total Capacity</label>
                         <Field 
                             name="totalCapacity" 
@@ -61,12 +63,16 @@ let RideForm = props => {
                 			component="input" 
                 			type="date" 
                 		/>
+                    </div>
+                    <div>
                         <label>FastPass Possible</label>
                         <Field 
                             name="fastPassPossible" 
                             component="input" 
                             type="checkbox" 
                         />
+                    </div>
+                    <div>
                         <label>Ride Type</label>
                         <Field 
                             name="rideType" 

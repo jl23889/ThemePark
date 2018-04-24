@@ -49,17 +49,12 @@ class CustomerProfile extends React.Component<DataProps, {}> {
         // generate unique toast
         const toastId =
             toast('Updating...', {
-                type: 'info'
+                type: 'info',
+                autoClose: 30000,
             });
 
         this.props.updateCustomer(values, toastId);
     }
-
-    logoutUser = () => {
-        this.props.logout();
-        this.props.history.push('/login'); //redirect to login
-    }
-
     private renderCustomerProfileForm() {
         return <div>
             <CustomerForm
@@ -67,8 +62,6 @@ class CustomerProfile extends React.Component<DataProps, {}> {
                 initialValues={this.props.customer}
                 form="customerProfileForm"
             />
-            <Button bsStyle="warning"
-                onClick={this.logoutUser}>Logout</Button>
         </div>
     }
 }

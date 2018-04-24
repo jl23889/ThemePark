@@ -354,7 +354,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 		        </tr>	
 			)
     	)
-    	return <div>
+    	return <div className="row">
             <Card>
             <CardBody>
 	        <div className="row justify-content-center">

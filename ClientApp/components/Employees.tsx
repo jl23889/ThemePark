@@ -147,7 +147,7 @@ class Employees extends React.Component<DataProps, {}> {
                             if (filter.value == "all") {
                                 return true;
                             }
-                            return row.employeeType == filter.value;
+                            return row.empType == filter.value;
                         },
                     },
                     {

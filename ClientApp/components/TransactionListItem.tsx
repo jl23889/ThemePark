@@ -38,7 +38,7 @@ export default class TransactionListItem extends React.Component<ListItemProps, 
             tag='div'
             color='warning'>
             <ListGroupItemHeading>
-                TicketID: {this.state.ticket.ticketId}
+                Ticket ID: {this.state.ticket.ticketId}
             </ListGroupItemHeading>
             <div className="row" key={'ticketItem'+ this.state.ticket.ticketId}>
                 <div className="col-md-3">
@@ -47,10 +47,10 @@ export default class TransactionListItem extends React.Component<ListItemProps, 
                     {this.props.transaction.ticket.fastPass ? "FastPass Enabled" : ""}
                 </div>
                 <div className="col-md-3">
-                    Effective Date: {this.props.transaction.ticket.effectiveDate}
+                    Effective Date: {moment(this.props.transaction.ticket.effectiveDate).format('MM-DD-YYYY')}
                 </div>
                 <div className="col-md-3">
-                    Expiration Date: {this.props.transaction.ticket.expirationDate}
+                    Expiration Date: {moment(this.props.transaction.ticket.expirationDate).format('MM-DD-YYYY')}
                 </div>
             </div>     
         </ListGroupItem>

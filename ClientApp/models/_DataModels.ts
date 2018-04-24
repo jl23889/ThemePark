@@ -37,6 +37,16 @@ export interface RideEmployee {
     employeeId: string;
 }
 
+export interface RideLineData {
+    date: Date;
+    count: number;
+    ageGroup1_0_to_18: number;
+    ageGroup2_19_to_30: number;   
+    ageGroup3_31_to_50: number;
+    ageGroup4_over50: number;
+}
+
+
 // Customers 
 //////////////
 export interface Customer {

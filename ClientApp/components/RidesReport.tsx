@@ -6,9 +6,9 @@ import { ApplicationState, AppThunkAction }  from '../store';
 import { requestRide, requestRidesById, requestDetailedVisitRide,
 	requestTicketSales, requestSummaryVisit } from '../actions/_RideActions';
 
-import { Alert, Ride } from '../models/_DataModels'
+import { Alert, Ride, RideLineData } from '../models/_DataModels'
 
-import { Image } from 'react-bootstrap';
+import { Image, Table } from 'react-bootstrap';
 import { Button, Jumbotron } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
@@ -34,49 +34,12 @@ interface ListItemState {
     endDate: Date;
     alert: Alert;
     lineData: Object;
+    rawLineData: RideLineData[];
     barData: Object;
-    donutData: Object;
+    rawBarData: Object[];
     showLine: boolean;
     showBar: boolean;
-    showDonut: boolean;
 }
-
-const bardata = {
-	labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      label: 'Average Attendance (All Rides)',
-      backgroundColor: 'rgba(255,99,132,0.2)',
-      borderColor: 'rgba(255,99,132,1)',
-      borderWidth: 1,
-      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-      hoverBorderColor: 'rgba(255,99,132,1)',
-      data: [22, 30, 1, 21, 5, 57, 42]
-    },
-    {
-      label: 'Ride',
-      fill: false,
-      lineTension: 0.1,
-      backgroundColor: 'rgba(75,192,192,0.4)',
-      borderColor: 'rgba(75,192,192,1)',
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(75,192,192,1)',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 1,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      pointHoverBorderColor: 'rgba(220,220,220,1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: [65, 59, 80, 81, 56, 55, 40]
-    }
-  ]
-}
-
 
 export class RidesReport extends React.Component<ListItemProps,ListItemState> {
     constructor(props){
@@ -88,11 +51,11 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
             endDate: new Date(),
             alert: null,
             lineData: null,
+            rawLineData: [],
             barData: null,
-            donutData: null,
+            rawBarData: [],
             showLine: true,
             showBar: false,
-            showDonut: false
         }
     }
 
@@ -136,7 +99,6 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
         // request rides by array of rideIds
         requestRidesById(rideIds)
         .then(response=>{
-  			console.log(response.data);
             this.setState({
                 rideSelected: response.data[0],
             })
@@ -248,6 +210,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 
 	        this.setState({
 	            lineData: linedata,
+	            rawLineData: response.data
 	        })
         }) 
     }
@@ -309,6 +272,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 
 	        this.setState({
 	            barData: bardata,
+	            rawBarData: response.data
 	        })
         }) 
     }
@@ -329,6 +293,19 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
     }
 
     private renderLine() {
+    	var rows = [];
+    	this.state.rawLineData.forEach(element => 
+			rows.push(
+				<tr>
+		            <th scope="row">{moment(element.date).format('MM-DD-YYYY')}</th>
+		            <td>{element.count}</td>
+		            <td>{element.ageGroup1_0_to_18}</td>
+		            <td>{element.ageGroup2_19_to_30}</td>
+		            <td>{element.ageGroup3_31_to_50}</td>
+		            <td>{element.ageGroup4_over50}</td>
+		        </tr>	
+			)
+    	)
     	return <div>
     		<h3>Weekly Ride Attendance (By Age Group)</h3>
 	        <div className="row">
@@ -372,6 +349,21 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
         		'No Ride Selected' : 
         		<Line data={this.state.lineData}/>
         	}</h3>
+        	 <Table>
+		        <thead>
+		          <tr>
+		            <th>Date</th>
+		            <th>Total</th>
+		            <th>Ages 0-18</th>
+		            <th>Ages 19-30</th>
+		            <th>Ages 31-50</th>
+		            <th>Ages 50+</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		        	{rows}
+	        	</tbody>
+		      </Table>
     	</div>
 	}
 

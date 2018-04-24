@@ -46,6 +46,18 @@ export interface RideLineData {
     ageGroup4_over50: number;
 }
 
+export interface RideBarData {
+    name: string;
+    average: number;
+    total: number;
+    maxDate: Date;
+    maxCount: number;
+    ageGroup1_0_to_18: number;
+    ageGroup2_19_to_30: number;
+    ageGroup3_31_to_50: number;
+    ageGroup4_over50: number;
+}
+
 
 // Customers 
 //////////////

@@ -5,8 +5,8 @@ export class Layout extends React.Component<{}, {}> {
     public render() {
         return (
             <div className='container-fluid'>
-                <img className='bg' src="https://cdn.pixabay.com/photo/2014/01/01/13/33/amusement-park-237200_1280.jpg"/>
                 <div className='row'>
+                    <img className='bg' src="http://b40ad1317d45595cd0df-4d1987fef3a36cccd5478db4931039f0.r84.cf3.rackcdn.com/assets/media/2018/01/APAC-theme-parks-blog.jpg" />
                     <div className='col-sm-3'>
                         <NavMenu />
                     </div>

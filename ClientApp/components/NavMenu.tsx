@@ -48,13 +48,13 @@ class NavMenu extends React.Component<DataProps, {}> {
 
     private renderCustomerProfile() {
         return <div className="navbar-brand">
-            <Link to={'/profile'}>MyProfile</Link>
+            <Link to={'/profile'}>My Profile</Link>
         </div>
     }
 
     private renderEmployeeProfile() {
         return <div className="navbar-brand">
-            <Link to={'/customerProfile'}>MyProfile</Link>
+            <Link to={'/customerProfile'}>My Profile</Link>
         </div>
     }
 

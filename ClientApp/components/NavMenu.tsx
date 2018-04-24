@@ -47,8 +47,8 @@ class NavMenu extends React.Component<DataProps, {}> {
             <Navbar color="light" light expand="md">
               <Collapse navbar>
                 <Nav navbar>
-                <NavItem><Link to="/">
-                  ThemePark</Link></NavItem>
+                            <NavItem><Button color="link"><Link to="/">
+                  ThemePark</Link></Button></NavItem>
                 </Nav>
                 { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerMenu() : '' }
                 { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeMenu() : '' }
@@ -97,33 +97,42 @@ class NavMenu extends React.Component<DataProps, {}> {
 
     private renderLogin() {
         return <Nav className="ml-auto" navbar>
-          <NavItem><Link to={'/login'}>
+            <NavItem><Button color="link"><Link to={'/login'}>
             Login</Link>
-          </NavItem> 
+          </Button></NavItem> 
         </Nav>
     }
 
     private renderAdminMenu() {
         return <Nav navbar>
             <NavItem>
+                <Button color="link">
                 <Link to={ '/rides/table' }>
                     Rides
                 </Link>
+                </Button>
             </NavItem>
+            
             <NavItem>
+                <Button color="link">
                 <Link to={ '/employees' }>
                     Employees
                 </Link>
+                </Button>
             </NavItem>
             <NavItem>
+                <Button color="link">
                 <Link to={ '/maintenance' }>
                     Maintenance
                 </Link>
+                </Button>
             </NavItem>
             <NavItem>
+                <Button color="link">
                 <Link to={ '/rides/report' }>
                     Report
                 </Link>
+                </Button>
             </NavItem>
         </Nav>
     }
@@ -131,9 +140,11 @@ class NavMenu extends React.Component<DataProps, {}> {
     private renderCustomerMenu() {
         return <Nav navbar>
             <NavItem>
+                <Button color="link">
                 <Link to={ '/ticket/purchase' }>
                     Purchase Ticket
                 </Link>
+                </Button>
             </NavItem>
         </Nav>
     }
@@ -141,9 +152,11 @@ class NavMenu extends React.Component<DataProps, {}> {
     private renderEmployeeMenu() {
         return <Nav navbar>
             <NavItem>
+                <Button color="link">
                 <Link to={ '/ticket/scan' }>
                     Scan Ticket
                 </Link>
+                </Button>
             </NavItem>
         </Nav>
     }

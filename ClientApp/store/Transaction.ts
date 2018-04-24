@@ -128,6 +128,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                     'alertMessage': 'Creating ticketId ' + action.ticketId + '...'
                 },
             }
+
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;

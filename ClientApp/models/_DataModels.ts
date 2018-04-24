@@ -27,21 +27,11 @@ export interface RideStatus {
     rideStatus: string;
 }
 
-export interface RideType {
-    rideTypeId: number;
-    rideType: string;
-}
-
-export interface RideEmployee {
-    rideId: string;
-    employeeId: string;
-}
-
 export interface RideLineData {
     date: Date;
     count: number;
     ageGroup1_0_to_18: number;
-    ageGroup2_19_to_30: number;   
+    ageGroup2_19_to_30: number;
     ageGroup3_31_to_50: number;
     ageGroup4_over50: number;
 }
@@ -58,6 +48,15 @@ export interface RideBarData {
     ageGroup4_over50: number;
 }
 
+export interface RideType {
+    rideTypeId: number;
+    rideType: string;
+}
+
+export interface RideEmployee {
+    rideId: string;
+    employeeId: string;
+}
 
 // Customers 
 //////////////
@@ -159,12 +158,28 @@ export interface TicketType {
 // TRANSACTION  
 //////////////
 export interface Transaction {
+    ticket: Ticket;
     transactionId: string;
     customerId: string;
     transactionType: number;
     date: Date;
     transactionTotal: number;
-    ticket: Ticket;
+    transactionTicketPurchases: TicketTransaction[];
+}
+
+export interface TicketTransaction {
+    transactionId: string;
+    ticketId: string;
+    purchaseAmount: number;
+}
+
+
+//WEATHER
+//////////
+export interface Weather {
+    date: Date;
+    weatherTypeId: number;
+    WeatherType: string;
 }
 
 // WEATHER TYPE 

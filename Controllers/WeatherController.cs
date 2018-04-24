@@ -75,6 +75,7 @@ namespace ThemePark.Controllers
             }
             return BadRequest(); 
         }
+
 	   [HttpPut("[action]")]
         public IActionResult UpdateWeather([FromBody]Weather weather)
         {
@@ -92,6 +93,7 @@ namespace ThemePark.Controllers
             }
             return BadRequest();
         }
+
 	   [HttpPost("[action]")]
         public IActionResult DeleteWeather([FromBody]Weather w)
         {

@@ -6,7 +6,7 @@ import { ApplicationState, AppThunkAction }  from '../store';
 import { requestRide, requestRidesById, requestDetailedVisitRide,
 	requestTicketSales, requestSummaryVisit } from '../actions/_RideActions';
 
-import { Alert, Ride, RideLineData } from '../models/_DataModels'
+import { Alert, Ride, RideLineData, RideBarData } from '../models/_DataModels'
 
 import { Image, Table } from 'react-bootstrap';
 import { Button, Jumbotron } from 'reactstrap';
@@ -36,7 +36,7 @@ interface ListItemState {
     lineData: Object;
     rawLineData: RideLineData[];
     barData: Object;
-    rawBarData: Object[];
+    rawBarData: RideBarData[];
     showLine: boolean;
     showBar: boolean;
 }
@@ -367,7 +367,23 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
     	</div>
 	}
 
-	private renderBar() {
+    private renderBar() {
+        var rows = [];
+        this.state.rawBarData.forEach(element =>
+            rows.push(
+                <tr>
+                    <th scope="row">{element.name}</th>
+                    <td>{element.average.toFixed(2)}</td>
+                    <td>{element.total}</td>                    
+                    <td>{moment(element.maxDate).format('MM-DD-YYYY')}</td>
+                    <td>{element.maxCount}</td>
+                    <td>{element.ageGroup1_0_to_18}</td>
+                    <td>{element.ageGroup2_19_to_30}</td>
+                    <td>{element.ageGroup3_31_to_50}</td>
+                    <td>{element.ageGroup4_over50}</td>
+                </tr>
+            )
+        )
     	return <div>
     		<h3>Ride Attendance (All Rides)</h3>
 	        <div className="row">
@@ -401,7 +417,25 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
         	<h3>{this.state.barData == null ? 
         		'No Data Generated' : 
         		<Bar data={this.state.barData}/>
-        	}</h3>
+            }</h3>
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Ride</th>
+                        <th>Average Visits</th>
+                        <th>Total Visits  </th>
+                        <th>Date of Peak  </th>
+                        <th>Peak Visits   </th>
+                        <th>Ages 0-18 </th>
+                        <th>Ages 19-30</th>
+                        <th>Ages 31-50</th>
+                        <th>Ages 50+  </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </Table>
     	</div>
 	}
 	       

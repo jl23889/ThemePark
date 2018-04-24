@@ -84,6 +84,18 @@ let RegisterCustomerForm = props => {
             </div>
             <div className="row">
                 <div className="col-6 text-right">
+                    <label>Gender</label>
+                </div>
+                <div className="col-6">
+                    <Field 
+                        name="gender" 
+                        component="input" 
+                        type="text" 
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-6 text-right">
                     <label>Emergency Contact Number</label>
                 </div>
                 <div className="col-6">

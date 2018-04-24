@@ -39,6 +39,10 @@ img.bg {
     opacity: .40;
 }
 
+.react-datepicker {
+    min-width:250px;
+}
+
 /* Keep the nav menu independent of scrolling and on top of other items */
 .main-nav {
     position: fixed;

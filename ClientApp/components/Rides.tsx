@@ -274,7 +274,7 @@ class Rides extends React.Component<DataProps, {}> {
                         Cell: row => (
                         <span>
                             <span style={{
-                              color: row.value === 2 || row.value === 3 ? '#ff2e00'
+                              color: row.value === 2 || row.value === 3 || row.value === 4 ? '#ff2e00'
                                 : '#57d500',
                               transition: 'all .3s ease'
                             }}>
@@ -282,6 +282,7 @@ class Rides extends React.Component<DataProps, {}> {
                             </span> {
                               row.value === 3 ? 'Weather'
                               : row.value === 2 ? `Maintenance`
+                              : row.value === 4 ? `No Employee`
                               : 'Open'
                             }
                           </span>

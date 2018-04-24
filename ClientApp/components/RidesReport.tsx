@@ -126,6 +126,12 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
     		startTime: moment(this.state.startDate).subtract(1,'d').toDate(),
     		endTime: this.state.endDate
     	}
+
+    	const toastId = 
+            toast('Generating Data...', {
+                type: 'info'
+            });
+
         requestDetailedVisitRide(values)
         .then(response=>{
         	var ageGroup1 = []
@@ -210,7 +216,23 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 
 	        this.setState({
 	            lineData: linedata,
-	            rawLineData: response.data
+	            rawLineData: response.data,
+	            alert: {
+                    'toastId': toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Report Generation Successful!'
+                },
+	        })
+        })
+        .catch(error => {
+        	this.setState({
+	            lineData: null,
+	            rawLineData: [],
+	            alert: {
+                    'toastId': toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'Report Generation Failed!'
+                },
 	        })
         }) 
     }
@@ -221,6 +243,12 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
     		startTime: moment(this.state.startDate).subtract(1,'d').toDate,
     		endTime: this.state.endDate
     	}
+
+    	const toastId = 
+            toast('Creating Employee...', {
+                type: 'info'
+            });
+
         requestSummaryVisit(values)
         .then(response=>{
         	var maxCounts = []
@@ -272,7 +300,23 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
 
 	        this.setState({
 	            barData: bardata,
-	            rawBarData: response.data
+	            rawBarData: response.data,
+	            alert: {
+                    'toastId': toastId,
+                    'alertType': 'success',
+                    'alertMessage': 'Report Generation Successful!'
+                },
+	        })
+        }) 
+        .catch(error => {
+        	this.setState({
+	            barData: null,
+	            rawBarData: [],
+	            alert: {
+                    'toastId': toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'Report Generation Failed!'
+                },
 	        })
         }) 
     }

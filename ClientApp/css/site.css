@@ -12,16 +12,16 @@
 
 .solidGreen {
     border-radius: 25px;
-    background-color: lightgreen;
     background-repeat: no-repeat;
     padding: 20px;
 }
 
 .solid {
     border-radius: 25px;
-    background-color: lightskyblue;
     background-repeat: repeat;
     padding: 20px;
+    font-family: serif;
+    font-size-adjust: inherit;
 }
 
 /* Keep the nav menu independent of scrolling and on top of other items */
@@ -31,6 +31,11 @@
     left: 0;
     right: 0;
     z-index: 1;
+}
+
+.changeFont{
+    font-family: serif;
+    color: white;
 }
 
 .calendar-container {
@@ -45,7 +50,6 @@ img.bg {
     width: 100%;
     height: auto;
     /* Set up positioning */
-    position: fixed;
     top: 0;
     left: 0;
 }

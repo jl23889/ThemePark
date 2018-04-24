@@ -34,7 +34,8 @@ class NavMenu extends React.Component<DataProps, {}> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    { this.props.loggedIn ? this.renderUsername() : ''}
+                    { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerProfile() : '' }
+                    { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeProfile() : ''}
                 </div>
                 <div className='clearfix'></div>
                 { !this.props.loggedIn ? this.renderLogin() : '' }
@@ -45,9 +46,15 @@ class NavMenu extends React.Component<DataProps, {}> {
         </div>;
     }
 
-    private renderUsername() {
+    private renderCustomerProfile() {
         return <div className="navbar-brand">
             <Link to={'/profile'}>MyProfile</Link>
+        </div>
+    }
+
+    private renderEmployeeProfile() {
+        return <div className="navbar-brand">
+            <Link to={'/customerProfile'}>MyProfile</Link>
         </div>
     }
 

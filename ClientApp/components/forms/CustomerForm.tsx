@@ -24,38 +24,38 @@ let CustomerForm = props => {
         <form onSubmit={handleSubmit}>
             <label>First Name</label>
             <Field
-                name="custFirstName"
+                name="firstName"
                 component="input"
                 type="text"
             />
             <label>Last Name</label>
             <Field
-                name="custLastName"
+                name="lastName"
                 component="input"
                 type="text"
             />
 
-            <label>Phone Number</label>
+            <label>Emergency Contact Number</label>
             <Field
-                name="custPhoneNumber"
+                name="emergencyContactNumber"
                 component="input"
                 type="text"
             />
             <label>Street Address</label>
             <Field
-                name="custAddressStreet"
+                name="addressStreet"
                 component="input"
                 type="text"
             />
             <label>City</label>
             <Field
-                name="custAddressCity"
+                name="addressCity"
                 component="input"
                 type="text"
             />
             <label>State</label>
             <Field
-                name="custAddressState"
+                name="addressState"
                 component="select"
             >
                 <option value='' disabled>Select State</option>
@@ -63,13 +63,7 @@ let CustomerForm = props => {
             </Field>
             <label>Zip Code</label>
             <Field
-                name="custAddressZipCode"
-                component="input"
-                type="text"
-            />
-            <label>Profile Picture (URL)</label>
-            <Field
-                name="custProfileImage"
+                name="addressZipCode"
                 component="input"
                 type="text"
             />

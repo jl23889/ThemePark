@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Home from './components/Home';
 import Rides from './components/Rides';
+import RidesPublic from './components/ridesPublic';
 import Employees from './components/Employees';
 import Customers from './components/Customers';
 import Weather from './components/forms/WeatherForm';
@@ -25,7 +26,8 @@ export const routes =
 	<ToastContainer/>
     <Route exact path='/' component={ Login } />
     <Route path='/counter' component={ Counter } />
-    <Route path='/rides/:viewType?' component={ Rides } />
+    <Route path='/rides/:viewType?' component={Rides} />
+    <Route path='/ridespublic/:viewType?' component={RidesPublic} />
     <Route path='/employees' component={ Employees } />    
     <Route path='/login' component={ Login } />
     <Route path='/register' component={ Register } />

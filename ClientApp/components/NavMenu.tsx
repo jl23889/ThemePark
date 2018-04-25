@@ -47,8 +47,10 @@ class NavMenu extends React.Component<DataProps, {}> {
             <Navbar color="light" light expand="md">
               <Collapse navbar>
                 <Nav navbar>
-                            <NavItem><Button color="link"><Link to="/">
-                  ThemePark</Link></Button></NavItem>
+                    <NavItem><Button color="link"><Link to="/">
+                        ThemePark</Link></Button></NavItem>
+                    <NavItem><Button color="link"><Link to="/ridespublic">
+                        Rides</Link></Button></NavItem>
                 </Nav>
                 { this.props.loggedIn && typeof this.props.accessLevel === 'undefined' ? this.renderCustomerMenu() : '' }
                 { this.props.loggedIn && this.props.accessLevel >= 1 ? this.renderEmployeeMenu() : '' }
@@ -143,6 +145,13 @@ class NavMenu extends React.Component<DataProps, {}> {
                 <Button color="link">
                 <Link to={ '/ticket/purchase' }>
                     Purchase Ticket
+                </Link>
+                </Button>
+            </NavItem>
+            <NavItem>
+                <Button color="link">
+                    <Link to={'/ridespublic'}>
+                        Rides
                 </Link>
                 </Button>
             </NavItem>

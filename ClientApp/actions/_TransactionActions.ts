@@ -103,7 +103,7 @@ export const actionCreators = {
         .then(transactionRes => { // transactionRes should contain transactionId
             // create ticket record for each ticket and 
             //     also create a ticketTransactionPurchase record
-            dispatch({ type: 'TICKET_TRANSACTION_CREATED', toastId: toastId});
+            //dispatch({ type: 'TICKET_TRANSACTION_CREATED', toastId: toastId});
             values.forEach(item => {
                 axios({
                     method: 'post',

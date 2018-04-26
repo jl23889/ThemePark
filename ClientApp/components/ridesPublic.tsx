@@ -58,9 +58,11 @@ class Rides extends React.Component<DataProps, {}> {
     render() {
                 return <div>
                     <div className="row justify-content-center">
-                        <div className="col-8">
+                        <div className="col-8" >
                             <Card><CardBody>
-                                <CardTitle className="h5 text-center mb-5">Current Attractions</CardTitle>
+                                <img className ="ridesbg" src= "https://www.highreshdwallpapers.com/wp-content/uploads/2014/03/Futuristic-Theme-Park-City.jpg" />
+                                <CardTitle className="h5 text-center mb-5">
+                                    Current Attractions</CardTitle>
                                 {(!this.props.loadingRideList) ? this.renderRidesTable() :
                                     <h3>LOADING TABLE...</h3>}</CardBody></Card>
                         </div>
@@ -139,8 +141,6 @@ class Rides extends React.Component<DataProps, {}> {
     }
     private renderRidesTable() {
         return <div>
-        <img className="ridesbg"
-                src="https://i.ytimg.com/vi/p9q2B8I8UEs/maxresdefault.jpg"/>
             <ReactTable
                 data={this.props.rideList}
                 columns={[
@@ -152,35 +152,6 @@ class Rides extends React.Component<DataProps, {}> {
                         Header: "Total Capacity",
                         accessor: "totalCapacity",
                         filterable: false
-                    },
-                    {
-                        Header: "Ride Status",
-                        accessor: "status",
-                        Cell: row => (
-                            <span>
-                                <span style={{
-                                    color: row.value === 2 || row.value === 3 || row.value === 4 ? '#ff2e00'
-                                        : '#57d500',
-                                    transition: 'all .3s ease'
-                                }}>
-                                    &#x25cf;
-                            </span> {
-                                    row.value === 3 ? 'Weather'
-                                        : row.value === 2 ? `Maintenance`
-                                            : row.value === 4 ? `No Employee`
-                                                : 'Open'
-                                }
-                            </span>
-                        ),
-                        Filter: ({ filter, onChange }) =>
-                            this.lookupRideStatusFilter(filter, onChange),
-                        filterMethod: (filter, row) => {
-                            if (filter.value == "all") {
-                                return true;
-                            } 
-                            return row.status == filter.value;
-                        },
-
                     },
                     {
                         Header: "FastPassPossible",

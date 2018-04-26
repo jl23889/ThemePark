@@ -136,6 +136,13 @@ class NavMenu extends React.Component<DataProps, {}> {
                 </Link>
                 </Button>
             </NavItem>
+            <NavItem>
+                <Button color="link">
+                    <Link to={'/weather'}>
+                        Weather
+                </Link>
+                </Button>
+            </NavItem>
         </Nav>
     }
 

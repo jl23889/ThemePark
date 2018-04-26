@@ -243,7 +243,7 @@ export class RidesReport extends React.Component<ListItemProps,ListItemState> {
     // generate ride
     generateRideData = () => {
     	const values = {
-    		startTime: moment(this.state.startDate).subtract(1,'d').toDate,
+    		startTime: moment(this.state.startDate).subtract(1,'d').toDate(),
     		endTime: this.state.endDate
     	}
 

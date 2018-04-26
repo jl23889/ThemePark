@@ -127,7 +127,7 @@ class Login extends React.Component<DataProps, {}> {
 
     private renderEmployeeWelcome() {
         return <div className='row justify-content-center'>
-            <div className='col-3'>
+            <div className='col-4'>
                 <Card>
                     <CardBody className="text-center">
                         <CardTitle className="h3 text-center mb-1">My Profile</CardTitle>
@@ -141,7 +141,7 @@ class Login extends React.Component<DataProps, {}> {
                     </CardBody>
                 </Card>
             </div>
-            <div className='col-3'>
+            <div className='col-4'>
                 <Card>
                     <CardBody className="text-center">
                         <CardTitle className="h3 text-center mb-1">Tickets</CardTitle>

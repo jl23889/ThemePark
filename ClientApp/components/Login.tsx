@@ -105,7 +105,7 @@ class Login extends React.Component<DataProps, {}> {
                                 Edit Profile
                             </Link>
                         </Button>
-                        <Button color="warning">Logout</Button>
+                        <Button color="warning" onClick={this.logoutUser}>Logout</Button>
                     </CardBody>
                 </Card>
             </div>
@@ -137,7 +137,7 @@ class Login extends React.Component<DataProps, {}> {
                                 Edit Profile
                             </Link>
                         </Button>
-                        <Button color="warning">Logout</Button>
+                        <Button color="warning" onClick={this.logoutUser}>Logout</Button>
                     </CardBody>
                 </Card>
             </div>
@@ -169,7 +169,7 @@ class Login extends React.Component<DataProps, {}> {
                                 Edit Profile
                             </Link>
                         </Button>
-                        <Button color="warning">Logout</Button>
+                        <Button color="warning" onClick={this.logoutUser}>Logout</Button>
                     </CardBody>
                 </Card>
             </div>
@@ -179,7 +179,7 @@ class Login extends React.Component<DataProps, {}> {
                         <CardTitle className="h3 text-center mb-1">Rides</CardTitle>
                         <hr/>
                         <Button outline color="primary">
-                            <Link to={ '/ticket/scan' }>
+                            <Link to={ '/scanticket' }>
                                 Scan Ticket
                             </Link>
                         </Button>

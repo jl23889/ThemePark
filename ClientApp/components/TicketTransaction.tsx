@@ -37,13 +37,14 @@ class TicketTransaction extends React.Component<DataProps, {}> {
     }
 
     componentDidUpdate(prevProps: DataProps) {
+        // update unique toast 
+        displayToast(this.props.transactionAlert);
+
         // This method runs when incoming props (e.g., route params) change
         if (this.props.reloadTickets) {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             this.props.requestCustomerTicketTransactions(storedUser.customerId);
         }
-        // update unique toast 
-        displayToast(this.props.alert);
     }
 
     render() {
@@ -142,9 +143,8 @@ class TicketTransaction extends React.Component<DataProps, {}> {
         // generate unique toast
         const toastId = 
             toast('Purchasing Ticket(s)...', {
-                type: 'info',
-                autoClose: 30000
-            });
+                type: 'info'            
+        });
 
         if (this.props.ticketList.length>0) {
             // get user details from stored user

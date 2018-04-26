@@ -34,12 +34,12 @@ type DataProps =
 
 class Weather extends React.Component<DataProps, {}> {
     componentDidMount() {
-        this.props.requestWeather;
+        this.props.requestWeatherList();
     }
 
     componentDidUpdate(prevProps: DataProps) {
         if (this.props.reloadWeathers) {
-            this.props.requestWeather;
+            this.props.requestWeatherList();
          }
 
         // update unique toast 

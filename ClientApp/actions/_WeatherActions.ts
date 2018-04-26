@@ -68,6 +68,16 @@ export type WeatherActions = FetchWeathersActionInProgress |
 
 export const actionCreators = {
     // Weathers 
+
+    // get all weathers 
+    requestWeatherList: (): AppThunkAction<WeatherActions> => (dispatch, getState) => {
+        // Only load data if it's something we don't already have (and are not already loading)
+        axios.get(`api/Weather/GetWeathers`)
+        .then(response => {
+            dispatch({ type: 'FETCH_WEATHERS_SUCCESS', weatherList: response.data });
+        })
+    },
+
     // get a single ride by id
     requestWeather: (id): AppThunkAction<WeatherActions> => (dispatch, getState) => {
         axios.get(`api/Weather/GetWeather`, id)

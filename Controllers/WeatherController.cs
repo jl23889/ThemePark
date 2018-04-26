@@ -33,7 +33,7 @@ namespace ThemePark.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
-        public IEnumerable<Weather> GetWeather()
+        public IEnumerable<Weather> GetWeathers()
         {
             return _context.Weather.ToList();
         }

@@ -9,7 +9,7 @@ import * as Transaction from './Transaction'
 import * as Ticket from './Ticket'
 import * as TicketType from './TicketType'
 import * as WeatherType from './WeatherType'
-
+import * as Weather from './Weather'
 import * as Employees from './Employees'
 import * as EmployeeType from './EmployeeType'
 import * as EmployeeProfile from './EmployeeProfile'
@@ -36,6 +36,7 @@ export interface ApplicationState {
     ticketType: TicketType.TicketTypeState;
     transaction: Transaction.TransactionState;
 
+    weather: Weather.WeatherState;
     weatherType: WeatherType.WeatherTypeState;
 
     login: Login.LoginState;
@@ -70,6 +71,7 @@ export const reducers = {
     transaction: Transaction.reducer,
 
     weatherType: WeatherType.reducer,
+    weather: Weather.reducer,
 
     login: Login.reducer,
     register: Register.reducer,

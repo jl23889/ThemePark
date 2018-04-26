@@ -1,7 +1,10 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Form, FormGroup } from 'reactstrap';
 import { weatherTypeList1 } from '../../helpers/_weatherTypeList'
+import * as moment from 'moment';
+import { Button, Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 
 // generate option element from employeeType
 function weatherOption(et) {
@@ -17,8 +20,17 @@ let WeatherForm = props => {
 
     const { handleSubmit, pristine, reset, submitting } = props;
 
-    // assigns usaStatesList
-    const stl = weatherTypeList1;
+    const wtl =
+        (typeof props.props !== 'undefined' &&
+            typeof props.props.weatherTypeList !== 'undefined' ?
+            props.props.weatherTypeList : []);
+
+    if (typeof props.initialValues !== 'undefined' &&
+        typeof props.initialValues.date !== 'undefined' &&
+        props.initialValues.date != null) {
+        const dateString = props.initialValues.date;
+        props.initialValues.date = moment(dateString).format('YYYY-MM-DD')
+    }
 
     return <div>
         <form onSubmit={handleSubmit}>
@@ -34,7 +46,7 @@ let WeatherForm = props => {
                 component="select"
             >
                 <option value='' disabled>Select Type</option>
-                {...stl.map(weatherTypeOption)}
+                {...wtl.map(weatherTypeOption)}
             </Field>
 
             <button type="submit" disabled={pristine || submitting}>

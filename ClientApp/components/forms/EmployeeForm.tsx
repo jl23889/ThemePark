@@ -37,76 +37,120 @@ let EmployeeForm = props => {
     return <Card>
             <CardBody>
             <CardTitle className="h5 text-center mb-5">Employee Information</CardTitle>
-                <form onSubmit={handleSubmit} className="text-center mb-4">
-                    <div>
-                        <label>First Name</label>
-                        <Field 
-                            name="empFirstName" 
-                            component="input" 
-                            type="text" 
-                        />
-                        <label>Last Name</label>
-                        <Field 
-                            name="empLastName" 
-                            component="input" 
-                            type="text" 
-                        />
+                <form onSubmit={handleSubmit} className="mb-4">
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>First Name</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empFirstName" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <label>Employee Type</label>
-                        <Field 
-                            name="empType" 
-                            component="select"
-                        >
-                        <option value='' disabled>Select Type</option>
-                        {...etl.map(employeeTypeOption)}
-                        </Field>
-                        <label>Phone Number</label>
-                        <Field 
-                            name="empPhoneNumber" 
-                            component="input" 
-                            type="text" 
-                        />
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Last Name</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empLastName" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <label>Street Address</label>
-                        <Field 
-                            name="empAddressStreet" 
-                            component="input" 
-                            type="text" 
-                        />
-                        <label>City</label>
-                        <Field 
-                            name="empAddressCity" 
-                            component="input" 
-                            type="text" 
-                        />
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Employee Type</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empType" 
+                                component="select"
+                            >
+                            <option value='' disabled>Select Type</option>
+                            {...etl.map(employeeTypeOption)}
+                            </Field>
+                        </div>
                     </div>
-                    <div>
-                        <label>State</label>
-                        <Field 
-                            name="empAddressState" 
-                            component="select" 
-                        >
-                        <option value='' disabled>Select State</option>
-                        {...stl.map(usaStatesOption)}
-                        </Field>
-                        <label>Zip Code</label>
-                        <Field 
-                            name="empAddressZipCode" 
-                            component="input" 
-                            type="text" 
-                        />
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Phone Number</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empPhoneNumber" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <label>Profile Picture (URL)</label>
-                        <Field 
-                            name="empProfileImage" 
-                            component="input" 
-                            type="text" 
-                        />
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Street Address</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empAddressStreet" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
                     </div>
-                    <div>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>City</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empAddressCity" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>State</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empAddressState" 
+                                component="select" 
+                            >
+                            <option value='' disabled>Select State</option>
+                            {...stl.map(usaStatesOption)}
+                            </Field>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Zip Code</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empAddressZipCode" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Profile Picture (URL)</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="empProfileImage" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
+                    </div>
+                    <div className="row text-center">
                         { profileImage != '' ? 
                             <div>
                                 <h3>Current Picture</h3>
@@ -114,7 +158,7 @@ let EmployeeForm = props => {
                             </div> : <div></div>
                         }
                     </div>
-                    <div>
+                    <div className="row text-center">
                 		<Button color="success" type="submit" disabled={pristine || submitting}>
                 			Submit
                 		</Button>

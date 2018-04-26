@@ -39,50 +39,70 @@ let RideForm = props => {
         <Card>
             <CardBody>
             <CardTitle className="h5 text-center mb-5">Ride Information</CardTitle>
-                <form onSubmit={handleSubmit} className="text-center mb-4">
-                    <div>
-                        <label>Name</label>
-                        <Field 
-                            name="rideName" 
-                            component="input" 
-                            type="text" 
-                        />
+                <form onSubmit={handleSubmit} className="mb-4">
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Name</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="rideName" 
+                                component="input" 
+                                type="text" 
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <label>Total Capacity</label>
-                        <Field 
-                            name="totalCapacity" 
-                            component="input" 
-                            type="number" 
-                        />
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Total Capacity</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="totalCapacity" 
+                                component="input" 
+                                type="number" 
+                            />
+                        </div>
                     </div>
-                    <div>
-                		<label>Installation Date</label>
-                		<Field 
-                			name="installationDate" 
-                			component="input" 
-                			type="date" 
-                		/>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                		    <label>Installation Date</label>
+                        </div>
+                        <div className="col-8">
+                    		<Field 
+                    			name="installationDate" 
+                    			component="input" 
+                    			type="date" 
+                    		/>
+                        </div>
                     </div>
-                    <div>
-                        <label>FastPass Possible</label>
-                        <Field 
-                            name="fastPassPossible" 
-                            component="input" 
-                            type="checkbox" 
-                        />
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>FastPass Possible</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="fastPassPossible" 
+                                component="input" 
+                                type="checkbox" 
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <label>Ride Type</label>
-                        <Field 
-                            name="rideType" 
-                            component="select"
-                        >
-                            <option value='' disabled>Select Type</option>
-                            {...rtl.map(rideTypeOption)}
-                        </Field>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Ride Type</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="rideType" 
+                                component="select"
+                            >
+                                <option value='' disabled>Select Type</option>
+                                {...rtl.map(rideTypeOption)}
+                            </Field>
+                        </div>
                     </div>
-                    <div>
+                    <div className="text-center">
                 		<Button color="success" type="submit" disabled={pristine || submitting}>
                 			Submit
                 		</Button>

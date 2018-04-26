@@ -150,7 +150,7 @@ let EmployeeForm = props => {
                             />
                         </div>
                     </div>
-                    <div className="row text-center">
+                    <div className="text-center">
                         { profileImage != '' ? 
                             <div>
                                 <h3>Current Picture</h3>
@@ -158,7 +158,7 @@ let EmployeeForm = props => {
                             </div> : <div></div>
                         }
                     </div>
-                    <div className="row text-center">
+                    <div className="text-center">
                 		<Button color="success" type="submit" disabled={pristine || submitting}>
                 			Submit
                 		</Button>

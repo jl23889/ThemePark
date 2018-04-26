@@ -25,6 +25,8 @@ let WeatherForm = props => {
             typeof props.props.weatherTypeList !== 'undefined' ?
             props.props.weatherTypeList : []);
 
+    const wl = weatherTypeList1;
+
     if (typeof props.initialValues !== 'undefined' &&
         typeof props.initialValues.date !== 'undefined' &&
         props.initialValues.date != null) {
@@ -46,7 +48,7 @@ let WeatherForm = props => {
                 component="select"
             >
                 <option value='' disabled>Select Type</option>
-                {...wtl.map(weatherTypeOption)}
+                {...wl.map(weatherTypeOption)}
             </Field>
 
             <button type="submit" disabled={pristine || submitting}>

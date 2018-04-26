@@ -6,7 +6,7 @@ import Rides from './components/Rides';
 import RidesPublic from './components/ridesPublic';
 import Employees from './components/Employees';
 import Customers from './components/Customers';
-import Weather from './components/forms/WeatherForm';
+import Weather from './components/Weather';
 
 import Lookup from './components/Lookup';
 import Login from './components/Login';
@@ -37,5 +37,5 @@ export const routes =
     <Route path='/scanticket' component={ TicketScan }/>
     <Route path='/customerProfile' component={CustomerProfile} />
     <Route path='/lookup/:tableToLoad?' component={Lookup} />
-    <Route path='/weather' component={ Weather } />
+    <Route path='/weather' component={Weather} />
 </Layout>;

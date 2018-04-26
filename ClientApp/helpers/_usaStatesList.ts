@@ -44,8 +44,8 @@ export const usaStatesList = [
 	{name: 'Tennessee', shortName: 'TN'},
 	{name: 'Texas', shortName: 'TX'},
 	{name: 'Utah', shortName: 'UT'},
-	{name: 'Vermont', shortName: 'VT'}
-	{name: 'Virginia', shortName: 'VA'},,
+	{name: 'Vermont', shortName: 'VT'},
+	{name: 'Virginia', shortName: 'VA'},
 	{name: 'Washington', shortName: 'WA'},
 	{name: 'West Virginia', shortName: 'WV'},
 	{name: 'Wisconsin', shortName: 'WI'},

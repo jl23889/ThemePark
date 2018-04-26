@@ -11,7 +11,8 @@ import * as RideActions from '../actions/_RideActions';
 import MaintenanceForm from './forms/MaintenanceForm';
 import { MaintenanceListItem } from './MaintenanceListItem';
 
-import { Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
+import { Breadcrumb, BreadcrumbItem,  
+    Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Button } from 'reactstrap';
@@ -73,10 +74,17 @@ class Maintenance extends React.Component<DataProps, {}> {
                         start: new Date(item.startDate),
                         end: new Date(item.endDate),
                     }))
-                return <Card>
+                return <div>
+                    <div className="row justify-content-center">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/maintenance/list'>List View</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    <Card>
                         <CardBody>
-                        <CardTitle className="h5 text-center mb-5">Calendar</CardTitle>      
-                        <Link to='/maintenance/list'>List View</Link>
+                        <CardTitle className="h5 text-center mb-5">Maintenance Calendar</CardTitle>      
                         <div className='calendar-container'><BigCalendar
                             events={calendarEvents}
                             defaultDate={new Date()}
@@ -87,13 +95,17 @@ class Maintenance extends React.Component<DataProps, {}> {
                         </div>
                     </CardBody>
                     </Card>
-
+                </div>
             default:
                 return <div>
+                    <div className="row justify-content-center">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/maintenance/calendar'>Calendar View</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
                     <ListGroup>
-                    <h3>List View</h3>
-                    <Link to='/maintenance/calendar'>Calendar View</Link>
-                   
                         {this.props.maintenanceList.map(item => 
                             <MaintenanceListItem
                                 key={'listItem'+item.maintenanceId}

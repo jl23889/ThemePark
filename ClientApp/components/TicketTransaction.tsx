@@ -38,7 +38,7 @@ class TicketTransaction extends React.Component<DataProps, {}> {
 
     componentDidUpdate(prevProps: DataProps) {
         // update unique toast 
-        displayToast(this.props.transactionAlert);
+        displayToast(this.props.alert);
 
         // This method runs when incoming props (e.g., route params) change
         if (this.props.reloadTickets) {

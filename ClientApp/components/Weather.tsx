@@ -16,7 +16,8 @@ import { Image, Table } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
-import {Bar,Doughnut,Line} from 'react-chartjs-2';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
+import ReactTable from 'react-table';
 
 import Select from 'react-select';
 import DatePicker from 'react-datepicker'
@@ -47,8 +48,16 @@ class Weather extends React.Component<DataProps, {}> {
 
     render() {
         return <div className="row justify-content-center">
-            <div className="col-3">
-                {this.renderCreateNewWeatherForm()}
+            <div className="row justify-content-center">
+                <div className="col-3">
+                    {this.renderCreateNewWeatherForm()}
+                </div>
+                <div className="col-8">
+                    <Card><CardBody>
+                        <CardTitle className="h5 text-center mb-5">Weather Table</CardTitle>
+                        {this.renderWeatherTable()}
+                        </CardBody></Card>
+                </div>
             </div>
         </div>
     }
@@ -92,6 +101,48 @@ class Weather extends React.Component<DataProps, {}> {
             }}
         />
     }
+
+    private renderWeatherTable() {
+        return <div>
+            <ReactTable
+                data={this.props.weatherList}
+                columns={[
+                    {
+                        Header: "Date",
+                        accessor: "date"
+                    },
+                    {
+                        Header: "Weather",
+                        accessor: "weatherType",
+                        filterable: false
+                    }
+                ]}
+                className="-striped -highlight"
+                filterable
+                defaultPageSize={10}
+                SubComponent={row => {
+                    const { original } = row;
+                    // contains update form
+                    return (
+                        <div className="container" style={{ width: "100%" }}>
+                            <WeatherForm
+                                onSubmit={this.updateWeather}
+                                initialValues={original}
+                                form={"form" + original.date}
+                                props={{
+                                    weatherList: this.props.weatherList
+                                }}
+                            />
+                            <Button color="danger" onClick={this.deleteWeather.bind(this, original)} >
+                                Delete
+                        </Button>
+                        </div>
+                    );
+                }}
+            />
+        </div>;
+    }
+
 }
 
 export default connect(

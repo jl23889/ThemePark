@@ -9,6 +9,7 @@ export interface WeatherState {
     weatherAlert: Alert;
     weather: Weather;
     date: Weather;
+    weatherList: Weather[];
     reloadWeathers: boolean;
 }
 
@@ -19,6 +20,7 @@ const unloadedState: WeatherState = {
     weatherAlert: null,
     weather: null,
     date: null,
+    weatherList: [],
     reloadWeathers: true,
 };
 
@@ -33,6 +35,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                 weather: state.weather,
                 reloadWeathers: false,
                 date: state.date,
+                weatherList: state.weatherList
             }
         case 'FETCH_WEATHERS_SUCCESS':
             return {
@@ -40,6 +43,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                 weather: state.weather,
                 reloadWeathers: false,
                 date: state.date,
+                weatherList: action.weatherList
             }
         case 'FETCH_WEATHER_SUCCESS':
             return {
@@ -47,6 +51,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                 weather: state.weather,
                 reloadWeathers: state.reloadWeathers,
                 date: state.date,
+                weatherList: state.weatherList
             }
         case 'CREATE_WEATHER_SUCCESS':
             return {
@@ -58,6 +63,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                     'alertType': 'success',
                     'alertMessage': 'Created Weather Successfully'
                 },
+                weatherList: state.weatherList
             }
 
         case 'CREATE_WEATHER_FAIL':
@@ -70,6 +76,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                     'alertType': 'error',
                     'alertMessage': 'Could not create weather. Please try again!'
                 },
+                weatherList: state.weatherList
             }
         case 'UPDATE_WEATHER_SUCCESS':
             return {
@@ -81,6 +88,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                     'alertType': 'success',
                     'alertMessage': 'Updated Weather Successfully'
                 },
+                weatherList: state.weatherList
             }
         case 'UPDATE_WEATHER_FAIL':
             return {
@@ -92,6 +100,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                     'alertType': 'error',
                     'alertMessage': 'Could not update weather. Please try again!'
                 },
+                weatherList: state.weatherList
             }
         case 'DELETE_WEATHER_SUCCESS':
             return {
@@ -103,6 +112,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                     'alertType': 'success',
                     'alertMessage': 'Deleted Weather Successfully'
                 },
+                weatherList: state.weatherList
             }
         case 'DELETE_WEATHER_FAIL':
             return {
@@ -114,6 +124,7 @@ export const reducer: Reducer<WeatherState> = (state: WeatherState, incomingActi
                     'alertType': 'error',
                     'alertMessage': 'Could not update weather. Please try again!'
                 },
+                weatherList: state.weatherList
             }
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

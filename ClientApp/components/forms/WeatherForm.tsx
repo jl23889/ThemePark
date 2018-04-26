@@ -35,6 +35,8 @@ let WeatherForm = props => {
     }
 
     return <div>
+        <Card>
+            <CardBody>
         <form onSubmit={handleSubmit}>
             <label>Date</label>
             <Field
@@ -57,7 +59,9 @@ let WeatherForm = props => {
             <button type="button" disabled={pristine || submitting} onClick={reset}>
                 Reset
 		</button>
-        </form>
+                </form>
+            </CardBody>
+                </Card>
     </div>;
 }
 

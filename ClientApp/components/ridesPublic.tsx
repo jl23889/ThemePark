@@ -60,7 +60,7 @@ class Rides extends React.Component<DataProps, {}> {
                     <div className="row justify-content-center">
                         <div className="col-8">
                             <Card><CardBody>
-                                <CardTitle className="h5 text-center mb-5">Ride Table</CardTitle>
+                                <CardTitle className="h5 text-center mb-5">Current Attractions</CardTitle>
                                 {(!this.props.loadingRideList) ? this.renderRidesTable() :
                                     <h3>LOADING TABLE...</h3>}</CardBody></Card>
                         </div>
@@ -139,6 +139,8 @@ class Rides extends React.Component<DataProps, {}> {
     }
     private renderRidesTable() {
         return <div>
+        <img className="ridesbg"
+                src="https://i.ytimg.com/vi/p9q2B8I8UEs/maxresdefault.jpg"/>
             <ReactTable
                 data={this.props.rideList}
                 columns={[
@@ -150,15 +152,6 @@ class Rides extends React.Component<DataProps, {}> {
                         Header: "Total Capacity",
                         accessor: "totalCapacity",
                         filterable: false
-                    },
-                    {
-                        Header: "Installation Date",
-                        accessor: "installationDate",
-                        filterable: false,
-                        Cell: row => (
-                            // convert dateString to Date object and convert it back to string
-                            moment(new Date(row.value)).format('YYYY-MM-DD')
-                        )
                     },
                     {
                         Header: "Ride Status",
@@ -184,7 +177,7 @@ class Rides extends React.Component<DataProps, {}> {
                         filterMethod: (filter, row) => {
                             if (filter.value == "all") {
                                 return true;
-                            }
+                            } 
                             return row.status == filter.value;
                         },
 

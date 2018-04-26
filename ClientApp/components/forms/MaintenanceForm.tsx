@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { Form, FormGroup } from 'reactstrap';
 
 import { Button, Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 
@@ -55,74 +54,101 @@ let MaintenanceForm = props => {
     return <Card>
             <CardBody>
             <CardTitle className="h5 text-center mb-5">Maintenance Information</CardTitle>       
-                <Form onSubmit={handleSubmit}>
-                    <FormGroup className="row">
-                        <label>Start Date</label>
-                        <Field 
-                            name="startDate" 
-                            component="input" 
-                            type="date" 
-                        />
+                <form onSubmit={handleSubmit} className="mb-4">
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Start Date</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="startDate" 
+                                component="input" 
+                                type="date" 
+                            />
+                        </div>
+                    </div>
                     {typeof props.initialValues !== 'undefined' && 
                         (typeof props.initialValues.endDate !== 'undefined' && props.initialValues.endDate!= null) ?
-                        (<div><label>
+                        (<div className="row"><div className="col-4 text-right">
+                            <label>
                             End Date</label>
-                        <Field 
+                            </div>
+                            <div className="col-8">
+                            <Field 
                             name="endDate" 
                             component="input" 
                             type="date" 
-                        /></div>) : ''
+                            />
+                            </div>
+                        </div>) : ''
                     }
-                    </FormGroup>
 
-                    <FormGroup className="row">
-                        <label>Maintenance Type</label>
-                        <Field 
-                            name="mainType" 
-                            component="select"
-                        >
-                        <option value='' disabled>Select Type</option>
-                        <option value='r'>Repair</option>
-                        <option value='c'>Cleaning</option> 
-                        </Field>
-                        <label>RideId</label>
-                        <Field 
-                            name="rideId" 
-                            component="select"
-                        >
-                            <option value='' disabled>Select Ride</option>
-                            {...rl.map(rideOption)}
-                        </Field>
-                    </FormGroup>
-                    <FormGroup className="row">
-                        <label>Manager Employee</label>
-                        <Field 
-                            name="managerEmployeeId" 
-                            component="select" 
-                        >
-                            <option value='' disabled>Select Employee</option>
-                            {...mel.map(managerEmployeeOption)}
-                        </Field>
-                    </FormGroup>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Maintenance Type</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="mainType" 
+                                component="select"
+                            >
+                            <option value='' disabled>Select Type</option>
+                            <option value='r'>Repair</option>
+                            <option value='c'>Cleaning</option> 
+                            </Field>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>RideId</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="rideId" 
+                                component="select"
+                            >
+                                <option value='' disabled>Select Ride</option>
+                                {...rl.map(rideOption)}
+                            </Field>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Manager Employee</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="managerEmployeeId" 
+                                component="select" 
+                            >
+                                <option value='' disabled>Select Employee</option>
+                                {...mel.map(managerEmployeeOption)}
+                            </Field>
+                        </div>
+                    </div>
 
-                    <FormGroup className="row">
-                        <label>Description</label>
-                        <Field 
-                            name="description" 
-                            component="textarea" 
-                            type="text" 
-                        />
-                    </FormGroup>
+                    <div className="row">
+                        <div className="col-4 text-right">
+                            <label>Description</label>
+                        </div>
+                        <div className="col-8">
+                            <Field 
+                                name="description" 
+                                component="textarea" 
+                                type="text" 
+                            />
+                        </div>
+                    </div>
 
-                    <FormGroup className="row">
+                    <div className="text-center">
                 		<Button color="primary" type="submit" disabled={pristine || submitting}>
                 			Submit
                 		</Button>
                 		<Button disabled={pristine || submitting} onClick={reset}>
                 			Reset
                 		</Button>
-                    </FormGroup>
-        	    </Form>
+                    </div>
+        	    </form>
         </CardBody>
     </Card>;
 }

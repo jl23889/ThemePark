@@ -45,7 +45,6 @@ namespace ThemePark.Controllers
             return _context.Customer.Find(id);
         }
 
-        [AllowAnonymous]
         [HttpGet("[action]")]
         public IEnumerable<TransactionTicketPurchases> GetCustomerTicketTransaction(string id)
         {

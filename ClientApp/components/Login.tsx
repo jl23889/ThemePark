@@ -115,7 +115,7 @@ class Login extends React.Component<DataProps, {}> {
                         <CardTitle className="h3 text-center mb-1">Tickets</CardTitle>
                         <hr/>
                         <Button outline color="primary">
-                            <Link to={ '/ticket/Purchase' }>
+                            <Link to={ '/ticket/purchase' }>
                                 Purchase Ticket
                             </Link>
                         </Button>
@@ -147,7 +147,7 @@ class Login extends React.Component<DataProps, {}> {
                         <CardTitle className="h3 text-center mb-1">Tickets</CardTitle>
                         <hr/>
                         <Button outline color="primary">
-                            <Link to={ '/ticket/scan' }>
+                            <Link to={ '/scanticket' }>
                                 Scan Ticket
                             </Link>
                         </Button>

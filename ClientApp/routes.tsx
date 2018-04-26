@@ -33,8 +33,8 @@ export const routes =
     <Route path='/register' component={ Register } />
     <Route path='/profile' component={ EmployeeProfile } />
     <Route path='/maintenance/:viewType?' component={ Maintenance } />
-    <Route path='/ticket/purchase' component={ TicketTransaction }/>
-    <Route path='/ticket/scan' component={ TicketScan }/>
+    <Route path='/ticket/:viewType?' component={ TicketTransaction }/>
+    <Route path='/scanticket' component={ TicketScan }/>
     <Route path='/customerProfile' component={CustomerProfile} />
     <Route path='/lookup/:tableToLoad?' component={Lookup} />
     <Route path='/weather' component={ Weather } />

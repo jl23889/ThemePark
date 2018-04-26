@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Field, reduxForm } from 'redux-form';
+import { Button, Input } from 'mdbreact'
 
 // generate option element from ticketType
 function ticketTypeOption(tt) {
@@ -18,29 +19,38 @@ let TicketTransactionForm = props => {
             props.props.ticketTypeList : []);
 
     return <div>
-    	<form onSubmit={handleSubmit}>  		
-            <label>Ticket Type</label>
-    		<Field 
-    			name="ticketType" 
-    			component="select" 
-            >     
-                {...ttl.map(ticketTypeOption)}
-            </Field>  
-            <label>Add FastPass (+$10)</label>
-            <Field 
-                name="fastPass" 
-                component="input" 
-                type="checkbox" 
-            />
-            <label>Number of Tickets</label>
-            <Field 
-                name="ticketAmount" 
-                component="input" 
-                type="number" 
-            />
-    		<button type="submit" disabled={submitting}>
-    			Add Ticket To Purchase
-    		</button>
+    	<form onSubmit={handleSubmit}>
+            <div>  		
+                <label>Ticket Type</label>
+        		<Field 
+        			name="ticketType" 
+        			component="select" 
+                >     
+                    {...ttl.map(ticketTypeOption)}
+                </Field>  
+            </div>
+            <div>
+                <label>Add FastPass (+$10)</label>
+                <Field 
+                    name="fastPass" 
+                    component="Input" 
+                    type="checkbox" 
+                />
+            </div>
+            <div>
+                <label>Number of Tickets</label>
+                <Field 
+                    name="ticketAmount" 
+                    component="Input" 
+                    type="number" 
+                />
+            </div>
+            <br/>
+            <div>
+        		<button type="submit" disabled={submitting}>
+        			Add Ticket To Purchase
+        		</button>
+            </div>
     	</form>
     </div>;
 }

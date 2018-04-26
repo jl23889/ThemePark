@@ -23,6 +23,7 @@ module.exports = (env) => {
                 'event-source-polyfill',
                 'font-awesome/css/font-awesome.css',
                 'history',
+                'mdbreact',
                 'mdbreact/dist/css/mdb.css',
                 'react',
                 'react-dom',

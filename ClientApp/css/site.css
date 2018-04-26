@@ -61,6 +61,10 @@ img.bg {
     height: 800px;
 }
 
+.fixed {
+    position: fixed;
+}
+
 @media (max-width: 767px) {
     /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
     body {

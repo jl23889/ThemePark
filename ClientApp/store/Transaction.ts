@@ -11,6 +11,7 @@ export interface TransactionState {
     transactionTotal: number;
     effectiveDate: Date;
     ticketTransactionList: Transaction[];
+    reloadTickets: boolean;
     alert: Alert;
 }
 
@@ -23,6 +24,7 @@ const unloadedState: TransactionState = {
     transactionTotal: 0,
     effectiveDate: new Date(),
     ticketTransactionList: [],
+    reloadTickets: false,
     alert: null,
 };
 
@@ -38,6 +40,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: state.transactionTotal,
                 effectiveDate: action.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: state.reloadTickets,
                 alert: state.alert,
             }
         case 'FETCH_TICKET_TYPES': 
@@ -47,6 +50,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: state.reloadTickets,
                 alert: state.alert,
             }
         case 'FETCH_CUSTOMER_TRANS':
@@ -56,6 +60,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: action.transactionList,
+                reloadTickets: false,
                 alert: state.alert,
             }
         case 'UPDATE_TRANSACTION_TOTAL': 
@@ -65,6 +70,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: action.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: state.reloadTickets,
                 alert: state.alert,
             }
         case 'TICKET_TRANSACTION_IN_PROGRESS': 
@@ -74,6 +80,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: state.reloadTickets,
                 alert: state.alert, 
             }
         case 'TICKET_TRANSACTION_SUCCESS': 
@@ -83,6 +90,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: state.reloadTickets,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'success',
@@ -96,6 +104,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: state.reloadTickets,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'error',
@@ -109,6 +118,7 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: state.reloadTickets,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'warning',
@@ -116,16 +126,18 @@ export const reducer: Reducer<TransactionState> = (state: TransactionState, inco
                 },
             }
         case 'TICKET_CREATED': 
+            console.log('ticket created')
             return {
                 ticketList: state.ticketList,
                 ticketTypeList: state.ticketTypeList,
                 transactionTotal: state.transactionTotal,
                 effectiveDate: state.effectiveDate,
                 ticketTransactionList: state.ticketTransactionList,
+                reloadTickets: true,
                 alert: {
                     'toastId': action.toastId,
                     'alertType': 'warning',
-                    'alertMessage': 'Creating ticketId ' + action.ticketId + '...'
+                    'alertMessage': 'Created ticketId ' + action.ticketId + '...'
                 },
             }
 

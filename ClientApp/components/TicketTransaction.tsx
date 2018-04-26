@@ -9,7 +9,8 @@ import TicketTransactionListItem from './TicketTransactionListItem';
 import TransactionListItem from './TransactionListItem';
 
 import { ListGroupItem, ListGroup } from 'react-bootstrap'
-import { Button, Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
+import { Badge, Button, Breadcrumb, BreadcrumbItem,
+    Card, CardImage, CardBody, CardTitle, CardText, Fa } from 'mdbreact'
 
 import { toast } from 'react-toastify';
 import { displayToast } from '../helpers/_displayToast'
@@ -22,9 +23,10 @@ import DatePicker from 'react-datepicker'
 type DataProps =
     TransactionState.TransactionState        // ... state we've requested from the Redux store
     & typeof TransactionActions.actionCreators       // ... plus action creators we've requested
-    & RouteComponentProps<{}>; // ... plus incoming routing parameters
+    & RouteComponentProps<{ viewType: string }>; // ... plus incoming routing parameters
 
 class TicketTransaction extends React.Component<DataProps, {}> {    
+
     componentDidMount() {
         // This method runs when the component is first added to the page
         this.props.requestTicketTypes(); // get list of ticket types
@@ -36,16 +38,41 @@ class TicketTransaction extends React.Component<DataProps, {}> {
 
     componentDidUpdate(prevProps: DataProps) {
         // This method runs when incoming props (e.g., route params) change
+        if (this.props.reloadTickets) {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            this.props.requestCustomerTicketTransactions(storedUser.customerId);
+        }
         // update unique toast 
         displayToast(this.props.alert);
     }
 
     render() {
-        return <div>
-            { this.renderTicketPurchaseForm()}
-            <h1 className="text-center">View My Tickets</h1>
-            { this.renderCustomerTicketTransactions()}
-        </div>
+        switch (this.props.match.params.viewType) {
+            case 'purchase':
+                return <div>
+                    <div className="row justify-content-center">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/ticket/view'>View My Tickets</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    <div className="row justify-content-center">
+                        { this.renderTicketPurchaseForm()}
+                    </div>
+                </div>
+            case 'view':
+                return <div>
+                    <div className="row justify-content-center">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/ticket/purchase'>Purchase Tickets</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    { this.renderCustomerTicketTransactions()}
+                </div>
+        }
     }
 
     addTicket = values => {
@@ -116,7 +143,7 @@ class TicketTransaction extends React.Component<DataProps, {}> {
         const toastId = 
             toast('Purchasing Ticket(s)...', {
                 type: 'info',
-                autoClose: 30000,
+                autoClose: 30000
             });
 
         if (this.props.ticketList.length>0) {
@@ -128,16 +155,13 @@ class TicketTransaction extends React.Component<DataProps, {}> {
                 if (response.data !== 'undefined') {
                     this.props.createTicketTransaction(this.props.ticketList, storedUser.customerId, toastId);
                 }
-                displayToast({
-                    'toastId': toastId,
-                    'alertType': 'success',
-                    'alertMessage': 'Purchase Successful'
-                })
             })
             .catch(error => {
-                toast('You must be a registered customer to buy tickets. Please register and try again.', {
-                    type: 'error',
-                });
+                displayToast({
+                    'toastId': toastId,
+                    'alertType': 'error',
+                    'alertMessage': 'You must be a registered customer to buy tickets. Please register and try again.'
+                })
             })
         } else {
             displayToast({
@@ -154,32 +178,39 @@ class TicketTransaction extends React.Component<DataProps, {}> {
             <div className='col-6'>
                 <Card>
                     <CardBody>
-                        <CardTitle className="h5 text-center mb-5">Order Tickets</CardTitle>
-                        <DatePicker
-                            inline
-                            selected={moment(this.props.effectiveDate)}
-                            onChange={this.setDate}
-                            minDate={moment()}
-                            maxDate={moment().add(90, "days")}
-                        />
-                        <TicketTransactionForm 
-                            onSubmit={this.addTicket} 
-                            form="purchaseTicketForm"
-                            initialValues={{
-                                ticketAmount: 1,
-                                fastPass: false,
-                                ticketType: 1,
-                            }}
-                            props={{
-                                ticketTypeList: this.props.ticketTypeList,
-                            }}/>
+                        <CardTitle className="h3 text-center mb-5">Order Tickets</CardTitle>
+                        <div className='row'>
+                            <div className='col-6'>
+                                <h4>Select Date </h4>
+                                <DatePicker
+                                    inline
+                                    selected={moment(this.props.effectiveDate)}
+                                    onChange={this.setDate}
+                                    minDate={moment()}
+                                    maxDate={moment().add(90, "days")}
+                                />
+                            </div>
+                            <div className='col-5 offset-1'>
+                                <TicketTransactionForm 
+                                    onSubmit={this.addTicket} 
+                                    form="purchaseTicketForm"
+                                    initialValues={{
+                                        ticketAmount: 1,
+                                        fastPass: false,
+                                        ticketType: 1,
+                                    }}
+                                    props={{
+                                        ticketTypeList: this.props.ticketTypeList,
+                                    }}/>
+                            </div>
+                        </div>
                     </CardBody>
                 </Card>
             </div>
             <div className='col-6'>
                 <Card>
                     <CardBody>
-                        <CardTitle className="h5 text-center mb-5">Purchase Ticket List</CardTitle>
+                        <CardTitle className="h3 text-center mb-5">Purchase Ticket List</CardTitle>
                         <ListGroup>
                             {this.props.ticketList.map(ticket =>
                                 <TicketTransactionListItem
@@ -193,7 +224,7 @@ class TicketTransaction extends React.Component<DataProps, {}> {
                                 </TicketTransactionListItem>
                             )}
                         </ListGroup>
-                        <h3 className="pull-left">Total Amount: ${this.props.transactionTotal}</h3>
+                        <h3 className="pull-left">  ${this.props.transactionTotal} Total</h3>
                         <div className="pull-right">
                             <Button color='success'
                                 onClick={this.startTransaction}
@@ -208,15 +239,36 @@ class TicketTransaction extends React.Component<DataProps, {}> {
     }
 
     private renderCustomerTicketTransactions() {
-        return <ListGroup>
-            {this.props.ticketTransactionList.map(transaction =>
-                <TransactionListItem
-                    key={'listItem'+transaction.ticket.ticketId}
-                    transaction={transaction}
-                    >                                      
-                </TransactionListItem>
-            )}
-        </ListGroup>
+        return <div className='row'>
+            <div className='col-2 offset-1 fixed'>
+                <Card>
+                    <CardBody>
+                        <ListGroup className='text center'>
+                            <ListGroupItem> 
+                                <h2><Badge color="success">Valid Ticket</Badge></h2>  
+                            </ListGroupItem>
+                            <ListGroupItem>
+                                <h2><Badge color="primary">Pending</Badge></h2>  
+                            </ListGroupItem>
+                            <ListGroupItem>
+                                <h4>Expired</h4>   
+                            </ListGroupItem>
+                        </ListGroup>
+                    </CardBody>
+                </Card>
+            </div>
+            <div className='col-6 offset-3'>
+                <ListGroup>
+                    {this.props.ticketTransactionList.map(transaction =>
+                        <TransactionListItem
+                            key={'listItem'+transaction.ticket.ticketId}
+                            transaction={transaction}
+                            >                                      
+                        </TransactionListItem>
+                    )}
+                </ListGroup>
+            </div>
+        </div>
     }
 }
 

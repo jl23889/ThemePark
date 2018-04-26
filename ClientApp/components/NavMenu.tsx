@@ -144,7 +144,14 @@ class NavMenu extends React.Component<DataProps, {}> {
             <NavItem>
                 <Button color="link">
                 <Link to={ '/ticket/purchase' }>
-                    Purchase Ticket
+                    Purchase Tickets
+                </Link>
+                </Button>
+            </NavItem>
+            <NavItem>
+                <Button color="link">
+                <Link to={ '/ticket/view' }>
+                    View Tickets
                 </Link>
                 </Button>
             </NavItem>
@@ -162,7 +169,7 @@ class NavMenu extends React.Component<DataProps, {}> {
         return <Nav navbar>
             <NavItem>
                 <Button color="link">
-                <Link to={ '/ticket/scan' }>
+                <Link to={ '/scanticket' }>
                     Scan Ticket
                 </Link>
                 </Button>
